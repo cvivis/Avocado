@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/avocado?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ssafy
+
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: create
+  sql:
+    init:
+      mode: always
