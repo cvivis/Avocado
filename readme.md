@@ -1,6 +1,6 @@
 # 🥑 아보카도 마켓 
 <h4 align="center">아보카도 라이브 경매 프로젝트</h4>
-<p align="center"><img src="docs/AVOCADO.png" height="200px" width="500px"></p>
+<p align="center"><img src="docs/LOGO.png" height="200px" width="500px"></p>
 <h5 align="center">개발기간: 2023.07.10 ~ 2022.08.18</h5>
 <p>팀 명 : A4용지</p>
 <p>프로젝트 명 : AVOCADO</p>
