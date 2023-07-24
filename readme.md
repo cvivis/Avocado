@@ -32,6 +32,62 @@
 
 <br>
 
+### Backend
+
+<div> 
+  <img src="https://img.shields.io/badge/java 11-007396?style=for-the-badge&logo=java&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/springboot 2.7.13-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/Spring Data Jpa-6DB33F?style=for-the-badge&logo=spring&logoColor=white" alt="">
+</div>
+
+### Database
+
+<div>
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="">
+</div>
+
+### Frontend
+
+<div>
+    <img src="https://img.shields.io/badge/HTML5-white?style=for-the-badge&logo=html5&logoColor=red" alt="">
+    <img src="https://img.shields.io/badge/CSS3-white?style=for-the-badge&logo=css3&logoColor=blue" alt="">
+    <img src="https://img.shields.io/badge/JS-white?style=for-the-badge&logo=javascript&logoColor=yellow" alt="">
+    <img src="https://img.shields.io/badge/React-white?style=for-the-badge&logo=react&logoColor=green" alt="">
+</div>
+
+### Authorization
+
+<div>
+    <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" alt="">
+    <img src="https://img.shields.io/badge/jwt-black?style=for-the-badge&logo=&logoColor=white" alt="">
+</div>
+
+### CI/CD
+
+<div>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" alt="">
+</div>
+
+### Infra
+
+<div>
+  <img src="https://img.shields.io/badge/Nginx-white?style=for-the-badge&logo=nginx&logoColor=green" alt="">
+</div>
+
+### Tool
+
+<div>
+  <img src="https://img.shields.io/badge/intellij-blue?style=for-the-badge&logo=&logoColor=" alt="">
+  <img src="https://img.shields.io/badge/Gradle-white?style=for-the-badge&logo=Gradle&logoColor=navy" alt="">
+</div>
+
+### Collaboration
+
+<div>
+  <img src="https://img.shields.io/badge/Notion-FFFFFF?style=for-the-badge&logo=Notion&logoColor=black" alt="">
+  <img src="https://img.shields.io/badge/Matter Most-white?style=for-the-badge&logo=mattermost&logoColor=navy" alt="">
+</div>
+
 # 💚 코드 컨벤션 & Git flow
 
 ## 1. 코드 컨벤션
