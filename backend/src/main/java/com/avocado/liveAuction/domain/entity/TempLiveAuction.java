@@ -1,13 +1,21 @@
 package com.avocado.liveAuction.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
+@ToString
+@Getter
 public class TempLiveAuction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String title;
 
     private Integer start_price;
 
@@ -19,5 +27,6 @@ public class TempLiveAuction {
 
     @ManyToOne
     @JoinColumn(name = "BroadCast_ID")
+    @JsonIgnore
     private TempBroadCast broadCast;
 }
