@@ -14,11 +14,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,18 +43,9 @@ public class TempController {
         return ResponseEntity.status(HttpStatus.OK).body(broadCastList.toArray());
     }
 
-    @GetMapping("/auctions")
-    public ResponseEntity<?> auctions() {
-//        tempLiveAuctionService.findAll()
-//                .stream().map(entity -> AuctionResponseDto.builder()
-//                        .id(entity.getId())
-//                        .title(entity.getTitle())
-//                        .start_price(entity.getStart_price())
-//                        .highest_price(entity.getHighest_price())
-//                        .bid_useremail(entity.getBid_useremail())
-//                        .status(entity.getStatus())
-//                        .broadcastId(entity.getBroadCast().getId())
-//                        .build()).collect(Collectors.toList()).toArray()
-        return ResponseEntity.status(HttpStatus.OK).body(tempLiveAuctionService.findAll().toArray());
+    @GetMapping("/auctions/{id}")
+    public ResponseEntity<?> auctions(@PathVariable Long id) {
+        tempBroadcastService.startBroadcastStatus(id);
+        return ResponseEntity.status(HttpStatus.OK).body(tempLiveAuctionService.findAllByBroadcast(id));
     }
  }

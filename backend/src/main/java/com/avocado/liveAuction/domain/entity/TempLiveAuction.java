@@ -26,7 +26,7 @@ public class TempLiveAuction {
     private Boolean status;
 
     @ManyToOne
-    @JoinColumn(name = "BroadCast_ID")
+    @JoinColumn(name = "Broadcast_ID")
     @JsonIgnore
-    private TempBroadCast broadCast;
+    private TempBroadCast broadcast;
 }

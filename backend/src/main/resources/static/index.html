@@ -2,216 +2,69 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello WebSocket</title>
+    <title>login form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/main.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <script src="/app.js"></script>
+    <script src="https://bundle.run/buffer@6.0.3"></script>
 </head>
 <body>
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-    enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div id="main-content" class="container" style="display:none">
-    <div class="row">
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="connect">WebSocket connection:</label>
-                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Greetings</th>
-                </tr>
-                </thead>
-                <tbody id="greetings">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
-<!-- 관리자 -->
 <div id="main-content" class="container">
     <div class="row">
-        <h2>관리자 페이지</h2>
-
-        <h3>방송관리(시작, 종료)</h3>
-        <div id="broadcast">
-
+        <div>
+            <label for="id">아이디</label>
+            <input type="text" id="id" class="form-control" placeholder="아이디" value="ssafy">
+            <br>
+            <label for="pw">비밀번호</label>
+            <input type="password" id="pw" class="form-control" placeholder="비밀번호" value="1234">
+            <br>
         </div>
-        
-        
-        
-    </div>
-    
-    <div class="row">
-        <!-- 경매 컨트롤 시작 종료 선택 -->
-        <h3>관리자 방송화면(경매 관리)</h3>
-        <div id="broadcastInfo"></div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>경매 리스트</th>
-                <th>경매 물품</th>
-                <th>시작가</th>
-                <th>최고가</th>
-                <th>최고 입찰자</th>
-                <th>버튼</th>
-               
-            </tr>
-            </thead>
-            <tbody id="auctions">
-            </tbody>
-        </table>
-
-    </div>
-</div>
-
-
-
-<!-- 사용자 -->
-<!-- 방송목록 -->
-<div id="main-content" class="container">
-    <div class="row">
-        <h2>사용자 페이지</h2>
-
-        <!-- 방송목록 입장 -->
-        <h3>방송 목록</h3>
-        <div id="userBroadcast"></div>
-        <!-- 경매참여 -->
-        <h3>사용자 방송화면</h3>
+        <button id="login" onclick="login()" class="btn btn-default" type="submit">로그인</button>
     </div>
 </div>
 
 
 <script>
-    
+    function login() {
+        const id = document.querySelector("#id").value;
+        const pw = document.querySelector("#pw").value;
+        localStorage.removeItem("access-token")
+        fetch("http://localhost:8080/member/login", {
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: id,
+                password: pw,
+            }),
+            })
+            .then((response) => {
+                console.log(response.headers.get("Authorization"))
+                localStorage.setItem("access-token",response.headers.get("Authorization") )
+                const info = localStorage.getItem("access-token").split('.')[1]
+                console.log(info)
+                const role = buffer.Buffer.from(info,"base64")
+                // const role = JSON.parse(info)
+                console.log(JSON.parse(role).authority)
+                if(role.includes("ADMIN")) window.location.href = "./admin.html"
+                else window.location.href = "./user.html" 
+                
+            })
+
+            
+            
+
+
+    }
    
 
-  window.onload = function(){
-    const broadcastlist = document.querySelector("#broadcast");
-    const userbroadcastlist = document.querySelector("#userBroadcast")
-    fetch("http://localhost:8080/temp/broadcasts")
-     .then((response) => response.json()).then((data)=> {
-        data.forEach(element => {
-            console.log(element)
-            const broadcast = document.createElement('div');
-            const info = document.createTextNode(element.id + '. ' +element.title+" \n");
-            const start_btn = document.createElement('button')
-            start_btn.className='btn btn-default'
-            start_btn.innerText = "방송 시작 \n"
-            start_btn.type = "submit"
-            start_btn.id = "start" + element.id
-            start_btn.setAttribute("onclick", "start(this.id)")
-            const end_btn = document.createElement('button')
-            end_btn.className='btn btn-default'
-            end_btn.innerText = "방송 종료"
-            end_btn.type = "submit"
-            end_btn.disabled = "disabled"
-            end_btn.id="end" + element.id
-            broadcast.appendChild(info)
-            broadcast.appendChild(start_btn)
-            broadcast.appendChild(end_btn)
-            broadcastlist.appendChild(broadcast);
+  
 
-            const userBroadcast = document.createElement('div')
-            const part_btn = document.createElement('button')
-            part_btn.className='btn btn-default'
-            part_btn.innerText = "방송 참여 \n"
-            part_btn.type = "submit"
-            part_btn.disabled = "disabled"
-            part_btn.id = "part" + element.id
-            part_btn.setAttribute("onclick", "part(this.id)")
-            userBroadcast.appendChild(info)
-            userBroadcast.appendChild(part_btn)
-            userbroadcastlist.appendChild(userBroadcast)
-        });
-     })
-  }
-
-  function start(broadcastId) {
-      const id = broadcastId.slice(-1);
-
-      const broadcastInfo =  document.querySelector("#broadcastInfo");
-      broadcastInfo.innerText = "방송 번호: "+ id + "번";
-
-    const start = document.querySelector("#"+broadcastId)
-    start.setAttribute("disabled", "disabled")
-
-    const end = document.querySelector("#end"+id);
-    end.removeAttribute("disabled")
-
-    const userBroadcast = document.querySelector("#part"+id);
-    userBroadcast.removeAttribute("disabled")
-    
-    const auctions = document.querySelector("#auctions")
-    fetch("http://localhost:8080/temp/auctions")
-     .then((response) => response.json()).then((data)=> {
-        data.forEach(element => {
-            console.log(element)
-            const auction = document.createElement('tr')
-            const index = document.createElement('td')
-            index.innerText = element.id
-            const title = document.createElement('td')
-            title.innerText = element.title
-            const start_price = document.createElement('td')
-            start_price.innerText = element.start_price
-            const bid_useremail = document.createElement('td')
-            const highest_price = document.createElement('td')
-
-            const button = document.createElement('td')
-            const start_btn = document.createElement('button')
-            start_btn.className='btn btn-default'
-            start_btn.innerText = "경매 시작 \n"
-            start_btn.type = "submit"
-            start_btn.id = "begin" + element.id
-            start_btn.setAttribute("onclick", "begin(this.id)")
-            const end_btn = document.createElement('button')
-            end_btn.className='btn btn-default'
-            end_btn.innerText = "경매 종료"
-            end_btn.type = "submit"
-            end_btn.disabled = "disabled"
-            end_btn.id="end" + element.id
-            end_btn.setAttribute("onclick", "stop(this.id)")
-           button.appendChild(start_btn);
-           button.appendChild(end_btn)
-
-            auction.appendChild(index)
-            auction.appendChild(title)
-            auction.appendChild(start_price)
-            auction.appendChild(bid_useremail)
-            auction.appendChild(highest_price)
-            auction.appendChild(button)
-            auctions.appendChild(auction)
-        });
-     })
-  }
-
-  function begin(auctionId) {
-    //시작버튼 비활성 , 종료버튼 활성
-
-    //유저화면에 경매목록
-  }
+  
 
 </script>
 

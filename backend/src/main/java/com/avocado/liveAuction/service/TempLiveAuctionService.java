@@ -5,7 +5,9 @@ import com.avocado.liveAuction.domain.entity.TempLiveAuction;
 import com.avocado.liveAuction.domain.repository.TempLiveAuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -13,8 +15,8 @@ import java.util.List;
 public class TempLiveAuctionService {
     private final TempLiveAuctionRepository tempLiveAuctionRepository;
 
-    public List<TempLiveAuction> findAll() {
-        return tempLiveAuctionRepository.findAll();
+    public List<TempLiveAuction> findAllByBroadcast(Long id) {
+        return tempLiveAuctionRepository.findAllByBID(id);
     }
 
 }
