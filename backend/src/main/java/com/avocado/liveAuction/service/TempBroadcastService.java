@@ -21,10 +21,10 @@ public class TempBroadcastService {
     }
 
     @Transactional
-    public void startBroadcastStatus(Long id) {
+    public void broadcastOnAndOff(Long id, boolean isbroadcastOn) {
         TempBroadCast tempBroadCast = tempBroadCastRepository.findById(id).orElse(null);
         if(!Objects.isNull(tempBroadCast)) {
-            tempBroadCast.setStatus(true);
+            tempBroadCast.setStatus(isbroadcastOn);
             tempBroadCastRepository.save(tempBroadCast);
         }
     }

@@ -2,6 +2,7 @@ package com.avocado.liveAuction.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @ToString
 @Getter
+@Setter
 public class TempLiveAuction {
 
     @Id

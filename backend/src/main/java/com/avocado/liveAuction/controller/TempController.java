@@ -2,10 +2,14 @@ package com.avocado.liveAuction.controller;
 
 import com.avocado.live.domain.Broadcast;
 import com.avocado.liveAuction.controller.dto.AuctionResponseDto;
+import com.avocado.liveAuction.controller.dto.BidReqeustDto;
+import com.avocado.liveAuction.controller.dto.BidResponseDto;
 import com.avocado.liveAuction.domain.entity.TempBroadCast;
 import com.avocado.liveAuction.domain.entity.TempLiveAuction;
+import com.avocado.liveAuction.domain.entity.TempLiveAuctionHistory;
 import com.avocado.liveAuction.service.TempBroadcastService;
 import com.avocado.liveAuction.service.TempLiveAuctionService;
+import com.avocado.liveAuction.service.TempLiveBidService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,8 @@ public class TempController {
     private final TempBroadcastService tempBroadcastService;
     private final TempLiveAuctionService tempLiveAuctionService;
 
+    private final TempLiveBidService tempLiveBidService;
+
 
     @GetMapping("/test")
     public ResponseEntity<?> test() {
@@ -45,7 +48,39 @@ public class TempController {
 
     @GetMapping("/auctions/{id}")
     public ResponseEntity<?> auctions(@PathVariable Long id) {
-        tempBroadcastService.startBroadcastStatus(id);
+        tempBroadcastService.broadcastOnAndOff(id, true);
         return ResponseEntity.status(HttpStatus.OK).body(tempLiveAuctionService.findAllByBroadcast(id));
+    }
+
+    @GetMapping("/auctions/end/{id}")
+    public ResponseEntity<?> broadcastEnd(@PathVariable Long id) {
+        tempBroadcastService.broadcastOnAndOff(id, false);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/auctions/begin/{id}")
+    public ResponseEntity<?> auctionStart(@PathVariable Long id) {
+        tempLiveAuctionService.liveAuctionOnAndOff(id, true);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/auctions/stop/{id}")
+    public ResponseEntity<?> auctionStop(@PathVariable Long id) {
+        tempLiveAuctionService.liveAuctionOnAndOff(id, false);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("/auctions/bid")
+    public ResponseEntity<?> bid(@RequestBody BidReqeustDto bidReqeustDto) {
+       log.info("[TempController bid] requstdto : {}", bidReqeustDto);
+       //거래내역에서 사용자아이디와 경매아이디를 기준으로 찾아보고 없으면 insert
+        TempLiveAuctionHistory tempLiveAuctionHistory = tempLiveBidService.bid(bidReqeustDto.getEmail(), bidReqeustDto.getAuctionId(), bidReqeustDto.getBid_price());
+        if(Objects.isNull(tempLiveAuctionHistory)) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(BidResponseDto.builder()
+                .bid_price(tempLiveAuctionHistory.getBid_price())
+                        .email(tempLiveAuctionHistory.getMember().getEmail())
+                .build()
+        );
     }
  }
