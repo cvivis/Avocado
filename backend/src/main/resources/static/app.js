@@ -59,3 +59,27 @@ $(function () {
     $( "#send" ).click(() => sendName());
 });
 
+// insert into tbroadcast(status, title)
+// values
+// (false, "방송1"),
+//     (false, "방송2"),
+//     (false, "방송3"),
+//     (false, "방송4"),
+//     (false, "방송5");
+//
+// insert into live_auction(title,start_price, status, broadcastid)
+// values
+// ("경매1",1000, 0,1),
+//     ("경매2",2000, 0,1),
+//     ("경매3",3000, 0,1),
+//     ("경매4",3000, 0,1),
+//     ("경매5",3000, 0,2),
+//     ("경매6",3000, 0,3);
+//
+// insert into member(email,nickname,password,role)
+// values
+// ("admin","관리자","$2a$10$gET1ZvsWnQU3CqdvyjWFZOWE.MehbonmgUAo3A.hJ694zJM8bKf/G","ADMIN");
+//
+// insert into member(email,nickname,password,role)
+// values
+// ("ssafy","김싸피","$2a$10$gET1ZvsWnQU3CqdvyjWFZOWE.MehbonmgUAo3A.hJ694zJM8bKf/G","USER");

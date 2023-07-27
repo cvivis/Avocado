@@ -105,6 +105,7 @@
                         if(element.status == 0) status.innerText = "시작 전"
                         else if(element.status == 1) status.innerText = "진행 중"
                         else if(element.status == 2) status.innerText = "종료"
+                        status.id = "status"+element.id
                         const button = document.createElement('td')
                         const start_btn = document.createElement('button')
                         start_btn.className='btn btn-default'
@@ -141,12 +142,18 @@
             //방송종료시
             //TODO
             //서버: 방송status -> false 
-            //ws 사용자들에게 방송이 종료되었는다는 알림 + 전페이지로 이동
-            //관리자는 관리자 페이지로 이동
+            //ws 사용자들에게 방송이 종료되었는다는 알림 + 방송게시판이동 / 웹소켓 연결끊는다
+
+            fetch("http://localhost:8080/admin/broadcast/status/off/"+id).then((response)=>{
+                window.location.href = "./admin.html"
+            })
         }
 
         function begin(auctionId) {
             //시작버튼 비활성 , 종료버튼 활성
+            //서버: 경매 status 변경
+            //TODO: ws 사용자들에게 시작된 경매 알림
+            //TODO: 경매목록에 경매진행 상황변경
             const id = auctionId.slice(-1);
 
             const begin = document.querySelector("#"+auctionId)
@@ -156,25 +163,29 @@
             const stop = document.querySelector("#stop"+id);
             stop.removeAttribute("disabled")
             
-            //서버에 경매 상태 변경
-            fetch("http://localhost:8080/temp/auctions/begin/"+id)
-                    
+            fetch("http://localhost:8080/admin/auction/status/begin/"+id)
+            
+            const status = document.querySelector("#status"+id)
+            status.innerText = "진행 중"
         }
 
         function stop(auctionId) {
-            //시작버튼 활성 , 종료버튼 비활성
+            //종료버튼 비활성
             const id = auctionId.slice(-1);
-
-            const begin = document.querySelector("#begin"+id)
-            begin.removeAttribute("disabled")
-           
-            
             
             const stop = document.querySelector("#"+auctionId);
             stop.setAttribute("disabled", "disabled")
-            
-            //서버에 경매 상태 변경
-            fetch("http://localhost:8080/temp/auctions/stop/"+id)
+
+            //경매진행상황 종료로
+            const status = document.querySelector("#status"+id)
+            status.innerText = "종료"
+
+            //서버에 경매 상태 변경, 입찰자가 있을 시 경매테이블 낙찰자,낙찰가 업데이트
+            fetch("http://localhost:8080/admin/auction/status/stop/"+id).then((response)=> {
+                console.log(response.status)
+            })
+
+            //TODO : ws 사용자들에게 경매종료를 알림
                     
         }
     </script>

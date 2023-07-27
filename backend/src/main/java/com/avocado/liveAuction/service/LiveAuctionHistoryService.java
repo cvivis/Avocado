@@ -2,7 +2,6 @@ package com.avocado.liveAuction.service;
 
 import com.avocado.liveAuction.domain.entity.LiveAuctionHistory;
 import com.avocado.liveAuction.domain.repository.LiveAuctionHistoryRepository;
-import com.avocado.tempLiveAuction.domain.entity.TempLiveAuctionHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +22,11 @@ public class LiveAuctionHistoryService {
         LiveAuctionHistory liveAuctionHistory = findMaxBid(auctionId);
         if(Objects.isNull(liveAuctionHistory)) return null;
         return liveAuctionHistory.getBidPrice();
+    }
+
+    public String highestBidMemberEmail(Long auctionId) {
+        LiveAuctionHistory liveAuctionHistory = findMaxBid(auctionId);
+        if(Objects.isNull(liveAuctionHistory)) return null;
+        return liveAuctionHistory.getMember().getEmail();
     }
 }

@@ -11,6 +11,170 @@
     <script src="https://bundle.run/buffer@6.0.3"></script>
 </head>
 <body>
-    
+    <div id="main-content" class="container">
+        <div class="row">
+            <h2>사용자 페이지</h2>
+            <h3>사용자 방송화면</h3>
+            <div id="broadcastInfo"></div>
+            <div style="width: 80%; height: 300px; background-color:yellowgreen;">실시간 방송화면</div>
+            <button type="submit" id="closeBtn" onclick="broadcastOut(this.id)">방송 나가기</button>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>경매 번호</th>
+                    <th>경매 물품</th>
+                    <th>시작가</th>
+                    <th>현재 최고 입찰자</th>
+                    <th>현재 입찰가</th>
+                    <th>경매 진행 상황</th>
+                    <th>입찰</th>
+                </tr>
+                </thead>
+                <tbody id="auctions">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <h2>채팅</h2>
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="connect">WebSocket connection:</label>
+                        <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="name">What is your name?</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                    </div>
+                    <button id="send" class="btn btn-default" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="conversation" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Greetings</th>
+                    </tr>
+                    </thead>
+                    <tbody id="greetings">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //TODO : 관리자가 방송종료하면 방송이종료되었다는알림 + 방송게시판으로 이동
+        window.onload = function(){
+            const broadcastId = localStorage.getItem("current-room-id")
+            //TODO : 여기서 websocket 연결해야함!
+            const broadcastInfo =  document.querySelector("#broadcastInfo");
+            broadcastInfo.innerText = "방송 번호: "+ broadcastId + "번";
+
+            const closeBtn = document.querySelector("#closeBtn")
+            closeBtn.id = "close"+broadcastId
+
+            fetch("http://localhost:8080/user/auctions/"+broadcastId)
+                .then((response) => response.json()).then((data)=> {
+                    data.forEach(element => {
+                        const auction = document.createElement('tr')
+                        const index = document.createElement('td')
+                        index.innerText = element.id
+                        const title = document.createElement('td')
+                        title.innerText = element.title
+                        const start_price = document.createElement('td')
+                        start_price.innerText = element.start_price
+                        start_price.id = "start_price"+element.id
+
+                        const current_bid_useremail = document.createElement('td')
+                        current_bid_useremail.innerText = element.current_member
+                        const current_highest_price = document.createElement('td')
+                        current_highest_price.innerText = element.current_bid_price
+                        current_highest_price.id = "current_price"+element.id
+
+                        const auction_status = document.createElement('td')
+                        if(element.status == 0) auction_status.innerText = "시작 전"
+                        else if(element.status == 1) auction_status.innerText = "진행 중"
+                        else if(element.status == 2) auction_status.innerText = "종료"
+
+                        const my_bid_price = document.createElement('td')
+                        const input_price = document.createElement('input')
+                        input_price.id = "bid"+element.id
+                        input_price.setAttribute("type","number")
+                        const bid_btn = document.createElement('button')
+                        bid_btn.className='btn btn-default'
+                        bid_btn.innerText = "입찰하기"
+                        bid_btn.type = "submit"
+                        bid_btn.setAttribute("onclick", "bid(this.id)")
+                        bid_btn.id = "bid_btn"+element.id
+                        if(element.status!=1) bid_btn.disabled = "disabled"
+
+                        my_bid_price.appendChild(input_price);
+                        my_bid_price.appendChild(bid_btn);
+
+
+                        auction.appendChild(index)
+                        auction.appendChild(title)
+                        auction.appendChild(start_price)
+                        auction.appendChild(current_bid_useremail)
+                        auction.appendChild(current_highest_price)
+                        auction.appendChild(auction_status)
+                        auction.appendChild(my_bid_price)
+                        auctions.appendChild(auction)
+                    });
+            })
+        }
+
+        function broadcastOut(broadcastId) {
+            const id = broadcastId.slice(-1);     
+            //방송나가기
+            //TODO 
+            //ws 방송게시판이동 / 웹소켓 연결끊는다
+            window.location.href = "./user.html"
+           
+        }
+
+       
+
+        function bid(btnId) {
+            const auctionId = btnId.slice(-1);
+            //TODO : 입찰가 validate
+            //시작가보다 높은지
+            //현재입찰가 보다 높은지
+            const bid_price = document.querySelector("#bid"+auctionId).value
+
+            //TODO
+            //경매테이블 현재가 업데이트
+            //거래내역 테이블에 추가
+            // --> 현재최고입찰가보다 높은지 검증 필요
+            //ws 다른 모든 사용자에게 입찰자,입찰가 넘겨주기
+            
+            const payload = localStorage.getItem("access-token").split('.')[1]
+            const info = buffer.Buffer.from(payload,"base64")
+            const email = JSON.parse(info).email
+
+            fetch("http://localhost:8080/user/auction/bid", {
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email : email,
+                auctionId : auctionId,
+                bid_price : bid_price
+            }),
+            })
+            .then((response) => response.json()).then((data) => console.log(data))
+        }
+    </script>
 </body>
 </html>

@@ -11,92 +11,30 @@
     <script src="https://bundle.run/buffer@6.0.3"></script>
 </head>
 <body>
-    <!-- 사용자 -->
-    <!-- 방송목록 -->
     <div id="main-content" class="container">
         <div class="row">
             <h2>사용자 페이지</h2>
-
-            <!-- 방송목록 입장 -->
             <h3>방송 목록</h3>
             <div id="userBroadcast"></div>
-        </div>
-        <div class="row">
-            <!-- 경매참여 -->
-            <h3>사용자 방송화면</h3>
-
-            <div id="broadcastInfo"></div>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>경매 리스트</th>
-                    <th>경매 물품</th>
-                    <th>시작가</th>
-                    <th>현재 최고 입찰자</th>
-                    <th>현재 입찰가</th>
-                    <th>입찰</th>
-                </tr>
-                </thead>
-                <tbody id="auctions">
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-    <div id="main-content" class="container" >
-        <div class="row">
-            <div class="col-md-6">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="connect">WebSocket connection:</label>
-                        <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="name">What is your name?</label>
-                        <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                    </div>
-                    <button id="send" class="btn btn-default" type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table id="conversation" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Greetings</th>
-                    </tr>
-                    </thead>
-                    <tbody id="greetings">
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 
     <script>
         window.onload = function(){
             const userbroadcastlist = document.querySelector("#userBroadcast")
-            fetch("http://localhost:8080/temp/broadcasts")
+            fetch("http://localhost:8080/user/broadcasts")
             .then((response) => response.json()).then((data)=> {
                 data.forEach(element => {
                     const userBroadcast = document.createElement('div')
-                    const uinfo = document.createTextNode(element.id + '. ' +element.title+" \n");
+                    const info = document.createTextNode(element.id + '. ' +element.title+" \n");
                     const part_btn = document.createElement('button')
                     part_btn.className='btn btn-default'
-                    part_btn.innerText = "방송 참여 \n"
+                    part_btn.innerText = "방송 참여"
                     part_btn.type = "submit"
                     if(!element.status)part_btn.disabled = "disabled"
                     part_btn.id = "part" + element.id
                     part_btn.setAttribute("onclick", "particiapte(this.id)")
-                    userBroadcast.appendChild(uinfo)
+                    userBroadcast.appendChild(info)
                     userBroadcast.appendChild(part_btn)
                     userbroadcastlist.appendChild(userBroadcast)
                 });
@@ -105,77 +43,8 @@
 
         function particiapte(broadcastId) {
             const id = broadcastId.slice(-1);
-
-            const broadcastInfo =  document.querySelector("#broadcastInfo");
-            broadcastInfo.innerText = "방송 번호: "+ id + "번";
-            
-            const auctions = document.querySelector("#auctions")
-            while(auctions.hasChildNodes()) auctions.removeChild(auctions.firstChild)
-
-            fetch("http://localhost:8080/temp/auctions/"+id)
-                .then((response) => response.json()).then((data)=> {
-                    data.forEach(element => {
-                        const auction = document.createElement('tr')
-                        const index = document.createElement('td')
-                        index.innerText = element.id
-                        const title = document.createElement('td')
-                        title.innerText = element.title
-                        const start_price = document.createElement('td')
-                        start_price.innerText = element.start_price
-
-
-                        const current_bid_useremail = document.createElement('td')
-                        const current_highest_price = document.createElement('td')
-
-                        const my_bid_price = document.createElement('td')
-                        const input_price = document.createElement('input')
-                        input_price.id = "bid"+element.id
-                        const bid_btn = document.createElement('button')
-                        bid_btn.className='btn btn-default'
-                        bid_btn.innerText = "입찰하기"
-                        bid_btn.type = "submit"
-                        bid_btn.setAttribute("onclick", "bid(this.id)")
-                        bid_btn.id = "bid_btn"+element.id
-                        if(!element.status) bid_btn.disabled = "disabled"
-
-                        my_bid_price.appendChild(input_price);
-                        my_bid_price.appendChild(bid_btn);
-
-
-                        auction.appendChild(index)
-                        auction.appendChild(title)
-                        auction.appendChild(start_price)
-                        auction.appendChild(current_bid_useremail)
-                        auction.appendChild(current_highest_price)
-                        auction.appendChild(my_bid_price)
-                        auctions.appendChild(auction)
-                    });
-            })
-        }
-
-        function bid(btnId) {
-            const payload = localStorage.getItem("access-token").split('.')[1]
-            const info = buffer.Buffer.from(payload,"base64")
-            const email = JSON.parse(info).email
-            console.log(email)
-
-
-            const auctionId = btnId.slice(-1);
-            const bid_price = document.querySelector("#bid"+auctionId).value
-            console.log(bid_price)
-
-            fetch("http://localhost:8080/temp/auctions/bid", {
-            method: "POST",
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email : email,
-                auctionId : auctionId,
-                bid_price : bid_price
-            }), //시작가 추가해야함
-            })
-            .then((response) => response.json()).then((data) => console.log(data))
+            localStorage.setItem("current-room-id",id)
+            window.location.href = "./user_live.html"
         }
     </script>
 </body>

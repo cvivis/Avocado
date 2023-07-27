@@ -3,12 +3,14 @@ package com.avocado.liveAuction.domain.entity;
 import com.avocado.member.domain.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Getter
+@Setter
 public class LiveAuction {
 
     @Id
@@ -29,6 +31,7 @@ public class LiveAuction {
     private Member member;
 
     private Integer status; //경매시작전:0 , 경매진행중: 1, 경매종료: 2 // TODO : ENUM type 추가
+
     @ManyToOne
     @JoinColumn(name = "broadcastID")
     @JsonIgnore
