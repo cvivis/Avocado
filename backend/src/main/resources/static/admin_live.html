@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 방송 페이지</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/main.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="/app.js"></script>
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+</head>
+<body>
+    <div id="main-content" class="container">
+        <div class="row">
+            <h2>관리자 페이지</h2>
+            <h3>관리자 방송화면</h3>
+            <div id="broadcastInfo"></div>
+            <div style="width: 80%; height: 300px; background-color:yellowgreen;">실시간 방송화면</div>
+            <button type="submit" id="closeBtn" onclick="broadcastOff(this.id)">방송 종료</button>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>경매 아이디</th>
+                    <th>경매 물품</th>
+                    <th>시작가</th>
+                    <th>낙찰가</th>
+                    <th>낙찰자</th>
+                    <th>현재 입찰가</th>
+                    <th>경매 진행 상황</th>
+                    <th>시작/종료</th>
+                </tr>
+                </thead>
+                <tbody id="auctions">
+                </tbody>
+            </table>
+
+        </div>
+        <div class="row">
+            <h2>채팅</h2>
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="connect">WebSocket connection:</label>
+                        <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="name">What is your name?</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                    </div>
+                    <button id="send" class="btn btn-default" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="conversation" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Greetings</th>
+                    </tr>
+                    </thead>
+                    <tbody id="greetings">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+            const broadcastId = localStorage.getItem("current-room-id")
+            //TODO : 여기서 websocket 연결해야함!
+            const broadcastInfo =  document.querySelector("#broadcastInfo");
+            broadcastInfo.innerText = "방송 번호: "+ broadcastId + "번";
+            
+            const closeBtn = document.querySelector("#closeBtn")
+            closeBtn.id = "close"+broadcastId
+
+            const auctions = document.querySelector("#auctions")
+            while(auctions.hasChildNodes()) auctions.removeChild(auctions.firstChild)
+            fetch("http://localhost:8080/admin/auctions/"+broadcastId)
+                .then((response) => response.json()).then((data)=> {
+                    data.forEach(element => {
+                        console.log(element)
+                        const auction = document.createElement('tr')
+                        const index = document.createElement('td')
+                        index.innerText = element.id
+                        const title = document.createElement('td')
+                        title.innerText = element.title
+                        const start_price = document.createElement('td')
+                        start_price.innerText = element.start_price
+                        const success_price = document.createElement('td')
+                        success_price.innerText = element.success_price
+                        const success_member = document.createElement('td')
+                        success_member.innerText = element.success_member
+                        const current_bid_price = document.createElement('td') 
+                        current_bid_price.innerText = element.current_bid_price
+                        const status = document.createElement('td')
+                        if(element.status == 0) status.innerText = "시작 전"
+                        else if(element.status == 1) status.innerText = "진행 중"
+                        else if(element.status == 2) status.innerText = "종료"
+                        const button = document.createElement('td')
+                        const start_btn = document.createElement('button')
+                        start_btn.className='btn btn-default'
+                        start_btn.innerText = "경매 시작"
+                        start_btn.type = "submit"
+                        if(element.status!=0) start_btn.disabled = "disabled"
+                        start_btn.id = "begin" + element.id
+                        start_btn.setAttribute("onclick", "begin(this.id)")
+                        const end_btn = document.createElement('button')
+                        end_btn.className='btn btn-default'
+                        end_btn.innerText = "경매 종료"
+                        end_btn.type = "submit"
+                        if(element.status!=1) end_btn.disabled = "disabled"
+                        end_btn.id="stop" + element.id
+                        end_btn.setAttribute("onclick", "stop(this.id)")
+                        button.appendChild(start_btn);
+                        button.appendChild(end_btn)
+
+                        auction.appendChild(index)
+                        auction.appendChild(title)
+                        auction.appendChild(start_price)
+                        auction.appendChild(success_price)
+                        auction.appendChild(success_member)
+                        auction.appendChild(current_bid_price)
+                        auction.appendChild(status)
+                        auction.appendChild(button)
+                        auctions.appendChild(auction)
+                    });
+            })
+        }
+
+        function broadcastOff(broadcastId) {
+            const id = broadcastId.slice(-1);     
+            //방송종료시
+            //TODO
+            //서버: 방송status -> false 
+            //ws 사용자들에게 방송이 종료되었는다는 알림 + 전페이지로 이동
+            //관리자는 관리자 페이지로 이동
+        }
+
+        function begin(auctionId) {
+            //시작버튼 비활성 , 종료버튼 활성
+            const id = auctionId.slice(-1);
+
+            const begin = document.querySelector("#"+auctionId)
+            begin.setAttribute("disabled", "disabled")
+            
+            
+            const stop = document.querySelector("#stop"+id);
+            stop.removeAttribute("disabled")
+            
+            //서버에 경매 상태 변경
+            fetch("http://localhost:8080/temp/auctions/begin/"+id)
+                    
+        }
+
+        function stop(auctionId) {
+            //시작버튼 활성 , 종료버튼 비활성
+            const id = auctionId.slice(-1);
+
+            const begin = document.querySelector("#begin"+id)
+            begin.removeAttribute("disabled")
+           
+            
+            
+            const stop = document.querySelector("#"+auctionId);
+            stop.setAttribute("disabled", "disabled")
+            
+            //서버에 경매 상태 변경
+            fetch("http://localhost:8080/temp/auctions/stop/"+id)
+                    
+        }
+    </script>
+</body>
+</html>

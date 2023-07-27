@@ -18,7 +18,7 @@
             <h2>사용자 페이지</h2>
 
             <!-- 방송목록 입장 -->
-            <h3>방송 목록(방송 중인 방송만 보임)</h3>
+            <h3>방송 목록</h3>
             <div id="userBroadcast"></div>
         </div>
         <div class="row">
@@ -175,9 +175,7 @@
                 bid_price : bid_price
             }), //시작가 추가해야함
             })
-            .then((response) => {
-                console.log(response.json())
-            })
+            .then((response) => response.json()).then((data) => console.log(data))
         }
     </script>
 </body>
