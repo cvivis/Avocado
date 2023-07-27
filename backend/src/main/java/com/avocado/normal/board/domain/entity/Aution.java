@@ -2,10 +2,7 @@ package com.avocado.normal.board.domain.entity;
 
 
 import com.avocado.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,18 +13,19 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Builder
+@ToString
 public class Aution {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "success_member")
-    private Member member;
 
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @Column(name = "success_member")
+    private Long successMember;
+
+
+    @Column(name = "item_id")
+    private Long itemId;
 
     @NotNull
     private Integer success_price;
