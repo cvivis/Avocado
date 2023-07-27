@@ -4,22 +4,30 @@ import com.avocado.live.domain.Broadcast;
 import com.avocado.live.domain.BroadcastRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class BroadcastService {
 
     private final BroadcastRepository broadcastRepository;
+    private final AuctionService auctionService;
 
-    public Long save(String sessionId) {
-        Broadcast save = broadcastRepository.save(new Broadcast(sessionId));
-        return save.getBroadcastId();
+    @Transactional
+    public Long save(String sessionId, List<Long> auctionIds) {
+        Broadcast broadcast = broadcastRepository.save(new Broadcast(sessionId));
+        auctionService.assignBroadcast(broadcast.getId(), auctionIds);
+        return broadcast.getId();
     }
 
+    @Transactional
     public String getBroadcastSessionId(Long broadcastId) {
         Broadcast broadcast = findBroadcastOrElseThrow(broadcastId);
+        broadcast.onOff();
         return broadcast.getSessionId();
     }
 
