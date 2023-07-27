@@ -2,9 +2,7 @@ package com.avocado.normal.auction.domain.entity;
 
 import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
+@Setter
 public class NormalHistory extends BaseTimeEntity {
 
     @Id
@@ -24,6 +24,10 @@ public class NormalHistory extends BaseTimeEntity {
     @NotNull
     private Member member;
 
+//    @NotNull
+//    @Column(name="column" , unique=true)
+//    private String email;
+
     @ManyToOne
     @JoinColumn(name = "normalAuction_id")
     @NotNull
@@ -31,4 +35,14 @@ public class NormalHistory extends BaseTimeEntity {
 
     @NotNull
     private Integer bidPrice;
+
+    @Override
+    public String toString() {
+        return "NormalHistory{" +
+                "id=" + id +
+                ", member=" + member +
+                ", normalAuction=" + normalAuction +
+                ", bidPrice=" + bidPrice +
+                '}';
+    }
 }

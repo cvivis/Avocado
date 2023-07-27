@@ -2,13 +2,9 @@ package com.avocado.normal.auction.domain.entity;
 
 import com.avocado.common.BaseTimeEntity;
 import com.avocado.normal.auction.domain.entity.NormalHistory;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
@@ -17,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-
 public class NormalAuction extends BaseTimeEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotNull
@@ -28,10 +24,10 @@ public class NormalAuction extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "normalAuction")
     private List<NormalHistory> normalHistory;
-//    private Member successMember;
 
-//    @
-//    Member sucessMember; // 1대1
+
+//    private Long successMember
+
     private Integer successPrice;
 
     @NotNull
@@ -39,4 +35,16 @@ public class NormalAuction extends BaseTimeEntity {
 
     @NotNull
     private Timestamp endAt;
+
+    @Override
+    public String toString() {
+        return "NormalAuction{" +
+                "id=" + id +
+                ", itemId=" + itemId +
+//                ", normalHistory=" + normalHistory +
+                ", successPrice=" + successPrice +
+                ", startAt=" + startAt +
+                ", endAt=" + endAt +
+                '}';
+    }
 }

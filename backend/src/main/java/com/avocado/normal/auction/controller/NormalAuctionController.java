@@ -2,6 +2,7 @@ package com.avocado.normal.auction.controller;
 
 
 import com.avocado.normal.auction.controller.dto.NormalBidRequestDto;
+import com.avocado.normal.auction.controller.dto.NormalBidResponseDto;
 import com.avocado.normal.auction.service.NormalAuctionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class NormalAuctionController {
     @MessageMapping("/normal/{id}")
     public void normalBid(@DestinationVariable("id") Long id, NormalBidRequestDto normalBidRequest) {
         log.info(normalBidRequest.toString());
-        normalAuctionService.doBid(normalBidRequest);
-        simpMessagingTemplate.convertAndSend("/sub/normal/" + id, normalBidRequest);
+        NormalBidResponseDto topBid = normalAuctionService.doBid(normalBidRequest);
+        simpMessagingTemplate.convertAndSend("/sub/normal/" + id, topBid);
     }
 
 }

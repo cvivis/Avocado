@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class NormalBidResponseDto {
     private Long id;
-    private String nickName;
+    private String email;
     private Integer price;
     private LocalDateTime lastBidAt;
 }
