@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
@@ -17,15 +16,16 @@ public class NormalItemDetailResponseDto {
     private String content;
     private Integer hopePrice;
 //    private TopBidMemberResponse topBidMember;
-    private Timestamp startAt;
-    private Timestamp endAt;
+    private Date startAt;
+    private Date endAt;
 
-//    public NormalItemDetailResponseDto(NormalHistory normalHistory) {
-//        this.id = normalHistory.getAution().getItem().getId();
-//        this.name = normalHistory.getAution().getItem().getName();
-//        this.content = normalHistory.getAution().getItem().getContent();
-//        this.hopePrice = normalHistory.getAution().getItem().getHopePrice();
-//        this.startAt = normalHistory.getAution().getStart_at();
-//        this.endAt = normalHistory.getAution().getEnd_at();
-//    }
+    public NormalItemDetailResponseDto(Long id, String name, String content,
+                                       Integer hopePrice, Date startAt, Date endAt) {
+        this.id = id;
+        this.name = name;
+        this.content = content;
+        this.hopePrice = hopePrice;
+        this.startAt = startAt;
+        this.endAt = endAt;
+    }
 }

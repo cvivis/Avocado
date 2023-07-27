@@ -20,10 +20,10 @@ public class NormalResponseEntryDto {
     private String name;
     private Integer bidPrice;
     private Integer hopePrice;
-    private Timestamp startAt;
-    private Timestamp endAt;
+    private Date startAt;
+    private Date endAt;
 
-    public NormalResponseEntryDto(Long id, String name, Integer bidPrice, Integer hopePrice, Timestamp startAt, Timestamp endAt) {
+    public NormalResponseEntryDto(Long id, String name, Integer bidPrice, Integer hopePrice, Date startAt, Date endAt) {
         this.id = id;
         this.name = name;
         this.bidPrice = bidPrice;
