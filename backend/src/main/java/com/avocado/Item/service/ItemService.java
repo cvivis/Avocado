@@ -16,7 +16,7 @@ public class ItemService {
 
     // 위탁 상품 등록
     //@Transactional
-    public boolean registItem(ConsignRequestDto consignRequestDto) {
+    public boolean saveItem(ConsignRequestDto consignRequestDto) {
         try {
             itemRepository.save(Item.builder()
                     .name(consignRequestDto.getName())
