@@ -7,7 +7,7 @@
 <p>팀원 : 황시은, 정연수, 오승기, 이원희, 정재현, 권민재</p>
 <p>배포 링크 : ---------------</p>
 
-<h5>아무거나</h5> 
+<p><strong>아</strong>무거나</p> 
 
 <p>보여주고</P> 
 
@@ -44,6 +44,7 @@
 
 <div>
   <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/redis-%23DC382D?style=for-the-badge&logo=redis&logoColor=white&color=red" alt="">
 </div>
 
 ### Frontend
@@ -71,6 +72,7 @@
 ### Infra
 
 <div>
+  <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" alt="">
   <img src="https://img.shields.io/badge/Nginx-white?style=for-the-badge&logo=nginx&logoColor=green" alt="">
 </div>
 
