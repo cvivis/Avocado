@@ -19,7 +19,6 @@ public class Broadcast extends BaseTimeEntity {
     @Column(nullable = false)
     private String sessionId;
 
-    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp startAt;
 
@@ -28,11 +27,13 @@ public class Broadcast extends BaseTimeEntity {
 
     public Broadcast(String sessionId) {
         this.sessionId = sessionId;
-        this.startAt = Timestamp.from(Instant.now());
         this.status = true;
     }
 
     public void onOff() {
+        if (this.status) {
+            this.startAt = Timestamp.from(Instant.now());
+        }
         this.status = !this.status;
     }
 
