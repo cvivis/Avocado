@@ -7,7 +7,7 @@
 <p>팀원 : 황시은, 정연수, 오승기, 이원희, 정재현, 권민재</p>
 <p>배포 링크 : ---------------</p>
 
-<p><span style="background-color:#dcffe4">아</span>무거나</p> 
+<p><span style="color:yellowgreen">아</span>무거나</p> 
 
 <p>보여주고</P> 
 
