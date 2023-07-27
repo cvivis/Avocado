@@ -46,7 +46,7 @@ public class OpenviduController {
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
-        broadcastService.save(session.getSessionId(), auctionIds);
+        broadcastService.assign(session.getSessionId(), auctionIds);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
 

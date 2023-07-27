@@ -18,7 +18,7 @@ public class BroadcastService {
     private final AuctionService auctionService;
 
     @Transactional
-    public Long save(String sessionId, List<Long> auctionIds) {
+    public Long assign(String sessionId, List<Long> auctionIds) {
         Broadcast broadcast = broadcastRepository.save(new Broadcast(sessionId));
         auctionService.assignBroadcast(broadcast.getId(), auctionIds);
         return broadcast.getId();
