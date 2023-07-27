@@ -7,13 +7,13 @@
 <p>팀원 : 황시은, 정연수, 오승기, 이원희, 정재현, 권민재</p>
 <p>배포 링크 : ---------------</p>
 
-<span style="color:yellowgreen">아</span>무거나
+<p><strong>아</strong>무거나</p>
 
-<p>보여주고</P> 
+<p><strong>보</strong>여주고</P> 
 
-<p>카메라로 판매하는</p> 
+<p><strong>카</strong>메라로 판매하는</p> 
 
-<p>도떼기경매</p> 
+<p><strong>도</strong>떼기경매</p> 
 
 # ❤ 서비스 소개
 <p>`경매` 거래방식을 메인으로 잡은 서비스로, 이용자의 물건을 등록하고 `라이브경매`와 `상시경매`를 통해 이용자는 다양한 상품을 적절한 가격으로 구매할 수 있습니다.</p>
@@ -27,10 +27,6 @@
 <br>
 
 # 💛 기술 스택
-
-![stackticon](https://firebasestorage.googleapis.com/v0/b/stackticon-81399.appspot.com/o/images%2F1690185619609?alt=media&token=ee8eb7b5-3ea7-4fb9-ba7b-cbd818ceddd0)
-
-<br>
 
 ### Backend
 
@@ -203,16 +199,20 @@ ex) Chore: 점심 먹기 전 커밋
 - 문서화
 - 단위테스트를 통한 service 의존성 분리
 
-# 🤎 경매 과정 구조도
+# 🤎 유스케이스 다이어그램
 
-(대충 사진)
+<img src="docs/유스케이스_다이어그램.png">
 
 # 🖤 DB ERD
 
-(대충 erd)
+<img src="docs/아보카도_ERD.png">
 
 # 🤍 Front
 
-(대충 피그마 사진)
+### 와이어프레임
+<img src="docs/와이어프레임_모음.png">
+
+### 목업
+<img src="docs/목업_모음.png">
 
 
