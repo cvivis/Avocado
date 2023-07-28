@@ -8,10 +8,7 @@ import com.avocado.liveAuction.service.TBroadcastService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,25 +25,25 @@ public class AdminController {
         return ResponseEntity.ok().body(tBroadcastService.findAll());
     }
 
-    @GetMapping("/broadcast/status/on/{id}")
+    @PutMapping("/broadcast/status/on/{id}")
     public ResponseEntity<?> broadcastOn(@PathVariable Long id) {
         if(tBroadcastService.broadcastOnAndOff(id, true)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/broadcast/status/off/{id}")
+    @PutMapping("/broadcast/status/off/{id}")
     public ResponseEntity<?> broadcastOff(@PathVariable Long id) {
         if(tBroadcastService.broadcastOnAndOff(id, false)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/auction/status/begin/{id}")
+    @PutMapping("/auction/status/begin/{id}")
     public ResponseEntity<?> liveAuctionBegin(@PathVariable Long id) {
         if (liveAuctionService.liveAuctionBegin(id)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/auction/status/stop/{id}")
+    @PutMapping("/auction/status/stop/{id}")
     public ResponseEntity<?> liveAuctionStop(@PathVariable Long id) {
         //경매 상태->종료 입찰있을 시 낙찰자,낙찰가 업데이트
         log.info("[AdminController liveauctionStop]");

@@ -49,4 +49,14 @@ public class LiveAuctionService {
         liveAuctionRepository.save(liveAuction);
         return true;
     }
+
+    @Transactional
+    public LiveAuction updateCurrentPrice(Long auctionId, Integer bidPrice) {
+        LiveAuction auction = liveAuctionRepository.findById(auctionId).orElse(null);
+        if(Objects.isNull(auction.getCurrentPrice()) || auction.getCurrentPrice() < bidPrice) {
+            auction.setCurrentPrice(bidPrice);
+            return liveAuctionRepository.save(auction);
+        }
+       return null;
+    }
 }

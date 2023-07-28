@@ -97,6 +97,7 @@
 
                         const current_bid_useremail = document.createElement('td')
                         current_bid_useremail.innerText = element.current_member
+                        current_bid_useremail.id = "bid_member"+element.id
                         const current_highest_price = document.createElement('td')
                         current_highest_price.innerText = element.current_bid_price
                         current_highest_price.id = "current_price"+element.id
@@ -151,6 +152,41 @@
             //시작가보다 높은지
             //현재입찰가 보다 높은지
             const bid_price = document.querySelector("#bid"+auctionId).value
+            const start_price = document.querySelector("#start_price"+auctionId).textContent
+            const current_price = document.querySelector("#current_price"+auctionId).textContent
+            const accesstoken = localStorage.getItem("access-token")
+            const payload = accesstoken.split('.')[1]
+            const info = buffer.Buffer.from(payload,"base64")
+            const email = JSON.parse(info).email
+
+            if(+bid_price > +start_price && +bid_price > +current_price) {
+                console.log("프론트단 입찰가격 검증 통과!")
+                fetch("http://localhost:8080/user/acution/bid", {
+                method: "POST",
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization' : accesstoken
+                },
+                body: JSON.stringify({
+                    auctionId : auctionId,
+                    bid_price : bid_price
+                }),
+                })
+                .then((response) => {
+                    if(response.ok) {
+                        alert(email+"님 입찰성공")
+                        const current_price1 = document.querySelector("#current_price"+auctionId)
+                        current_price1.innerText = bid_price
+                        const current_bid_useremail1 = document.querySelector("#bid_member"+auctionId)
+                        current_bid_useremail1.innerText = email
+                    }
+                    else {
+                        alert("입찰 실패!")
+                    }
+                })
+            } else {
+                alert("입찰가 확인!")
+            }
 
             //TODO
             //경매테이블 현재가 업데이트
@@ -158,22 +194,9 @@
             // --> 현재최고입찰가보다 높은지 검증 필요
             //ws 다른 모든 사용자에게 입찰자,입찰가 넘겨주기
             
-            const payload = localStorage.getItem("access-token").split('.')[1]
-            const info = buffer.Buffer.from(payload,"base64")
-            const email = JSON.parse(info).email
+            
 
-            fetch("http://localhost:8080/user/auction/bid", {
-            method: "POST",
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email : email,
-                auctionId : auctionId,
-                bid_price : bid_price
-            }),
-            })
-            .then((response) => response.json()).then((data) => console.log(data))
+
         }
     </script>
 </body>

@@ -45,7 +45,7 @@
 
         function start(broadcastId) {
             const id = broadcastId.slice(-1);
-            fetch("http://localhost:8080/admin/broadcast/status/on/"+id)
+            fetch("http://localhost:8080/admin/broadcast/status/on/"+id,"PUT")
             .then((response) => {
                 localStorage.setItem("current-room-id",id)
                 window.location.href = "./admin_live.html"

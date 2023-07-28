@@ -46,20 +46,21 @@
                 console.log(response.headers.get("Authorization"))
                 localStorage.setItem("access-token",response.headers.get("Authorization") )
                 const info = localStorage.getItem("access-token").split('.')[1]
-                console.log(info)
                 const role = buffer.Buffer.from(info,"base64")
-                // const role = JSON.parse(info)
                 console.log(JSON.parse(role).authority)
                 if(role.includes("ADMIN")) window.location.href = "./admin.html"
                 else window.location.href = "./user.html" 
                 
             })
+        }
+
+            
 
             
             
 
 
-    }
+
    
 
   
