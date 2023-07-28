@@ -20,10 +20,15 @@ public class NormalHistory extends BaseTimeEntity {
     private Long id;
 
 
-    @Column(name = "member_id") // 이메일로 수정하기
-    @NotNull
-    private Long memberId;
+//    @Column(name = "member_id") // 이메일로 수정하기
+//    @NotNull
+//    private Long memberId;
 
+
+    @ManyToOne
+    @JoinColumn(name = "member_id") // 이메일로 수정하기
+    @NotNull
+    private Member member;
 
     @Column(name = "normalAuction_id")
     @NotNull
