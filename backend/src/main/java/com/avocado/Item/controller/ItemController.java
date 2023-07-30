@@ -47,12 +47,12 @@ public class ItemController {
     public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")Type type) {
         
         if(type.equals("NORMAL")) {
-            itemService.getMyNormalSale(itemId);
+            return itemService.getMyNormalSale(itemId);
         } else if (type.equals("LIVE")) {
-            itemService.getMyLiveSale(itemId);
+            return itemService.getMyLiveSale(itemId);
+        } else {
+            return null;
         }
-
-        return null;
     }
 
 }
