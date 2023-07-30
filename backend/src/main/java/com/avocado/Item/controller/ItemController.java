@@ -1,8 +1,12 @@
 package com.avocado.Item.controller;
 
 import com.avocado.Item.controller.dto.ConsignRequestDto;
+import com.avocado.Item.controller.dto.MySaleDetailResponseDto;
 import com.avocado.Item.controller.dto.MySaleResponseDto;
+import com.avocado.Item.domain.entity.Type;
 import com.avocado.Item.service.ItemService;
+import com.avocado.member.service.AuthService;
+import com.avocado.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+    private final MemberService memberService;
+    private final AuthService authService;
 
     // 위탁 요청 물품 등록
     @PostMapping("/consign")
@@ -27,9 +33,25 @@ public class ItemController {
     };
 
     // 나의 위탁 물품 리스트 가져오기
-    @GetMapping("/mySale")
-    public MySaleResponseDto findById() {
-        //return itemService.find
+    @GetMapping("/my-sale")
+    public MySaleResponseDto mySales(@RequestHeader("Authorization") String requestAccessToken) {
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Long memberId = memberService.getMember(email).getId();
+
+        return itemService.getMySales(memberId);
+    }
+
+    // 나의 위탁 물품 상세보기
+    // TODO : 예외 처리에 대한 고민해보기, 어느 단에서 분기를 해야할지 고민해보기
+    @GetMapping("/my-sale/{itemId}/{type}")
+    public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")Type type) {
+        
+        if(type.equals("NORMAL")) {
+            itemService.getMyNormalSale(itemId);
+        } else if (type.equals("LIVE")) {
+            itemService.getMyLiveSale(itemId);
+        }
+
         return null;
     }
 

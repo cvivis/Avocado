@@ -20,5 +20,7 @@ public class ConsignRequestDto {
     private int hopePrice;
     private Type type;
     private ItemStatus itemStatus;
+    
+    // TODO : dtoToEntity 작성 및 사용을 통해 서비스 코드 가독성 올리기
 
 }
