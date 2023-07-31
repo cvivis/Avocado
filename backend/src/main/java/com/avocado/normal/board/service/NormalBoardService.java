@@ -3,16 +3,12 @@ package com.avocado.normal.board.service;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseEntryDto;
-import com.avocado.normal.board.domain.entity.Category;
-import com.avocado.normal.board.domain.entity.NormalHistory;
+import com.avocado.normal.entity.Category;
 import com.avocado.normal.board.domain.repository.NormalBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 @RequiredArgsConstructor

@@ -1,7 +1,6 @@
 
-package com.avocado.normal.board.domain.entity;
+package com.avocado.normal.entity;
 
-import com.avocado.member.domain.entity.Member;
 import lombok.*;
 import reactor.util.annotation.Nullable;
 

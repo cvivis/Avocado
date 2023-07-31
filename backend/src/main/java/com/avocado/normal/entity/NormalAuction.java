@@ -1,7 +1,6 @@
-package com.avocado.normal.auction.domain.entity;
+package com.avocado.normal.entity;
 
 import com.avocado.common.BaseTimeEntity;
-import com.avocado.normal.auction.domain.entity.NormalHistory;
 import lombok.*;
 
 import javax.persistence.*;

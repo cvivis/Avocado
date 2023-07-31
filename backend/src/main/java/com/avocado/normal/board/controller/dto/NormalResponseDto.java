@@ -1,6 +1,5 @@
 package com.avocado.normal.board.controller.dto;
 
-import com.avocado.normal.board.domain.entity.Item;
 import lombok.*;
 
 import java.util.List;

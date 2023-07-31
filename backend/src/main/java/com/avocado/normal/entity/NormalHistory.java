@@ -1,4 +1,4 @@
-package com.avocado.normal.board.domain.entity;
+package com.avocado.normal.entity;
 
 import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
@@ -10,35 +10,39 @@ import javax.validation.constraints.NotNull;
 @Entity(name = "normalHistory")
 @NoArgsConstructor
 @Builder
-@Getter
 @AllArgsConstructor
-@ToString
+@Getter
+@Setter
 public class NormalHistory extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-//    @Column(name = "member_id") // 이메일로 수정하기
-//    @NotNull
-//    private Long memberId;
-
-
     @ManyToOne
     @JoinColumn(name = "member_id") // 이메일로 수정하기
     @NotNull
     private Member member;
 
-    @Column(name = "normalAuction_id")
+//    @NotNull
+//    @Column(name="column" , unique=true)
+//    private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "normalAuction_id")
     @NotNull
-    private Long autionId;
+    private NormalAuction normalAuction;
 
     @NotNull
     private Integer bidPrice;
 
-
-    public void setBidPrice(Integer bidPrice) {
-        this.bidPrice = bidPrice;
+    @Override
+    public String toString() {
+        return "NormalHistory{" +
+                "id=" + id +
+                ", member=" + member +
+                ", normalAuction=" + normalAuction +
+                ", bidPrice=" + bidPrice +
+                '}';
     }
 }
