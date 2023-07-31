@@ -11,7 +11,8 @@ import java.util.Date;
 @Builder
 @ToString
 public class NormalItemDetailResponseDto {
-    private Long id;
+    private Long auctionId;
+    private Long itemId;
     private String name;
     private String content;
     private Integer hopePrice;
@@ -19,9 +20,10 @@ public class NormalItemDetailResponseDto {
     private Date startAt;
     private Date endAt;
 
-    public NormalItemDetailResponseDto(Long id, String name, String content,
+    public NormalItemDetailResponseDto(Long auctionId, Long itemId, String name, String content,
                                        Integer hopePrice, Date startAt, Date endAt) {
-        this.id = id;
+        this.auctionId=auctionId;
+        this.itemId = itemId;
         this.name = name;
         this.content = content;
         this.hopePrice = hopePrice;

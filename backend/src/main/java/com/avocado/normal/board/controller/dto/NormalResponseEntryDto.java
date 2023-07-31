@@ -16,15 +16,17 @@ import java.util.Date;
 
 
 public class NormalResponseEntryDto {
-    private Long id;
+    private Long auctionId;
+    private Long itemId;
     private String name;
     private Integer bidPrice;
     private Integer hopePrice;
     private Date startAt;
     private Date endAt;
 
-    public NormalResponseEntryDto(Long id, String name, Integer bidPrice, Integer hopePrice, Date startAt, Date endAt) {
-        this.id = id;
+    public NormalResponseEntryDto(Long auctionId, Long itemId, String name, Integer bidPrice, Integer hopePrice, Date startAt, Date endAt) {
+        this.auctionId = auctionId;
+        this.itemId = itemId;
         this.name = name;
         this.bidPrice = bidPrice;
         this.hopePrice = hopePrice;
