@@ -5,15 +5,17 @@
 import Home from './component/home'
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Detail from './component/normal/board/detail';
-import Search from './component/normal/board/search';
+import SearchList from './component/normal/board/SearchList';
 import BoardList from './component/normal/board/boardList';
+import CategoryList from './component/normal/board/CategoryList';
 
 function App() {
   return (
     <Router>
       <div className="App">
         실행완료
-        <Search></Search>
+        <SearchList></SearchList>
+        <CategoryList></CategoryList>
         <div className="nav-btn">
         
           <button>
@@ -25,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/normal/list" element={<BoardList />}></Route>
           <Route path="/normal/detail/:id" element={<Detail />}></Route>
+          <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
         
         </Routes>
       </div>
