@@ -1,10 +1,11 @@
-version: '3.3'
+version: '3'
 services:
-  mysql:
+  db:
     image: mysql:8
     container_name: avocado_db
+    restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
     env_file: docker.env
     volumes:
       - mysql_data:/var/lib/mysql
