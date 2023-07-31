@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
-@Entity(name= 'liveAuction')
+@Entity(name= "liveAuction")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,7 +19,7 @@ public class LiveAuction {
     private Long id;
 
     @Column(name= "broadcast_id")
-    private Long broadcatsId;
+    private Long broadcastId;
 
     @Column(name="item_id")
     private Long itemId;
