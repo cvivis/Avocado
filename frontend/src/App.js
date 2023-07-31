@@ -1,15 +1,34 @@
-import logo from './logo.svg';
-import NormalBid from './normalAuction/normalBid';
-import TimeCheck from './normalAuction/timeCheck';
-import './App.css';
+
+// import logo from './logo.svg';
+// import './App.css';
+
+import Home from './Components/home'
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Detail from './Components/Normal/Board/detail';
+import Search from './Components/Normal/Board/search';
+import BoardList from './Components/Normal/Board/BoardList';
 
 function App() {
   return (
-    <div className="App">
-      <p>실행완료</p>
-      <NormalBid ></NormalBid>
-      <TimeCheck></TimeCheck>
-    </div>
+    <Router>
+      <div className="App">
+        실행완료
+        <Search></Search>
+        <div className="nav-btn">
+        
+          <button>
+            <Link to="/normal/list"> 사용자 리스트 </Link>
+          </button>
+        </div>
+
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/normal/list" element={<BoardList />}></Route>
+          <Route path="/normal/detail/:id" element={<Detail />}></Route>
+        </Routes>
+      </div>
+    </Router>
+
   );
 }
 

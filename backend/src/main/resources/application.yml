@@ -3,5 +3,9 @@ spring:
     active: test
     include: db, swagger
 
+server:
+  port: 8080
+
+
 OPENVIDU_URL: http://localhost:4443/
 OPENVIDU_SECRET: ssafy
