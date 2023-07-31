@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @RequestMapping("/broadcast")
 public class OpenviduController {
@@ -33,12 +33,12 @@ public class OpenviduController {
     }
 
     @PostMapping("/organization")
-    public ResponseEntity<?> organizeAuction(@RequestBody List<Long> auctionIds)
+    public ResponseEntity<Long> organizeAuction(@RequestBody List<Long> auctionIds)
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
-        broadcastService.assign(session.getSessionId(), auctionIds);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Long broadcastId = broadcastService.assign(session.getSessionId(), auctionIds);
+        return new ResponseEntity<>(broadcastId, HttpStatus.OK);
     }
 
     @PostMapping("/connection/{broadcastId}")
