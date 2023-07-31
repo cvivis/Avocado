@@ -16,8 +16,13 @@ public class Member {
     private Long id;
     @Column(unique = true)
     private String email;
+
+
+
     private String password;
     private String nickname;
+
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
