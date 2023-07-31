@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <script src="/app.js"></script>
     <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
     <div id="main-content" class="container">
@@ -73,7 +75,8 @@
     </div>
 
     <script>
-        //TODO : 관리자가 방송종료하면 방송이종료되었다는알림 + 방송게시판으로 이동
+        var sockJs;
+        var stomp;
         window.onload = function(){
             const broadcastId = localStorage.getItem("current-room-id")
             //TODO : 여기서 websocket 연결해야함!
@@ -96,10 +99,10 @@
                         start_price.id = "start_price"+element.id
 
                         const current_bid_useremail = document.createElement('td')
-                        current_bid_useremail.innerText = element.current_member
+                        current_bid_useremail.innerText = element.success_member
                         current_bid_useremail.id = "bid_member"+element.id
                         const current_highest_price = document.createElement('td')
-                        current_highest_price.innerText = element.current_bid_price
+                        current_highest_price.innerText = element.success_price
                         current_highest_price.id = "current_price"+element.id
 
                         const auction_status = document.createElement('td')
@@ -133,24 +136,41 @@
                         auctions.appendChild(auction)
                     });
             })
+            sockJs = new SockJS("/live-auction")
+            stomp = Stomp.over(sockJs)
+            stomp.connect({}, function() {
+                stomp.subscribe("/sub/auction/status/" + broadcastId, function (status) {
+                    var content = JSON.parse(status.body);
+                    bidDisable(content.auctionId, content.onAndOff)
+                });
+                stomp.subscribe("/sub/auction/bid/" + broadcastId, function (bid) {
+                    var content = JSON.parse(bid.body);
+                    //TODO : 입찰가입찰자 업데이트
+                });
+            })
+        }
+        
+        function bidDisable(auctionId, onAndOff) {
+            const bid_btn = document.querySelector("#bid_btn"+auctionId)
+             //시작시 입찰버튼 활성화
+            if(onAndOff == 1) {
+                bid_btn.removeAttribute("disabled")
+            }
+            //종료시 입찰버튼 비활성화
+            else if(onAndOff==2) {
+                bid_btn.setAttribute("disabled", "disabled")
+            }
         }
 
         function broadcastOut(broadcastId) {
             const id = broadcastId.slice(-1);     
-            //방송나가기
-            //TODO 
-            //ws 방송게시판이동 / 웹소켓 연결끊는다
             window.location.href = "./user.html"
-           
         }
 
        
 
         function bid(btnId) {
             const auctionId = btnId.slice(-1);
-            //TODO : 입찰가 validate
-            //시작가보다 높은지
-            //현재입찰가 보다 높은지
             const bid_price = document.querySelector("#bid"+auctionId).value
             const start_price = document.querySelector("#start_price"+auctionId).textContent
             const current_price = document.querySelector("#current_price"+auctionId).textContent
@@ -158,45 +178,36 @@
             const payload = accesstoken.split('.')[1]
             const info = buffer.Buffer.from(payload,"base64")
             const email = JSON.parse(info).email
+            const broadcastId = localStorage.getItem("current-room-id")
 
             if(+bid_price > +start_price && +bid_price > +current_price) {
-                console.log("프론트단 입찰가격 검증 통과!")
-                fetch("http://localhost:8080/user/acution/bid", {
-                method: "POST",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization' : accesstoken
-                },
-                body: JSON.stringify({
-                    auctionId : auctionId,
-                    bid_price : bid_price
-                }),
-                })
-                .then((response) => {
-                    if(response.ok) {
-                        alert(email+"님 입찰성공")
-                        const current_price1 = document.querySelector("#current_price"+auctionId)
-                        current_price1.innerText = bid_price
-                        const current_bid_useremail1 = document.querySelector("#bid_member"+auctionId)
-                        current_bid_useremail1.innerText = email
-                    }
-                    else {
-                        alert("입찰 실패!")
-                    }
-                })
+                stomp.send("/pub/auction/bid", {}, JSON.stringify({auctionId : auctionId, bid_price : bid_price, bidMemberEmail : email, broadcastId : broadcastId}))
+                // fetch("http://localhost:8080/user/acution/bid", {
+                // method: "POST",
+                // headers: {
+                // 'Content-Type': 'application/json',
+                // 'Authorization' : accesstoken
+                // },
+                // body: JSON.stringify({
+                //     auctionId : auctionId,
+                //     bid_price : bid_price
+                // }),
+                // })
+                // .then((response) => {
+                //     if(response.ok) {
+                //         alert(email+"님 입찰성공")
+                //         const current_price1 = document.querySelector("#current_price"+auctionId)
+                //         current_price1.innerText = bid_price
+                //         const current_bid_useremail1 = document.querySelector("#bid_member"+auctionId)
+                //         current_bid_useremail1.innerText = email
+                //     }
+                //     else {
+                //         alert("입찰 실패!")
+                //     }
+                // })
             } else {
                 alert("입찰가 확인!")
             }
-
-            //TODO
-            //경매테이블 현재가 업데이트
-            //거래내역 테이블에 추가
-            // --> 현재최고입찰가보다 높은지 검증 필요
-            //ws 다른 모든 사용자에게 입찰자,입찰가 넘겨주기
-            
-            
-
-
         }
     </script>
 </body>

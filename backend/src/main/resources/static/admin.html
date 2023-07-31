@@ -35,7 +35,6 @@
                     start_btn.type = "submit"
                     start_btn.id = "start" + element.id
                     start_btn.setAttribute("onclick", "start(this.id)")
-                    
                     broadcast.appendChild(info)
                     broadcast.appendChild(start_btn)
                     broadcastlist.appendChild(broadcast);
@@ -45,7 +44,7 @@
 
         function start(broadcastId) {
             const id = broadcastId.slice(-1);
-            fetch("http://localhost:8080/admin/broadcast/status/on/"+id,"PUT")
+            fetch("http://localhost:8080/admin/broadcast/status/on/"+id, {method: "PUT"})
             .then((response) => {
                 localStorage.setItem("current-room-id",id)
                 window.location.href = "./admin_live.html"

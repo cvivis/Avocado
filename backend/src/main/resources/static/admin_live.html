@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
     <script src="/app.js"></script>
     <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
     <div id="main-content" class="container">
@@ -72,10 +74,12 @@
             </div>
         </div>
     </div>
+   
     <script>
+        var sockJs;
+        var stomp;
         window.onload = function(){
             const broadcastId = localStorage.getItem("current-room-id")
-            //TODO : 여기서 websocket 연결해야함!
             const broadcastInfo =  document.querySelector("#broadcastInfo");
             broadcastInfo.innerText = "방송 번호: "+ broadcastId + "번";
             
@@ -87,7 +91,6 @@
             fetch("http://localhost:8080/admin/auctions/"+broadcastId)
                 .then((response) => response.json()).then((data)=> {
                     data.forEach(element => {
-                        console.log(element)
                         const auction = document.createElement('tr')
                         const index = document.createElement('td')
                         index.innerText = element.id
@@ -96,11 +99,11 @@
                         const start_price = document.createElement('td')
                         start_price.innerText = element.start_price
                         const success_price = document.createElement('td')
-                        success_price.innerText = element.success_price
+                        if(element.status == 2) success_price.innerText = element.success_price
                         const success_member = document.createElement('td')
-                        success_member.innerText = element.success_member
+                        if(element.status == 2) success_member.innerText = element.success_member
                         const current_bid_price = document.createElement('td') 
-                        current_bid_price.innerText = element.current_bid_price
+                        if(element.status != 2) current_bid_price.innerText = element.success_price
                         const status = document.createElement('td')
                         if(element.status == 0) status.innerText = "시작 전"
                         else if(element.status == 1) status.innerText = "진행 중"
@@ -123,7 +126,6 @@
                         end_btn.setAttribute("onclick", "stop(this.id)")
                         button.appendChild(start_btn);
                         button.appendChild(end_btn)
-
                         auction.appendChild(index)
                         auction.appendChild(title)
                         auction.appendChild(start_price)
@@ -135,36 +137,37 @@
                         auctions.appendChild(auction)
                     });
             })
-        }
-
-        function broadcastOff(broadcastId) {
-            const id = broadcastId.slice(-1);     
-            //방송종료시
-            //TODO
-            //서버: 방송status -> false 
-            //ws 사용자들에게 방송이 종료되었는다는 알림 + 방송게시판이동 / 웹소켓 연결끊는다
-
-            fetch("http://localhost:8080/admin/broadcast/status/off/"+id).then((response)=>{
-                window.location.href = "./admin.html"
+            sockJs = new SockJS("/live-auction")
+            stomp = Stomp.over(sockJs)
+            stomp.connect({}, function() {
+                stomp.subscribe("/sub/auction/status/" + broadcastId, function (status) {
+                    var content = JSON.parse(status.body);
+                    //TODO : 시작시 경매물품 채팅창 업데이트
+                    //TODO : 종료시 낙찰가 낙찰자 업데이트 및 채팅창 업데이트
+                });
+                stomp.subscribe("/sub/auction/bid/" + broadcastId, function (bid) {
+                    var content = JSON.parse(bid.body);
+                    if(content.status) {
+                       //TODO : 현재 입찰가 업데이트
+                    } 
+                });
             })
         }
 
+        //경매 시작
         function begin(auctionId) {
-            //시작버튼 비활성 , 종료버튼 활성
-            //서버: 경매 status 변경
-            //TODO: ws 사용자들에게 시작된 경매 알림
-            //TODO: 경매목록에 경매진행 상황변경
             const id = auctionId.slice(-1);
+            const broadcastId = localStorage.getItem("current-room-id")
 
             const begin = document.querySelector("#"+auctionId)
             begin.setAttribute("disabled", "disabled")
-            
-            
+
             const stop = document.querySelector("#stop"+id);
+            console.log(stop)
             stop.removeAttribute("disabled")
             
-            fetch("http://localhost:8080/admin/auction/status/begin/"+id)
-            
+            stomp.send("/pub/auction/status", {}, JSON.stringify({auctionId : id, onAndOff : "1", broadcastId : broadcastId}))
+
             const status = document.querySelector("#status"+id)
             status.innerText = "진행 중"
         }
@@ -172,6 +175,7 @@
         function stop(auctionId) {
             //종료버튼 비활성
             const id = auctionId.slice(-1);
+            const broadcastId = localStorage.getItem("current-room-id")
             
             const stop = document.querySelector("#"+auctionId);
             stop.setAttribute("disabled", "disabled")
@@ -180,13 +184,13 @@
             const status = document.querySelector("#status"+id)
             status.innerText = "종료"
 
-            //서버에 경매 상태 변경, 입찰자가 있을 시 경매테이블 낙찰자,낙찰가 업데이트
-            fetch("http://localhost:8080/admin/auction/status/stop/"+id).then((response)=> {
-                console.log(response.status)
-            })
-
-            //TODO : ws 사용자들에게 경매종료를 알림
+            stomp.send("/pub/auction/status", {}, JSON.stringify({auctionId : id, onAndOff : "2", broadcastId : broadcastId}))
                     
+        }
+
+        function broadcastOff(broadcastId) {
+            const id = broadcastId.slice(-1);     
+            //TODO : 사용자들이 다 나갈 수 있도록 알림
         }
     </script>
 </body>
