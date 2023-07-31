@@ -2,11 +2,11 @@
 // import logo from './logo.svg';
 // import './App.css';
 
-import Home from './components/home'
+import Home from './component/home'
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import Detail from './components/normal/board/detail';
-import Search from './components/normal/board/search';
-import BoardList from './components/normal/board/boardList';
+import Detail from './component/normal/board/detail';
+import Search from './component/normal/board/search';
+import BoardList from './component/normal/board/boardList';
 
 function App() {
   return (
