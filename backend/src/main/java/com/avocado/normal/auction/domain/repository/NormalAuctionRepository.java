@@ -1,7 +1,7 @@
 package com.avocado.normal.auction.domain.repository;
 
-import com.avocado.member.domain.entity.Member;
-import com.avocado.normal.auction.domain.entity.NormalAuction;
+
+import com.avocado.normal.entity.NormalAuction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

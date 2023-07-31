@@ -1,9 +1,7 @@
 package com.avocado.normal.board.controller.dto;
 
-import com.avocado.normal.board.domain.entity.NormalHistory;
 import lombok.*;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
