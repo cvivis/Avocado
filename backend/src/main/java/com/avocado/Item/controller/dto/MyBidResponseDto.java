@@ -1,6 +1,8 @@
 package com.avocado.Item.controller.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class MySaleResponseDto {
+public class MyBidResponseDto {
     // 페이지네이션 적용 대비 일급컬렉션 이용
-    private List<MySaleResponseEntries> entries = new ArrayList<>();
+    private List<MyBidResponseEntries> entries = new ArrayList<>();
 }
-
-

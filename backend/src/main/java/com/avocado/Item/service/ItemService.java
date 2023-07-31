@@ -1,9 +1,6 @@
 package com.avocado.Item.service;
 
-import com.avocado.Item.controller.dto.ConsignRequestDto;
-import com.avocado.Item.controller.dto.MySaleDetailResponseDto;
-import com.avocado.Item.controller.dto.MySaleResponseDto;
-import com.avocado.Item.controller.dto.MySaleResponseEntries;
+import com.avocado.Item.controller.dto.*;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.Item.domain.repository.MySaleResponseMapping;
@@ -78,5 +75,19 @@ public class ItemService {
         Broadcast broadcast = BroadcastService.getBroadcast(broadcastId);
 
         return new MySaleDetailResponseDto(item, liveAuction, broadcast);
+    }
+
+    public MyBidResponseDto getMyNormalBids(Long memberId) {
+        List<MyBidResponseEntries> entries = itemRepository.findMyNormalBidsByMemberId(memberId);
+        MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);
+
+        return myBidResponseDto;
+    }
+
+    public MyBidResponseDto getMyLiveBids(Long memberId) {
+        List<MyBidResponseEntries> entries = itemRepository.findMyLiveBidsByMemberId(memberId);
+        MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);
+
+        return myBidResponseDto;
     }
 }

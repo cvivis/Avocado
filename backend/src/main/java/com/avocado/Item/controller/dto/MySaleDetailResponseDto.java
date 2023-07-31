@@ -40,6 +40,8 @@ public class MySaleDetailResponseDto {
         currentBid = nomalAuction.getCurrentBid(); // 추후 추가(거래내역 테이블에서 가져와야 할 수도 있음)
         hopePrice = item.getHopePrice();
         successPrice = nomalAuction.getSuccessPrice(); // 추후 추가
+        startAt = normalAuction.getStartAt(); // 추후 추가
+        endAt = normalAuction.getEndAt(); // 추후 추가
     }
 
     // 라이브 경매용
@@ -54,7 +56,6 @@ public class MySaleDetailResponseDto {
         hopePrice = item.getHopePrice();
         successPrice = liveAuction.getSuccessPrice(); // 추후 추가
         startAt = broadcast.getStartAt(); // 추후 추가
-        endAt = broadcast.getEndAt(); // 추후 추가(없어도 될듯)
     }
 
 }

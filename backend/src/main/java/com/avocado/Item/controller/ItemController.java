@@ -1,6 +1,7 @@
 package com.avocado.Item.controller;
 
 import com.avocado.Item.controller.dto.ConsignRequestDto;
+import com.avocado.Item.controller.dto.MyBidResponseDto;
 import com.avocado.Item.controller.dto.MySaleDetailResponseDto;
 import com.avocado.Item.controller.dto.MySaleResponseDto;
 import com.avocado.Item.domain.entity.Type;
@@ -32,7 +33,7 @@ public class ItemController {
         }
     };
 
-    // 나의 위탁 물품 리스트 가져오기
+    // 마이페이지 - 나의 위탁 물품 리스트 가져오기
     @GetMapping("/my-sale")
     public MySaleResponseDto mySales(@RequestHeader("Authorization") String requestAccessToken) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
@@ -41,7 +42,7 @@ public class ItemController {
         return itemService.getMySales(memberId);
     }
 
-    // 나의 위탁 물품 상세보기
+    // 마이페이지 - 나의 위탁 물품 상세보기
     // TODO : 예외 처리에 대한 고민해보기, 어느 단에서 분기를 해야할지 고민해보기
     @GetMapping("/my-sale/{itemId}/{type}")
     public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")Type type) {
@@ -50,6 +51,21 @@ public class ItemController {
             return itemService.getMyNormalSale(itemId);
         } else if (type.equals("LIVE")) {
             return itemService.getMyLiveSale(itemId);
+        } else {
+            return null;
+        }
+    }
+    
+    // 마이페이지 - 나의 입찰 상품 리스트 가져오기
+    @GetMapping("/my-bid/{type}")
+    public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken, @PathVariable(name = "type") Type type) {
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Long memberId = memberService.getMember(email).getId();
+
+        if(type.equals("NORMAL")) {
+            return itemService.getMyNormalBids(memberId);
+        } else if (type.equals("LIVE")) {
+            return itemService.getMyLiveBids(memberId);
         } else {
             return null;
         }
