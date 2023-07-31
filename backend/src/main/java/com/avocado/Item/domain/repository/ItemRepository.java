@@ -14,9 +14,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<MySaleResponseMapping> findItemsByMemberId(Long memberId);
 
     @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
-            "(i.id, i.name, i.type, i.category, nh.currentBid, nh.myBid )" +
+            "(i.id, i.name, i.type, i.category, nh.currentBid, nh.bidPrice )" +
             "FROM normalHistory nh " +
-            "JOIN item i ON nh.itemID = i.id")
+            "JOIN item i ON nh.itemID = i.id " +
+            "WHERE nh.member = :memberId")
     List<MyBidResponseEntries> findMyNormalBidsByMemberId(@Param("memberId") Long memberId);
 
     @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +

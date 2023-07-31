@@ -5,10 +5,12 @@ import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
 import com.avocado.Item.domain.entity.Type;
 import com.avocado.live.domain.Broadcast;
+import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter
 @NoArgsConstructor
@@ -23,14 +25,14 @@ public class MySaleDetailResponseDto {
     private Category category;
     private Integer currentBid;
     private Integer hopePrice;
-    private Timestamp startAt;
-    private Timestamp endAt;
+    private Date startAt;
+    private Date endAt;
     private Integer successPrice;
 
     // 상시 경매용
-    public MySaleDetailResponseDto(Item item, NormalAuction normalAuction) {
+    public MySaleDetailResponseDto(Item item, NormalItemDetailResponseDto normalItemDetailResponseDto) {
         itemId = item.getId();
-        auctionId = nomalAuction.getAuctionId(); // 추후 추가
+        auctionId = normalItemDetailResponseDto.getAuctionId(); // 추후 추가
         name = item.getName();
         content = item.getContent();
         type = item.getType();
@@ -39,9 +41,9 @@ public class MySaleDetailResponseDto {
         // TODO : 현재 입찰가 실시간 반영 방법 고안하기
         currentBid = nomalAuction.getCurrentBid(); // 추후 추가(거래내역 테이블에서 가져와야 할 수도 있음)
         hopePrice = item.getHopePrice();
-        successPrice = nomalAuction.getSuccessPrice(); // 추후 추가
-        startAt = normalAuction.getStartAt(); // 추후 추가
-        endAt = normalAuction.getEndAt(); // 추후 추가
+        successPrice = normalItemDetailResponseDto.getSuccessPrice(); // 추후 추가
+        startAt = normalItemDetailResponseDto.getStartAt(); // 추후 추가
+        endAt = normalItemDetailResponseDto.getEndAt(); // 추후 추가
     }
 
     // 라이브 경매용

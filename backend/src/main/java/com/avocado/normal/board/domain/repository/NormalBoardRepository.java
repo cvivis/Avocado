@@ -32,7 +32,7 @@ public interface NormalBoardRepository extends JpaRepository<Item, Long> {
     List<NormalResponseEntryDto> findByItemNameContains(@Param("keyword") String keyword);
 
     // 상세보기
-    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto(a.id, i.id, i.name, i.content, i.hopePrice, a.startAt, a.endAt) " +
+    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto(a.id, i.id, i.name, i.content, i.hopePrice, a.startAt, a.endAt, a.successPrice) " +
             "FROM item i " +
             "JOIN normalAuction a ON a.itemId = i.id " +
             "WHERE i.id = :id")

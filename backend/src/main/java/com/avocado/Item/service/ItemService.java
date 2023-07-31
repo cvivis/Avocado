@@ -6,6 +6,8 @@ import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.Item.domain.repository.MySaleResponseMapping;
 import com.avocado.live.domain.Broadcast;
 import com.avocado.live.service.BroadcastService;
+import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
+import com.avocado.normal.board.service.NormalBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +21,8 @@ import java.util.stream.Collectors;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-    private final NormalAuctionService normalAuctionService;
-    private final LiveAuctionService liveAuctionService;
+    private final NormalBoardService normalBoardService;
+    private final LiveAuctionService liveAuctionService; // 추후 변경
     private final BroadcastService broadcastService;
 
     // 위탁 요청 물품 등록
@@ -56,10 +58,9 @@ public class ItemService {
         Optional<Item> optionalItem = itemRepository.findById(itemId);
         Item item = optionalItem.get();
 
-        // 상품id를 통해 상시경매 데이터를 가져오는 서비스가 만들어져야 함
-        NormalAuction normalAuction = NormalAuctionService.getNormalAuction(itemId);
+        NormalItemDetailResponseDto normalItemDetailResponseDto = normalBoardService.getItemDetail(itemId);
 
-        return new MySaleDetailResponseDto(item, normalAuction);
+        return new MySaleDetailResponseDto(item, normalItemDetailResponseDto);
     }
 
     // 나의 위탁 라이브경매 물품 상세보기
@@ -77,6 +78,7 @@ public class ItemService {
         return new MySaleDetailResponseDto(item, liveAuction, broadcast);
     }
 
+    // 나의 상시경매 입찰 물품 리스트
     public MyBidResponseDto getMyNormalBids(Long memberId) {
         List<MyBidResponseEntries> entries = itemRepository.findMyNormalBidsByMemberId(memberId);
         MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);
@@ -84,6 +86,7 @@ public class ItemService {
         return myBidResponseDto;
     }
 
+    // 나의 라이브경매 입찰 물품 리스트
     public MyBidResponseDto getMyLiveBids(Long memberId) {
         List<MyBidResponseEntries> entries = itemRepository.findMyLiveBidsByMemberId(memberId);
         MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);

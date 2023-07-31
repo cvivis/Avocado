@@ -1,5 +1,6 @@
 package com.avocado.Item.domain.entity;
 
+import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
-public class Item {
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
