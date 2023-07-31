@@ -5,9 +5,8 @@
     <title>사용자 라이브 페이지</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/main.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
-    <script src="/app.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script> -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -18,8 +17,27 @@
             <h2>사용자 페이지</h2>
             <h3>사용자 방송화면</h3>
             <div id="broadcastInfo"></div>
-            <div style="width: 80%; height: 300px; background-color:yellowgreen;">실시간 방송화면</div>
-            <button type="submit" id="closeBtn" onclick="broadcastOut(this.id)">방송 나가기</button>
+            <div style="display:flex">
+                <div style="width: 70%;">
+                    <div style="height: 300px; background-color:yellowgreen;">실시간 방송화면</div>
+                    <button type="submit" id="closeBtn" onclick="broadcastOut(this.id)">방송 나가기</button>
+                </div>
+    
+                <div style="width: 25%; padding-left: 5%; overflow-y: scroll;">
+                    <table id="conversation" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">채팅</th>
+                        </tr>
+                        </thead>
+                        <tbody id="chat" >
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -35,42 +53,6 @@
                 <tbody id="auctions">
                 </tbody>
             </table>
-        </div>
-
-        <div class="row">
-            <h2>채팅</h2>
-            <div class="col-md-6">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="connect">WebSocket connection:</label>
-                        <button id="connect" class="btn btn-default" type="submit">Connect</button>
-                        <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="name">What is your name?</label>
-                        <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                    </div>
-                    <button id="send" class="btn btn-default" type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <table id="conversation" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Greetings</th>
-                    </tr>
-                    </thead>
-                    <tbody id="greetings">
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 
@@ -106,6 +88,7 @@
                         current_highest_price.id = "current_price"+element.id
 
                         const auction_status = document.createElement('td')
+                        auction_status.id = "auction_status"+element.id
                         if(element.status == 0) auction_status.innerText = "시작 전"
                         else if(element.status == 1) auction_status.innerText = "진행 중"
                         else if(element.status == 2) auction_status.innerText = "종료"
@@ -142,6 +125,30 @@
                 stomp.subscribe("/sub/auction/status/" + broadcastId, function (status) {
                     var content = JSON.parse(status.body);
                     bidDisable(content.auctionId, content.onAndOff)
+
+                    const chat = document.querySelector("#chat")
+                    const tr = document.createElement('tr')
+                    const td = document.createElement('td')
+                    tr.appendChild(td)
+                    td.style.color = "red"
+                    const auction_status = document.querySelector("#auction_status"+content.auctionId)
+                    if(content.onAndOff == 1) {
+                        td.innerText = content.title +" 경매 시작!!" 
+                        chat.appendChild(tr)
+                        auction_status.innerText = "진행 중"
+                    }
+                    //TODO : 종료시 낙찰가 낙찰자 업데이트 및 채팅창 업데이트
+                    else {
+                        td.innerText = content.title +" 경매 종료!!" 
+                        chat.appendChild(tr)
+                        
+                        const current_price = document.querySelector("#current_price"+content.auctionId)
+                        success_price.innerHTML = content.success_price
+                        const sucess_member = document.querySelector("#bid_member"+content.auctionId)
+                        success_member.innerHTML = content.success_member_email
+
+                        auction_status.innerText = "종료"
+                    }
                 });
                 stomp.subscribe("/sub/auction/bid/" + broadcastId, function (bid) {
                     var content = JSON.parse(bid.body);
