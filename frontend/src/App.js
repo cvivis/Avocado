@@ -1,5 +1,6 @@
 import logo from './logo.svg';
-import NormalBid from './normalBid';
+import NormalBid from './normalAuction/normalBid';
+import TimeCheck from './normalAuction/timeCheck';
 import './App.css';
 
 function App() {
@@ -7,8 +8,7 @@ function App() {
     <div className="App">
       <p>실행완료</p>
       <NormalBid ></NormalBid>
-      <NormalBid ></NormalBid>
-      <NormalBid ></NormalBid>
+      <TimeCheck></TimeCheck>
     </div>
   );
 }
