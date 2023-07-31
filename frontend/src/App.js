@@ -6,7 +6,7 @@ import Home from './components/home'
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Detail from './components/normal/board/detail';
 import Search from './components/normal/board/search';
-import BoardList from './components/normal/board/boardlist';
+import BoardList from './components/normal/board/boardList';
 
 function App() {
   return (
