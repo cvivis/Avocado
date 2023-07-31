@@ -1,10 +1,12 @@
+
 // import logo from './logo.svg';
 // import './App.css';
-import BoardList from './Components/Normal/Board/boardlist';
+
 import Home from './Components/home'
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Detail from './Components/Normal/Board/detail';
 import Search from './Components/Normal/Board/search';
+import BoardList from './Components/Normal/Board/BoardList';
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+
   );
 }
 
