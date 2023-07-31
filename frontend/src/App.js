@@ -2,11 +2,11 @@
 // import logo from './logo.svg';
 // import './App.css';
 
-import Home from './Components/home'
+import Home from './components/home'
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
-import Detail from './Components/Normal/Board/detail';
-import Search from './Components/Normal/Board/search';
-import BoardList from './Components/Normal/Board/BoardList';
+import Detail from './components/normal/board/detail';
+import Search from './components/normal/board/search';
+import BoardList from './components/normal/board/boardlist';
 
 function App() {
   return (
@@ -25,6 +25,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/normal/list" element={<BoardList />}></Route>
           <Route path="/normal/detail/:id" element={<Detail />}></Route>
+        
         </Routes>
       </div>
     </Router>
