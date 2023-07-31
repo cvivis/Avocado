@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 
 public class LiveBoardController {
+
     private final LiveBoardService liveBoardService;
+
+
+
+
 
 
 }

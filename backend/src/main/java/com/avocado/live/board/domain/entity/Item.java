@@ -29,7 +29,7 @@ public class Item {
     @Nullable
     private String thumbnail;
     @Min(value = 0) // 최솟값 설정
-    private int hopePrice;
+    private Integer hopePrice;
 
     @Enumerated(EnumType.STRING)
 //    @EnumValid(enumClass = Type.class)
