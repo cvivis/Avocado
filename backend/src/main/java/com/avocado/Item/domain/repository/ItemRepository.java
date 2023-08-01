@@ -21,12 +21,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE nh.member = :memberId AND i.itemStatus = 'ASSIGN'")
     List<MyBidResponseEntries> findMyNormalBidsByMemberId(@Param("memberId") Long memberId);
 
-//    @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
-//            "(i.id, i.name, i.type, i.category, lh.currentBid, lh.myBid )" +
-//            "FROM LiveHistory lh " +
-//            "JOIN item i ON nh.itemID = i.id")
-//    List<MyBidResponseEntries> findMyLiveBidsByMemberId(@Param("memberId") Long memberId);
-
     @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
             "(i.id, i.name, i.type, i.category, " +
             "CASE i.type" +
@@ -40,7 +34,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE i.type = 'NORMAL' " +
             "OR i.type = 'LIVE' ")
     List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
-
+    
+    
+// TODO : 아래 참고용 쿼리 추후에 지우기
     // 전체 리스트 반환
 //    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(i.id, i.name, nh.bidPrice, i.hopePrice, a.start_at, a.end_at) " +
 //            "FROM item i " +
