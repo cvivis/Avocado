@@ -23,21 +23,16 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.14'
-	implementation 'mysql:mysql-connector-java:8.0.32'
 	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	//openvidu
 	// https://mvnrepository.com/artifact/io.openvidu/openvidu-java-client
 	implementation group: 'io.openvidu', name: 'openvidu-java-client', version: '2.28.0'
-
 
 	//정재현
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'

@@ -1,7 +1,28 @@
 spring:
-  profiles:
-    active: test
-    include: db, swagger
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/avocado?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: Ssafy123!
+
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_fetch_size: ${chunkSize:100}
+      hibernate.jdbc.batch_size: ${chunkSize:100}
+  redis:
+    host: localhost
+    port: 6379
 
 OPENVIDU_URL: http://localhost:4443/
 OPENVIDU_SECRET: ssafy
+
+jwt:
+  secret: secretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkey
+  refresh-token-expiration-ms: 86400000 # 1000 * 60 * 60 * 24 1일
+  access-token-expiration-ms: 3600000 # 1000 * 60 * 60 1시간
