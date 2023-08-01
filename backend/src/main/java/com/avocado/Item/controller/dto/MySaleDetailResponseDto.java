@@ -30,7 +30,7 @@ public class MySaleDetailResponseDto {
     private Integer successPrice;
 
     // 상시 경매용
-    public MySaleDetailResponseDto(Item item, NormalItemDetailResponseDto normalItemDetailResponseDto) {
+    public MySaleDetailResponseDto(Item item, NormalItemDetailResponseDto normalItemDetailResponseDto, Integer currentBid) {
         itemId = item.getId();
         auctionId = normalItemDetailResponseDto.getAuctionId(); // 추후 추가
         name = item.getName();
@@ -38,8 +38,7 @@ public class MySaleDetailResponseDto {
         type = item.getType();
         itemStatus = item.getItemStatus();
         category = item.getCategory();
-        // TODO : 현재 입찰가 실시간 반영 방법 고안하기
-        currentBid = nomalAuction.getCurrentBid(); // 추후 추가(거래내역 테이블에서 가져와야 할 수도 있음)
+        this.currentBid = currentBid;
         hopePrice = item.getHopePrice();
         successPrice = normalItemDetailResponseDto.getSuccessPrice(); // 추후 추가
         startAt = normalItemDetailResponseDto.getStartAt(); // 추후 추가
@@ -47,17 +46,17 @@ public class MySaleDetailResponseDto {
     }
 
     // 라이브 경매용
-    public MySaleDetailResponseDto(Item item, LiveAuction liveAuction, Broadcast broadcast) {
-        itemId = item.getId();
-        auctionId = liveAuction.getAuctionId(); // 추후 추가
-        name = item.getName();
-        content = item.getContent();
-        type = item.getType();
-        itemStatus = item.getItemStatus();
-        category = item.getCategory();
-        hopePrice = item.getHopePrice();
-        successPrice = liveAuction.getSuccessPrice(); // 추후 추가
-        startAt = broadcast.getStartAt(); // 추후 추가
-    }
+//    public MySaleDetailResponseDto(Item item, LiveAuction liveAuction, Broadcast broadcast) {
+//        itemId = item.getId();
+//        auctionId = liveAuction.getAuctionId(); // 추후 추가
+//        name = item.getName();
+//        content = item.getContent();
+//        type = item.getType();
+//        itemStatus = item.getItemStatus();
+//        category = item.getCategory();
+//        hopePrice = item.getHopePrice();
+//        successPrice = liveAuction.getSuccessPrice(); // 추후 추가
+//        startAt = broadcast.getStartAt(); // 추후 추가
+//    }
 
 }
