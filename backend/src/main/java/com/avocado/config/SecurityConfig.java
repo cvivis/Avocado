@@ -62,7 +62,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeRequests() // '인증'이 필요하다
-                .antMatchers("/member/auth/**").authenticated()
+//                .antMatchers("/member/auth/**").authenticated()
 //                .antMatchers("/member/auth").authenticated()
 //                .antMatchers("관리자 기능..").hasRole("ADMIN") // 관리자 페이지
                 .anyRequest().permitAll()
