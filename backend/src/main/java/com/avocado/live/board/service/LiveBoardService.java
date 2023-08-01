@@ -1,6 +1,6 @@
 package com.avocado.live.board.service;
 
-import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
+//import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
 import com.avocado.live.board.controller.dto.BroadcastItemResponseEntryDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseEntryDto;

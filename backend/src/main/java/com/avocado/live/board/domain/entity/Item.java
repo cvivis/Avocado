@@ -31,6 +31,8 @@ public class Item {
     @Min(value = 0) // 최솟값 설정
     private Integer hopePrice;
 
+    private Integer instantPrice;
+
     @Enumerated(EnumType.STRING)
 //    @EnumValid(enumClass = Type.class)
     private Type type;
