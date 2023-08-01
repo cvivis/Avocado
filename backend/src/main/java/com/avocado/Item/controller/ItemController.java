@@ -42,11 +42,11 @@ public class ItemController {
     // 마이페이지 - 나의 위탁 물품 상세보기
     // TODO : 예외 처리에 대한 고민해보기, 어느 단에서 분기를 해야할지 고민해보기
     @GetMapping("/my-sale/{itemId}/{type}")
-    public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")Type type) {
+    public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")String type) {
         
-        if(type.equals("NORMAL")) {
+        if(type.equals(Type.NORMAL.getKey())) {
             return itemService.getMyNormalSale(itemId);
-        } else if (type.equals("LIVE")) {
+        } else if (type.equals(Type.LIVE.getKey())) {
             //return itemService.getMyLiveSale(itemId);
         }
 
@@ -68,7 +68,8 @@ public class ItemController {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 
-        return itemService.getMySuccessBids(memberId);
+        //return itemService.getMySuccessBids(memberId);
+        return null;
     }
 
 }

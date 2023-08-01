@@ -21,8 +21,8 @@ public class NormalAuction extends BaseTimeEntity {
     private Long id;
 
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "itemId") // referencedColumnName = "idx"
+    @OneToOne
+    @JoinColumn(name = "itemId")
     private Item item;
 
     @OneToMany(mappedBy = "normalAuction")

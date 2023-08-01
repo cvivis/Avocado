@@ -86,10 +86,10 @@ public class ItemService {
     }
 
     // 나의 낙찰 물품 리스트
-    public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
-        List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
-
-        return new MySuccessBidResponseDto(entries);
-    }
+//    public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
+//        List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
+//
+//        return new MySuccessBidResponseDto(entries);
+//    }
 
 }

@@ -17,22 +17,22 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "(i.id, nh.normalAuction.id, i.name, i.type, i.category, nh.bidPrice )" +
             "FROM normalHistory nh " +
             "JOIN item i ON nh.normalAuction.item.id = i.id " +
-            "WHERE nh.member = :memberId AND i.itemStatus = 'ASSIGN'")
+            "WHERE nh.member.id = :memberId AND i.itemStatus = com.avocado.Item.domain.entity.ItemStatus.ASSIGN")
     List<MyBidResponseEntries> findMyNormalBidsByMemberId(@Param("memberId") Long memberId);
 
-    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
-            "(i.id, i.name, i.type, i.category, " +
-            "CASE i.type" +
-            "   WHEN com.avocado.Item.domain.entity.Type.NORMAL THEN na.successPrice " +
-            "   ELSE la.successPrice " +
-            "END " +
-            ") " +
-            "FROM item i " +
-            "LEFT JOIN normalAuction na ON na.successMember = :memberId " +
-            "LEFT JOIN liveAuction la ON la.successMember = :memberId " +
-            "WHERE i.type = 'NORMAL' " +
-            "OR i.type = 'LIVE' ")
-    List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
+//    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
+//            "(i.id, i.name, i.type, i.category, " +
+//            "CASE i.type" +
+//            "   WHEN com.avocado.Item.domain.entity.Type.NORMAL THEN na.successPrice " +
+//            "   ELSE la.successPrice " +
+//            "END " +
+//            ") " +
+//            "FROM item i " +
+//            "LEFT JOIN normalAuction na ON na.successMember = :memberId " +
+//            "LEFT JOIN liveAuction la ON la.successMember = :memberId " +
+//            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL " +
+//            "OR i.type = com.avocado.Item.domain.entity.Type.LIVE ")
+//    List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
     
     
 // TODO : 아래 참고용 쿼리 추후에 지우기
