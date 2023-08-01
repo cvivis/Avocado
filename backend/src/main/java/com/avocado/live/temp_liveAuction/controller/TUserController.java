@@ -15,10 +15,13 @@ public class TUserController {
     private final TBroadcastService tBroadcastService;
     private final TLiveAuctionService liveAuctionService;
 
+    //방송 편성 리스트
     @GetMapping("/broadcasts")
     public ResponseEntity<?> findAllBroadcasts() {
         return ResponseEntity.ok().body(tBroadcastService.findAll());
     }
+
+
 
     @GetMapping("/auctions/{id}")
     public ResponseEntity<?> findAllAuctionsByBraodcastId(@PathVariable Long id) {

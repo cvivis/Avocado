@@ -13,18 +13,16 @@ import java.util.Date;
 @ToString
 public class BroadcastResponseEntryDto {
     private Long id;
-    private Long itemId;
     private String title;
     private String link;
-    private Boolean broadcastStatus;
+    private Boolean status;
     private Date startAt;
 
-    public BroadcastResponseEntryDto(Long id,Long itemId, String title, String link, Boolean broadcastStatus, Date startAt){
+    public BroadcastResponseEntryDto(Long id, String title, String link, Boolean status, Date startAt){
         this.id=id;
-        this.itemId =itemId;
         this.title =title;
         this.link=link;
-        this.broadcastStatus=broadcastStatus;
+        this.status=status;
         this.startAt=startAt;
 
     }

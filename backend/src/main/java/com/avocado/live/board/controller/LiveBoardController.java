@@ -23,7 +23,7 @@ public class LiveBoardController {
 
     private final LiveBoardService liveBoardService;
 
-    @GetMapping("/{broadcastId}/list")
+    @GetMapping("/list")
     public ResponseEntity<?> liveItemList(){
         BroadcastResponseDto liveitemlist = liveBoardService.getLiveList();
         log.info("{}",liveBoardService.getLiveList());

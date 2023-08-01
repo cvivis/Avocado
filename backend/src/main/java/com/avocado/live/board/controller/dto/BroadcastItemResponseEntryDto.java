@@ -12,15 +12,13 @@ import lombok.ToString;
 @Builder
 @ToString
 public class BroadcastItemResponseEntryDto {
-    private Long id;
     private Long itemId;
     private String name;
     private Integer hopePrice;
     private Category category;
     private  Integer instantPrice;
 
-    public BroadcastItemResponseEntryDto(Long id, Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice ){
-        this.id=id;
+    public BroadcastItemResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice ){
         this.itemId=itemId;
         this.name=name;
         this.hopePrice=hopePrice;
