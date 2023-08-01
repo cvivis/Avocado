@@ -63,18 +63,12 @@ public class ItemController {
     }
     
     // 마이페이지 - 나의 낙찰 상품 리스트 가져오기
-    @GetMapping("/my-success-bid/{type}")
-    public MySuccessBidResponseDto mySuccessBid(@RequestHeader("Authorization") String requestAccessToken, @PathVariable(name = "type") Type type) {
+    @GetMapping("/my-success-bid")
+    public MySuccessBidResponseDto mySuccessBid(@RequestHeader("Authorization") String requestAccessToken) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 
-        if(type.equals("NORMAL")) {
-            return itemService.getMyNormalSuccessBids(memberId);
-        } else if (type.equals("LIVE")) {
-            // 라이브 미구현
-        }
-
-        return null;
+        return itemService.getMySuccessBids(memberId);
     }
 
 }

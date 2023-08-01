@@ -1,7 +1,6 @@
 package com.avocado.Item.domain.repository;
 
 import com.avocado.Item.controller.dto.MyBidResponseEntries;
-import com.avocado.Item.controller.dto.MySaleResponseEntries;
 import com.avocado.Item.controller.dto.MySuccessBidEntries;
 import com.avocado.Item.domain.entity.Item;
 import io.lettuce.core.dynamic.annotation.Param;

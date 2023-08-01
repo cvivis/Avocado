@@ -7,12 +7,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ItemStatus {
 
-    CONSIGN("STATUS_CONSIGN","위탁"),
-    APPROVE("STATUS_APPROVE","승인"),
-    ASSIGN("STATUS_ASSIGN","배정"),
-    REJECT("STATUS_REJECT","반려"),
-    SUCCESS("STATUS_SUCCESS","낙찰"),
-    FAIL("STATUS_FAIL","유찰");
+    CONSIGN("CONSIGN","위탁"),
+    APPROVE("APPROVE","승인"),
+    ASSIGN("ASSIGN","배정"),
+    REJECT("REJECT","반려"),
+    SUCCESS("SUCCESS","낙찰"),
+    FAIL("FAIL","유찰");
 
     private final String key;
     private final String title;

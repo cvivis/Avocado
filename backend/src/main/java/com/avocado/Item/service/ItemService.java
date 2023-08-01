@@ -85,12 +85,11 @@ public class ItemService {
         return myBidResponseDto;
     }
 
-    // 나의 상시경매 낙찰 물품 리스트
-    public MySuccessBidResponseDto getMyNormalSuccessBids(Long memberId) {
+    // 나의 낙찰 물품 리스트
+    public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
         List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
 
         return new MySuccessBidResponseDto(entries);
-
     }
 
 }
