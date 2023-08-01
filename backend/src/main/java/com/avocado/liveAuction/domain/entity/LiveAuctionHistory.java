@@ -11,7 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Builder
-@ToString
 public class LiveAuctionHistory {
 
     @Id

@@ -15,7 +15,6 @@ import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class LiveAuctionService {
 
     private final LiveAuctionRepository liveAuctionRepository;

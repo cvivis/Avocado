@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class AuctionOnAndOffDto {
     private Long auctionId;
     private Integer onAndOff; //경매상태 0:진행전 ,1: 진행 중 , 2: 진행 종료

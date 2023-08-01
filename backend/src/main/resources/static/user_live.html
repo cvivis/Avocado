@@ -5,8 +5,6 @@
     <title>사용자 라이브 페이지</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/main.css" rel="stylesheet">
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script> -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -61,7 +59,7 @@
         var stomp;
         window.onload = function(){
             const broadcastId = localStorage.getItem("current-room-id")
-            //TODO : 여기서 websocket 연결해야함!
+            
             const broadcastInfo =  document.querySelector("#broadcastInfo");
             broadcastInfo.innerText = "방송 번호: "+ broadcastId + "번";
 
@@ -133,18 +131,18 @@
                     td.style.color = "red"
                     const auction_status = document.querySelector("#auction_status"+content.auctionId)
                     if(content.onAndOff == 1) {
-                        td.innerText = content.title +" 경매 시작!!" 
+                        td.innerText = content.title +"의 경매가 시작되었습니다" 
                         chat.appendChild(tr)
                         auction_status.innerText = "진행 중"
                     }
                     //TODO : 종료시 낙찰가 낙찰자 업데이트 및 채팅창 업데이트
                     else {
-                        td.innerText = content.title +" 경매 종료!!" 
+                        td.innerText = content.title +"의 경매가 종료되었습니다" 
                         chat.appendChild(tr)
                         
                         const current_price = document.querySelector("#current_price"+content.auctionId)
-                        success_price.innerHTML = content.success_price
-                        const sucess_member = document.querySelector("#bid_member"+content.auctionId)
+                        current_price.innerHTML = content.success_price
+                        const success_member = document.querySelector("#bid_member"+content.auctionId)
                         success_member.innerHTML = content.success_member_email
 
                         auction_status.innerText = "종료"
@@ -152,7 +150,16 @@
                 });
                 stomp.subscribe("/sub/auction/bid/" + broadcastId, function (bid) {
                     var content = JSON.parse(bid.body);
-                    //TODO : 입찰가입찰자 업데이트
+                    const current_price = document.querySelector("#current_price"+content.auctionId)
+                    current_price.innerHTML = content.bid_price
+                    const success_member = document.querySelector("#bid_member"+content.auctionId)
+                    success_member.innerHTML = content.bidMemberEmail
+                });
+                stomp.subscribe("/sub/broadcast/off/" + broadcastId, function (off) {
+                    var content = JSON.parse(off.body);
+                    console.log(content)
+                    alert("방송이 종료되었습니다.")
+                    window.location.href = "./user.html"
                 });
             })
         }
@@ -189,29 +196,6 @@
 
             if(+bid_price > +start_price && +bid_price > +current_price) {
                 stomp.send("/pub/auction/bid", {}, JSON.stringify({auctionId : auctionId, bid_price : bid_price, bidMemberEmail : email, broadcastId : broadcastId}))
-                // fetch("http://localhost:8080/user/acution/bid", {
-                // method: "POST",
-                // headers: {
-                // 'Content-Type': 'application/json',
-                // 'Authorization' : accesstoken
-                // },
-                // body: JSON.stringify({
-                //     auctionId : auctionId,
-                //     bid_price : bid_price
-                // }),
-                // })
-                // .then((response) => {
-                //     if(response.ok) {
-                //         alert(email+"님 입찰성공")
-                //         const current_price1 = document.querySelector("#current_price"+auctionId)
-                //         current_price1.innerText = bid_price
-                //         const current_bid_useremail1 = document.querySelector("#bid_member"+auctionId)
-                //         current_bid_useremail1.innerText = email
-                //     }
-                //     else {
-                //         alert("입찰 실패!")
-                //     }
-                // })
             } else {
                 alert("입찰가 확인!")
             }

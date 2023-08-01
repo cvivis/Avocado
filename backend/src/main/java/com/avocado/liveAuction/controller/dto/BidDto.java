@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class BidDto {
     private Boolean status; // true : 입찰성공, false: 입찰실패
     private Long auctionId;

@@ -5,22 +5,25 @@ import com.avocado.liveAuction.controller.dto.BidDto;
 import com.avocado.liveAuction.domain.entity.LiveAuction;
 import com.avocado.liveAuction.service.BidService;
 import com.avocado.liveAuction.service.LiveAuctionService;
+import com.avocado.liveAuction.service.TBroadcastService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class StompController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final LiveAuctionService liveAuctionService;
     private final BidService bidService;
+    private final TBroadcastService tBroadcastService;
 
     //---관리자 기능---
 
@@ -49,6 +52,11 @@ public class StompController {
     }
 
     //방송종료
+    @MessageMapping(value = "/broadcast/off/{id}")
+    public void broadcastOff(@DestinationVariable Long id) {
+        tBroadcastService.broadcastOnAndOff(id, false);
+        simpMessagingTemplate.convertAndSend("/sub/broadcast/off/"+id,id);
+    }
 
     //---사용자---
     //입찰
@@ -66,6 +74,5 @@ public class StompController {
 
 
     //---공통---
-
     //채팅
 }

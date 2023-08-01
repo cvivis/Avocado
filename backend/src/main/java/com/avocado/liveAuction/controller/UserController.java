@@ -16,16 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
-@Slf4j
 public class UserController {
 
     private final TBroadcastService tBroadcastService;
     private final LiveAuctionService liveAuctionService;
-    private final LiveAuctionHistoryService liveAuctionHistoryService;
-    private final AuthService authService;
-    private final BidService bidService;
-    private final MemberService memberService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @GetMapping("/broadcasts")
     public ResponseEntity<?> findAllBroadcasts() {

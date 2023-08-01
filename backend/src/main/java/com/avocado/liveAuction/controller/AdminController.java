@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
-@Slf4j
 public class AdminController {
 
     private final TBroadcastService tBroadcastService;
     private final LiveAuctionService liveAuctionService;
-    private final LiveAuctionHistoryService liveAuctionHistoryService;
 
 
     //생성된 방송목록 가져오기

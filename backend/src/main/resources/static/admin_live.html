@@ -5,8 +5,6 @@
     <title>관리자 방송 페이지</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="/main.css" rel="stylesheet">
-    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script> -->
     <script src="https://bundle.run/buffer@6.0.3"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
@@ -87,6 +85,7 @@
                         success_member.id = "success_member"+element.id
                         if(element.status == 2) success_member.innerText = element.success_member
                         const current_bid_price = document.createElement('td') 
+                        current_bid_price.id = "current_price"+element.id
                         if(element.status != 2) current_bid_price.innerText = element.success_price
                         const status = document.createElement('td')
                         if(element.status == 0) status.innerText = "시작 전"
@@ -150,6 +149,8 @@
                     var content = JSON.parse(bid.body);
                     if(content.status) {
                        //TODO : 현재 입찰가 업데이트
+                       const current_price = document.querySelector("#current_price"+content.auctionId)
+                       current_price.innerText = content.bid_price
                     } 
                 });
             })
@@ -192,7 +193,8 @@
 
         function broadcastOff(broadcastId) {
             const id = broadcastId.slice(-1);     
-            //TODO : 사용자들이 다 나갈 수 있도록 알림
+            stomp.send("/pub/broadcast/off/"+id, {}, {})
+            window.location.href = "./admin.html"
         }
     </script>
 </body>
