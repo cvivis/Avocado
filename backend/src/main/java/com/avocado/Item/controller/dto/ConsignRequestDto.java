@@ -1,5 +1,6 @@
 package com.avocado.Item.controller.dto;
 
+import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
 import com.avocado.Item.domain.entity.Type;
 import lombok.AllArgsConstructor;
@@ -8,9 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class ConsignRequestDto {
 
     private Long memberId;
@@ -20,7 +19,16 @@ public class ConsignRequestDto {
     private int hopePrice;
     private Type type;
     private ItemStatus itemStatus;
-    
-    // TODO : dtoToEntity 작성 및 사용을 통해 서비스 코드 가독성 올리기
 
+    public Item ConsignRequestDtoToEntity() {
+        Item item = Item.builder()
+                .name(this.name)
+                .content(this.content)
+                .thumbnail(this.thumbnail)
+                .hopePrice(this.hopePrice)
+                .type(this.type)
+                .itemStatus(this.itemStatus)
+                .build();
+        return item;
+    }
 }

@@ -2,6 +2,7 @@ package com.avocado.Item.domain.repository;
 
 import com.avocado.Item.controller.dto.MyBidResponseEntries;
 import com.avocado.Item.controller.dto.MySaleResponseEntries;
+import com.avocado.Item.controller.dto.MySuccessBidEntries;
 import com.avocado.Item.domain.entity.Item;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,11 +21,25 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE nh.member = :memberId AND i.itemStatus = 'ASSIGN'")
     List<MyBidResponseEntries> findMyNormalBidsByMemberId(@Param("memberId") Long memberId);
 
-    @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
-            "(i.id, i.name, i.type, i.category, lh.currentBid, lh.myBid )" +
-            "FROM LiveHistory lh " +
-            "JOIN item i ON nh.itemID = i.id")
-    List<MyBidResponseEntries> findMyLiveBidsByMemberId(@Param("memberId") Long memberId);
+//    @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
+//            "(i.id, i.name, i.type, i.category, lh.currentBid, lh.myBid )" +
+//            "FROM LiveHistory lh " +
+//            "JOIN item i ON nh.itemID = i.id")
+//    List<MyBidResponseEntries> findMyLiveBidsByMemberId(@Param("memberId") Long memberId);
+
+    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
+            "(i.id, i.name, i.type, i.category, " +
+            "CASE i.type" +
+            "   WHEN com.avocado.Item.domain.entity.Type.NORMAL THEN na.successPrice " +
+            "   ELSE la.successPrice " +
+            "END " +
+            ") " +
+            "FROM item i " +
+            "LEFT JOIN normalAuction na ON na.successMember = :memberId " +
+            "LEFT JOIN liveAuction la ON la.successMember = :memberId " +
+            "WHERE i.type = 'NORMAL' " +
+            "OR i.type = 'LIVE' ")
+    List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
 
     // 전체 리스트 반환
 //    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(i.id, i.name, nh.bidPrice, i.hopePrice, a.start_at, a.end_at) " +

@@ -1,9 +1,6 @@
 package com.avocado.Item.controller;
 
-import com.avocado.Item.controller.dto.ConsignRequestDto;
-import com.avocado.Item.controller.dto.MyBidResponseDto;
-import com.avocado.Item.controller.dto.MySaleDetailResponseDto;
-import com.avocado.Item.controller.dto.MySaleResponseDto;
+import com.avocado.Item.controller.dto.*;
 import com.avocado.Item.domain.entity.Type;
 import com.avocado.Item.service.ItemService;
 import com.avocado.member.service.AuthService;
@@ -50,25 +47,34 @@ public class ItemController {
         if(type.equals("NORMAL")) {
             return itemService.getMyNormalSale(itemId);
         } else if (type.equals("LIVE")) {
-            return itemService.getMyLiveSale(itemId);
-        } else {
-            return null;
+            //return itemService.getMyLiveSale(itemId);
         }
+
+        return null;
     }
     
-    // 마이페이지 - 나의 입찰 상품 리스트 가져오기
+    // 마이페이지 - 나의 입찰 상품 리스트 가져오기 (상시만)
     @GetMapping("/my-bid/{type}")
-    public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken, @PathVariable(name = "type") Type type) {
+    public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken) {
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Long memberId = memberService.getMember(email).getId();
+
+        return itemService.getMyNormalBids(memberId);
+    }
+    
+    // 마이페이지 - 나의 낙찰 상품 리스트 가져오기
+    @GetMapping("/my-success-bid/{type}")
+    public MySuccessBidResponseDto mySuccessBid(@RequestHeader("Authorization") String requestAccessToken, @PathVariable(name = "type") Type type) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 
         if(type.equals("NORMAL")) {
-            return itemService.getMyNormalBids(memberId);
+            return itemService.getMyNormalSuccessBids(memberId);
         } else if (type.equals("LIVE")) {
-            return itemService.getMyLiveBids(memberId);
-        } else {
-            return null;
+            // 라이브 미구현
         }
+
+        return null;
     }
 
 }

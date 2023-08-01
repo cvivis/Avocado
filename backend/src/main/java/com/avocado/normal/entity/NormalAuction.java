@@ -28,8 +28,7 @@ public class NormalAuction extends BaseTimeEntity {
     @OneToMany(mappedBy = "normalAuction")
     private List<NormalHistory> normalHistory;
 
-
-//    private Long successMember
+    private Long successMember;
 
     private Integer successPrice;
 

@@ -32,14 +32,7 @@ public class ItemService {
     @Transactional
     public boolean saveItem(ConsignRequestDto consignRequestDto) {
         try {
-            itemRepository.save(Item.builder()
-                    .name(consignRequestDto.getName())
-                    .content(consignRequestDto.getContent())
-                    .thumbnail(consignRequestDto.getThumbnail())
-                    .hopePrice(consignRequestDto.getHopePrice())
-                    .type(consignRequestDto.getType())
-                    .itemStatus(consignRequestDto.getItemStatus())
-                    .build());
+            itemRepository.save(consignRequestDto.ConsignRequestDtoToEntity());
             return true;
         } catch (Exception e) {
 
@@ -92,11 +85,12 @@ public class ItemService {
         return myBidResponseDto;
     }
 
-    // 나의 라이브경매 입찰 물품 리스트(미완)
-//    public MyBidResponseDto getMyLiveBids(Long memberId) {
-//        List<MyBidResponseEntries> entries = itemRepository.findMyLiveBidsByMemberId(memberId);
-//        MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);
-//
-//        return myBidResponseDto;
-//    }
+    // 나의 상시경매 낙찰 물품 리스트
+    public MySuccessBidResponseDto getMyNormalSuccessBids(Long memberId) {
+        List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
+
+        return new MySuccessBidResponseDto(entries);
+
+    }
+
 }
