@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import api from '../../../api';
-
-
-// 백엔드 category를 파라미터로 받도록 수정해야함
+// 백엔드 category를 파라미터로 받도록 수정해야함 => 쿼리스트링으로 해결
 
 function CategoryList() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -14,7 +12,7 @@ function CategoryList() {
 
   const handleSearch = () => {
     // 확인 버튼을 누를 때 선택한 토글 값을 사용하여 API 호출
-    api.get("/normal/list/sort-category")
+    api.get(`/normal/list/sort-category?category=${selectedCategory}`)
       .then(response => {
         setSearchLists(response.data.entries);
       })
