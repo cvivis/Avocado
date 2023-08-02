@@ -1,7 +1,11 @@
+package com.avocado.Item.domain.entity;
 
-package com.avocado.normal.entity;
-
-import lombok.*;
+import com.avocado.common.BaseTimeEntity;
+import com.avocado.member.domain.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
@@ -13,16 +17,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
-public class Item {
+public class Item extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "memberId")
-    private Long memberId;
-
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
     @NotNull
     private String name;
     private String content;
@@ -30,18 +32,15 @@ public class Item {
     private String thumbnail;
     @Min(value = 0) // 최솟값 설정
     private int hopePrice;
-
+    // 즉시구매가 임시 스펙 아웃
+    //private int instantPrice;
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = Type.class)
+    //@EnumValid(enumClass = Type.class)
     private Type type;
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = ItemStatus.class)
+    //@EnumValid(enumClass = ItemStatus.class, ignoreCase = true)
     private ItemStatus itemStatus;
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = Category.class)
-    @Nullable
+    //@EnumValid(enumClass = Category.class)
     private Category category;
-
-
-
 }

@@ -1,0 +1,26 @@
+package com.avocado.Item.controller.dto;
+
+import com.avocado.Item.domain.entity.Item;
+import com.avocado.Item.domain.entity.ItemStatus;
+import com.avocado.Item.domain.entity.Type;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+public class MySaleResponseEntries {
+
+    private Long itemId;
+    private String name;
+    private ItemStatus status;
+    private Type type;
+
+    public MySaleResponseEntries(Long itemId, String name, ItemStatus itemStatus, Type type) {
+        this.itemId = itemId;
+        this.name = name;
+        this.status = itemStatus;
+        this.type = type;
+    }
+
+}

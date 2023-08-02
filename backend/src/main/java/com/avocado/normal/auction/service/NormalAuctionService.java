@@ -42,7 +42,7 @@ public class NormalAuctionService {
         normalHistoryRepository.saveAndFlush(normalHistory);
 
         //최고 입찰가 가져오기
-        NormalHistory topBid = normalHistoryRepository.findFirstByOrderByBidPriceDescCreatedAtAsc().orElse(null);
+        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(nowNormal.getId()).orElse(null);
         log.info(topBid.toString());
 //        log.info(topBid.getMember().toString());
 //        Member topMember = memberRepository.findById(topBid.getMember().)
