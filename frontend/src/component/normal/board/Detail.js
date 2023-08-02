@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from '../../../api';
 import { useParams } from "react-router-dom";
+import NormalBid from "../auction/normalBid";
 
 function Detail() {
+  <NormalBid></NormalBid>
   const { id } = useParams();
   const [boardDetail, setboardDetail] = useState('');
   useEffect(() => {

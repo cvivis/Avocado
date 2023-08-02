@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import SearchList from "./component/normal/board/SearchList";
 import { useSelector } from "react-redux";
 import BoardList from "./component/normal/board/BoardList";
+// import NormalBid from "./component/normal/auction/normalBid";
 // import BoardList from "./component/normal/board/BoardList";
 // import BoardList from "./component/normal/board/boardList";
 // import { useSelector } from "react-redux";
@@ -25,6 +26,7 @@ function Home() {
         <input></input>
         <div className="nav-btn">
       {searchResults.length === 0 ? <BoardList /> : <SearchList />}
+      
         
         <button>
           <Link to="/normal/list"> 사용자 리스트 </Link>
