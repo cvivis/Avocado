@@ -4,10 +4,10 @@
 
 import Home from './Home';
 import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
-import Detail from './component/normal/Board/Detail';
-import SearchList from './component/normal/Board/SearchList';
-import BoardList from './component/normal/Board/BoardList';
-import CategoryList from './component/normal/Board/CategoryList';
+import Detail from './component/normal/board/Detail';
+import SearchList from './component/normal/board/SearchList';
+import BoardList from './component/normal/board/BoardList';
+import CategoryList from './component/normal/board/CategoryList';
 
 function App() {
   return (
