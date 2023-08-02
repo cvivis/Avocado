@@ -1,8 +1,8 @@
 package com.avocado.normal.board.controller;
 
+import com.avocado.Item.domain.entity.Category;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseDto;
-import com.avocado.normal.entity.Category;
 import com.avocado.normal.board.service.NormalBoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
