@@ -33,6 +33,9 @@ function Home() {
         <button>
           <Link to="normal/list/sort-category"> 카테고리 </Link>
         </button>
+        <button>
+          <Link to="/member/MyPage">마이페이지</Link>
+        </button>
       </div>
 
         
