@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+const root = ReactDOM.createRoot(rootElement);
+// Redux의 상태를 컴포넌트에 제공하기 위해 Provider 컴포넌트 사용
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
