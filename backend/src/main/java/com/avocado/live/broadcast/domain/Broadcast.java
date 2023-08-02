@@ -16,7 +16,7 @@ public class Broadcast {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long broadcastId;
+    private Long id;
 
     private String sessionId;
 

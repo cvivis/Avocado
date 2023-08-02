@@ -1,15 +1,14 @@
 package com.avocado.live.board.service;
 
 //import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
-import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
-import com.avocado.live.board.controller.dto.BroadcastItemResponseEntryDto;
+import com.avocado.live.board.controller.dto.LiveAuctionResponseDto;
+import com.avocado.live.board.controller.dto.LiveAuctionResponseEntryDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseEntryDto;
 import com.avocado.live.board.domain.entity.LiveAuction;
-import com.avocado.live.board.domain.repository.BroadcastRepository;
 import com.avocado.live.board.domain.repository.LiveAuctionRepository;
-import com.avocado.live.board.domain.repository.LiveBoardRepository;
 import com.avocado.live.broadcast.domain.Broadcast;
+import com.avocado.live.broadcast.domain.BroadcastRepository;
 import io.jsonwebtoken.lang.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class LiveBoardService {
         List<Broadcast> broadcastList= broadcastRepository.findAll();
         if(Collections.isEmpty(broadcastList)){return null;}
         BroadcastResponseDto broadcastResponseDto= new  BroadcastResponseDto (broadcastList.stream().map(broadcast -> BroadcastResponseEntryDto.builder()
-               .id(broadcast.getBroadcastId())
+               .id(broadcast.getId())
                .title(broadcast.getTitle())
                .link(broadcast.getLink())
                .status(broadcast.getStatus())
@@ -45,14 +44,20 @@ public class LiveBoardService {
         return broadcastResponseDto;
     }
 
-    public BroadcastItemResponseDto getLiveAuctionsByBroadcastId(Long broadcastId){
+    //라이브 방송 경매 리스트 반환
+    public LiveAuctionResponseDto getLiveAuctionsByBroadcastId(Long broadcastId){
+
             List<LiveAuction> liveAuctionList = liveAuctionRepository.findByBroadcast_Id(broadcastId).orElse(null);
             if(Collections.isEmpty(liveAuctionList))return null;
-            BroadcastItemResponseDto broadcastItemResponseDto = new BroadcastItemResponseDto(liveAuctionList.stream().map(liveAuction -> BroadcastItemResponseEntryDto.builder()
-                    .itemId(liveAuction.getItem().getId()).instantPrice(liveAuction.getItem().getInstantPrice()).hopePrice(liveAuction.getItem().getHopePrice())
-                    .name(liveAuction.getItem().getName()).
-            )
 
+            LiveAuctionResponseDto liveAuctionResponseDto = new LiveAuctionResponseDto (liveAuctionList.stream().map(liveAuction -> LiveAuctionResponseEntryDto.builder()
+                    .itemId(liveAuction.getId())
+                    .name(liveAuction.getItem().getName())
+                    .hopePrice(liveAuction.getItem().getHopePrice())
+                    .category(liveAuction.getItem().getCategory())
+                    .instantPrice(liveAuction.getItem().getInstantPrice())
+                    .build()).collect(Collectors.toList()));
+        return liveAuctionResponseDto;
     }
 
 

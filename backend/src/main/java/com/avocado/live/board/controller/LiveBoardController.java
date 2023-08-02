@@ -1,47 +1,43 @@
 package com.avocado.live.board.controller;
 
-import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
-import com.avocado.live.board.controller.dto.BroadcastItemResponseEntryDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseDto;
-import com.avocado.live.board.controller.dto.BroadcastResponseEntryDto;
+import com.avocado.live.board.controller.dto.LiveAuctionResponseDto;
 import com.avocado.live.board.service.LiveBoardService;
-import io.lettuce.core.dynamic.annotation.Param;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/live")
 @RequiredArgsConstructor
 @Slf4j
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class LiveBoardController {
 
     private final LiveBoardService liveBoardService;
 
+    //방송 편성 리스트
     @GetMapping("/list")
-    public ResponseEntity<?> liveItemList(){
-        BroadcastResponseDto liveitemlist = liveBoardService.getLiveList();
-        log.info("{}",liveBoardService.getLiveList());
+    public ResponseEntity<?> broadcastList(){
+        BroadcastResponseDto liveitemlist = liveBoardService.getBroadcastList();
+        log.info("{}",liveBoardService.getBroadcastList());
         return ResponseEntity.ok().body(liveitemlist);
     }
 
-    @GetMapping("/list/search/{keyword}")
-    public ResponseEntity<?> searchLiveItemList(@PathVariable String keyword){
-        BroadcastResponseDto liveitemlist = liveBoardService.getLiveSearchList(keyword);
-        log.info("{}",liveBoardService.getLiveSearchList(keyword));
-        return ResponseEntity.ok().body(liveitemlist);
+    //방송 상세 경매 리스트
+    @GetMapping("/list/{broadcast_id}")
+    public ResponseEntity<?> searchLiveAuctionList(@PathVariable Long broadcast_id){
+        LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctionsByBroadcastId(broadcast_id);
+        log.info("{}",liveBoardService.getLiveAuctionsByBroadcastId(broadcast_id));
+        return ResponseEntity.ok().body(liveAuctionList);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<?> liveItemDetail(@PathVariable Long id){
-        BroadcastItemResponseEntryDto liveitem = liveBoardService.getLiveItemDetail(id);
-        return ResponseEntity.ok().body(liveitem);
-    }
+//    @GetMapping("/detail/{id}")
+//    public ResponseEntity<?> liveItemDetail(@PathVariable Long id){
+//        BroadcastItemResponseEntryDto liveitem = liveBoardService.getLiveItemDetail(id);
+//        return ResponseEntity.ok().body(liveitem);
+//    }
 
 
 

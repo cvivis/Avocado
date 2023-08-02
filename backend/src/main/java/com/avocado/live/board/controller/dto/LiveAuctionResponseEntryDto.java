@@ -9,16 +9,16 @@ import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@Builder
 @ToString
-public class BroadcastItemResponseEntryDto {
+@Builder
+public class LiveAuctionResponseEntryDto {
     private Long itemId;
     private String name;
     private Integer hopePrice;
     private Category category;
     private  Integer instantPrice;
 
-    public BroadcastItemResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice ){
+    public LiveAuctionResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice ){
         this.itemId=itemId;
         this.name=name;
         this.hopePrice=hopePrice;

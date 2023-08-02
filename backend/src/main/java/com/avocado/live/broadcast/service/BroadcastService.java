@@ -15,7 +15,7 @@ public class BroadcastService {
 
     public Long save(String sessionId) {
         Broadcast save = broadcastRepository.save(new Broadcast(sessionId));
-        return save.getBroadcastId();
+        return save.getId();
     }
 
     public String getBroadcastSessionId(Long broadcastId) {
