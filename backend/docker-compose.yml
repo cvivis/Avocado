@@ -5,7 +5,7 @@ services:
     container_name: avocado_db
     restart: always
     ports:
-      - "3307:3306"
+      - "3306:3306"
     env_file: docker.env
     volumes:
       - mysql_data:/var/lib/mysql
