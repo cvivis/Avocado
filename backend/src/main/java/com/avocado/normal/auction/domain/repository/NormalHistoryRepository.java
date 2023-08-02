@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface NormalHistoryRepository extends JpaRepository<NormalHistory, Long> {
-    Optional<NormalHistory> findFirstByOrderByBidPriceDescCreatedAtAsc();
+    Optional<NormalHistory> findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(Long id);
 }

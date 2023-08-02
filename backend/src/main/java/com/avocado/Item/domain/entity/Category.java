@@ -1,4 +1,4 @@
-package com.avocado.normal.entity;
+package com.avocado.Item.domain.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

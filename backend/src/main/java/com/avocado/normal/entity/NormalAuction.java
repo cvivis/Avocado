@@ -1,5 +1,6 @@
 package com.avocado.normal.entity;
 
+import com.avocado.Item.domain.entity.Item;
 import com.avocado.common.BaseTimeEntity;
 import lombok.*;
 
@@ -12,20 +13,22 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 public class NormalAuction extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    private Long itemId; //item 외래키 설정 나중에
+    @OneToOne
+    @JoinColumn(name = "itemId")
+    private Item item;
 
     @OneToMany(mappedBy = "normalAuction")
     private List<NormalHistory> normalHistory;
 
-
-//    private Long successMember
+    private Long successMember;
 
     private Integer successPrice;
 
@@ -39,7 +42,7 @@ public class NormalAuction extends BaseTimeEntity {
     public String toString() {
         return "NormalAuction{" +
                 "id=" + id +
-                ", itemId=" + itemId +
+                ", itemId=" + item.getId() +
 //                ", normalHistory=" + normalHistory +
                 ", successPrice=" + successPrice +
                 ", startAt=" + startAt +
