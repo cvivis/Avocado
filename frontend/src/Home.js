@@ -4,9 +4,9 @@
 
 import React from "react"
 import { Link } from "react-router-dom";
-import SearchList from "./component/normal/board/SearchList";
+import SearchList from "./component/normal/Board/SearchList";
 import { useSelector } from "react-redux";
-import BoardList from "./component/normal/board/BoardList";
+import BoardList from "./component/normal/Board/BoardList";
 // import BoardList from "./component/normal/board/BoardList";
 // import BoardList from "./component/normal/board/boardList";
 // import { useSelector } from "react-redux";
