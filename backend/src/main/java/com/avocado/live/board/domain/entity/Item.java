@@ -1,6 +1,8 @@
 
 package com.avocado.live.board.domain.entity;
 
+import com.avocado.member.domain.entity.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import reactor.util.annotation.Nullable;
 
@@ -20,13 +22,14 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "memberId")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn (name = "memberId")
+    @JsonIgnore
+    private Member member;
 
     @NotNull
     private String name;
     private String content;
-    @Nullable
     private String thumbnail;
     @Min(value = 0) // 최솟값 설정
     private Integer hopePrice;
@@ -34,14 +37,12 @@ public class Item {
     private Integer instantPrice;
 
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = Type.class)
     private Type type;
+
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = ItemStatus.class)
     private ItemStatus itemStatus;
+
     @Enumerated(EnumType.STRING)
-//    @EnumValid(enumClass = Category.class)
-    @Nullable
     private Category category;
 
 
