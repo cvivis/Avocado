@@ -14,20 +14,16 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 @Builder
-@ToString
+@Setter
 public class LiveAuction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    private String title; //TODO: 물품테이블 조인으로 대체
-//    private Integer startPrice; //TODO : 물품테이블 조인으로 대체
-
     @OneToOne
     @JoinColumn(name="itemId")
     @JsonIgnore
     private Item item;
-
 
     private Integer successPrice; //경매종료전 : 최고입찰가, 경매종료후: 낙찰가
 
@@ -41,7 +37,7 @@ public class LiveAuction {
     @ManyToOne
     @JoinColumn(name = "broadcastId")
     @JsonIgnore
-    private Broadcast broadcast; //TODO : 방송 feature와 merge 후 교체
+    private Broadcast broadcast;
 
     public String getEmail() {
         if(Objects.isNull(this.member)) return null;

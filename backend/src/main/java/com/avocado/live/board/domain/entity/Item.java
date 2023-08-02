@@ -29,8 +29,11 @@ public class Item {
 
     @NotNull
     private String name;
+
     private String content;
+
     private String thumbnail;
+
     @Min(value = 0) // 최솟값 설정
     private Integer hopePrice;
 

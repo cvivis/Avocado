@@ -2,6 +2,7 @@ package com.avocado.live.broadcast.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Getter
 @Entity
+@Setter
 public class Broadcast {
 
     @Id
@@ -26,13 +28,10 @@ public class Broadcast {
     @NotNull
     private String introduce;
 
-    @NotNull
     private String link;
 
-    @NotNull
     private Boolean status;
 
-    @NotNull
     private Date startAt;
 
 

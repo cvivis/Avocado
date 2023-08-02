@@ -17,6 +17,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true) //api 별 권한 (@Secured("ROLE_ADMIN))
@@ -29,13 +34,11 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder encoder() {
-        // 비밀번호를 DB에 저장하기 전 사용할 암호화
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        // ACL(Access Control List, 접근 제어 목록)의 예외 URL 설정
         return (web)
                 -> web
                 .ignoring()
@@ -44,11 +47,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // 인터셉터로 요청을 안전하게 보호하는 방법 설정
+        http.cors().configurationSource(corsConfigurationSource());
+        //TODO : 인증/인가 필요한 경로 설정 및 웹소켓통신 interceptor 추가!
         http
-                // jwt 토큰 사용을 위한 설정
-                .csrf().disable()
                 .httpBasic().disable()
+                .csrf().disable()
 
                 .formLogin().disable()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
@@ -69,7 +72,7 @@ public class SecurityConfig {
 
                 .and()
                 .headers()
-                .frameOptions().sameOrigin();
+                .frameOptions().disable();
 
         return http.build();
     }
@@ -77,6 +80,23 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        //TODO : 배포과정에서 재설정 필요!
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedHeader("*");
+        // 개발 테스트 용도로 전부 열어둔다.
+        configuration.addAllowedMethod("*"); // GET, POST, PUT, DELETE (Javascript 요청 허용)
+        // 서버 리소스에 액세스할 수 있는 원본(도메인)을 지정합니다.
+        configuration.addAllowedOriginPattern("*"); // 모든 IP 주소 허용 (프론트 앤드 IP만 허용 react)
+        configuration.setAllowCredentials(true); // 클라이언트에서 쿠키 요청 허용
+        // 브라우저가 Authorization을 읽을 수 있게 허용하는 옵션
+        configuration.addExposedHeader("Authorization");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

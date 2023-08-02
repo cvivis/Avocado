@@ -1,6 +1,6 @@
 package com.avocado.live.board.service;
 
-//import com.avocado.live.board.controller.dto.BroadcastItemResponseDto;
+
 import com.avocado.live.board.controller.dto.LiveAuctionResponseDto;
 import com.avocado.live.board.controller.dto.LiveAuctionResponseEntryDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseDto;
@@ -23,13 +23,6 @@ public class LiveBoardService {
 
     private final LiveAuctionRepository liveAuctionRepository;
 
-
-    //방송 편성 리스트 보기 추후 추가
-
-    //방송 편성 상세 보기 추후 추가
-
-
-
     //라이브 방송 리스트 반환
     public BroadcastResponseDto getBroadcastList(){
 
@@ -51,31 +44,13 @@ public class LiveBoardService {
             if(Collections.isEmpty(liveAuctionList))return null;
 
             LiveAuctionResponseDto liveAuctionResponseDto = new LiveAuctionResponseDto (liveAuctionList.stream().map(liveAuction -> LiveAuctionResponseEntryDto.builder()
-                    .itemId(liveAuction.getId())
+                    .auctionId(liveAuction.getId())
                     .name(liveAuction.getItem().getName())
                     .hopePrice(liveAuction.getItem().getHopePrice())
                     .category(liveAuction.getItem().getCategory())
                     .instantPrice(liveAuction.getItem().getInstantPrice())
+                    .status(liveAuction.getStatus())
                     .build()).collect(Collectors.toList()));
         return liveAuctionResponseDto;
     }
-
-
-
-    //검색 리스트 반환
-
-//    public BroadcastResponseDto getLiveSearchList(String keyword){
-//        String keywordWildcard = "%" +keyword +"%d";
-//        List<BroadcastResponseEntryDto> broadcastResponseEntryDtos = liveBoardRepository.findByLiveItemNameContains(keywordWildcard);
-//        BroadcastResponseDto broadcastResponseDto = new BroadcastResponseDto(broadcastResponseEntryDtos);
-//        return broadcastResponseDto;
-//    }
-//
-//
-//    //물건 상세 보기
-//    public BroadcastItemResponseEntryDto getLiveItemDetail(Long id){ return liveBoardRepository.findLiveDetailById(id);}
-
-
-
-
 }

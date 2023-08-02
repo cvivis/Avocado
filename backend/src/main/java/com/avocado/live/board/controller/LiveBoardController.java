@@ -17,11 +17,16 @@ public class LiveBoardController {
 
     private final LiveBoardService liveBoardService;
 
+    //흐름
+    // 1. 방송편성표에서 방송참여하기 클릭 -> 해당 방송ID 어딘가에 저장 -> 방송화면으로 이동
+    // 2. 방송화면으로 이동 시, 어딘가에 저장해놓은 방송ID로 경매리스트를 불러온다
+    // TODO: 방송에 해당하는 경매리스트 불러오기 (경매id, 진행상황(status), 시작가, 최고입찰자, 최고입찰가)
+    // TODO : 방송 화면 진입 시 필요한 api를 auction/board 어디서 처리할지 논의 필요
+
     //방송 편성 리스트
     @GetMapping("/list")
     public ResponseEntity<?> broadcastList(){
         BroadcastResponseDto liveitemlist = liveBoardService.getBroadcastList();
-        log.info("{}",liveBoardService.getBroadcastList());
         return ResponseEntity.ok().body(liveitemlist);
     }
 
@@ -29,17 +34,6 @@ public class LiveBoardController {
     @GetMapping("/list/{broadcast_id}")
     public ResponseEntity<?> searchLiveAuctionList(@PathVariable Long broadcast_id){
         LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctionsByBroadcastId(broadcast_id);
-        log.info("{}",liveBoardService.getLiveAuctionsByBroadcastId(broadcast_id));
         return ResponseEntity.ok().body(liveAuctionList);
     }
-
-//    @GetMapping("/detail/{id}")
-//    public ResponseEntity<?> liveItemDetail(@PathVariable Long id){
-//        BroadcastItemResponseEntryDto liveitem = liveBoardService.getLiveItemDetail(id);
-//        return ResponseEntity.ok().body(liveitem);
-//    }
-
-
-
-
 }

@@ -12,18 +12,20 @@ import lombok.ToString;
 @ToString
 @Builder
 public class LiveAuctionResponseEntryDto {
-    private Long itemId;
+    private Long auctionId;
     private String name;
     private Integer hopePrice;
     private Category category;
     private  Integer instantPrice;
+    private Integer status; // 경매 진행 상태
 
-    public LiveAuctionResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice ){
-        this.itemId=itemId;
+    public LiveAuctionResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice, Integer status ){
+        this.auctionId=itemId;
         this.name=name;
         this.hopePrice=hopePrice;
         this.category=category;
         this.instantPrice=instantPrice;
+        this.status = status;
     }
 
 }

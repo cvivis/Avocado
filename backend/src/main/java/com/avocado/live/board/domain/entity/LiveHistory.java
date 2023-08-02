@@ -12,20 +12,21 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Getter
 @AllArgsConstructor
-@ToString
+@Setter
 public class LiveHistory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="member_id")
+    @JoinColumn(name="memberId")
     @NotNull
     private Member member;
 
-    @Column(name="liveAuction_id")
+    @ManyToOne
+    @JoinColumn(name="liveAuctionId")
     @NotNull
-    private Long liveAuctionId;
+    private LiveAuction liveAuction;
 
     @NotNull
     private Integer bidPrice;

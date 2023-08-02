@@ -1,11 +1,9 @@
-package com.avocado.live.temp_liveAuction.controller;
+package com.avocado.live.auction.controller;
 
-import com.avocado.live.temp_liveAuction.controller.dto.AuctionOnAndOffDto;
-import com.avocado.live.temp_liveAuction.controller.dto.BidDto;
-import com.avocado.live.temp_liveAuction.domain.entity.TLiveAuction;
-import com.avocado.live.temp_liveAuction.service.TBidService;
-import com.avocado.live.temp_liveAuction.service.TLiveAuctionService;
-import com.avocado.live.temp_liveAuction.service.TBroadcastService;
+import com.avocado.live.auction.service.BidService;
+import com.avocado.live.board.domain.entity.LiveAuction;
+import com.avocado.live.auction.controller.dto.AuctionOnAndOffDto;
+import com.avocado.live.auction.controller.dto.BidDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,32 +14,29 @@ import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
-public class TStompController {
+public class StompController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final TLiveAuctionService liveAuctionService;
-    private final TBidService bidService;
-    private final TBroadcastService tBroadcastService;
+    private final BidService bidService;
 
-    //---관리자 기능---
-
-    //경매 시작, 종료
+    //pub : 관리자 - 경매 시작 및 종료
+    //sub : 사용자 - 시작 시 경매 입찰 활성화, 종료 시 경매 입찰 비활성화
     @MessageMapping(value = "/auction/status")
     public void auctionOnAndOff(AuctionOnAndOffDto auctionOnAndOffDto) {
         Integer status = auctionOnAndOffDto.getOnAndOff();
         if(status == 1) {
             //경매시작
-            TLiveAuction liveAuction = liveAuctionService.liveAuctionBegin(auctionOnAndOffDto.getAuctionId());
+            LiveAuction liveAuction = bidService.liveAuctionBegin(auctionOnAndOffDto.getAuctionId());
             if(!Objects.isNull(liveAuction)) {
-                auctionOnAndOffDto.setTitle(liveAuction.getTitle());
+                auctionOnAndOffDto.setTitle(liveAuction.getItem().getName());
                 simpMessagingTemplate.convertAndSend("/sub/auction/status/"+auctionOnAndOffDto.getBroadcastId(),auctionOnAndOffDto);
             }
         }
         else if(status == 2) {
             //경매 종료
-            TLiveAuction liveAuction = liveAuctionService.liveAuctionStop(auctionOnAndOffDto.getAuctionId());
+            LiveAuction liveAuction = bidService.liveAuctionStop(auctionOnAndOffDto.getAuctionId());
             if(!Objects.isNull(liveAuction)) {
-                auctionOnAndOffDto.setTitle(liveAuction.getTitle());
+                auctionOnAndOffDto.setTitle(liveAuction.getItem().getName());
                 auctionOnAndOffDto.setSuccess_member_email(liveAuction.getEmail());
                 auctionOnAndOffDto.setSuccess_price(liveAuction.getSuccessPrice());
                 simpMessagingTemplate.convertAndSend("/sub/auction/status/"+auctionOnAndOffDto.getBroadcastId(),auctionOnAndOffDto);
@@ -49,16 +44,16 @@ public class TStompController {
         }
     }
 
-    //방송종료
+    //pub : 관리자 - 방송 종료
+    //sub : 사용자 - 방송 종료 확인 후 퇴장 처리
     @MessageMapping(value = "/broadcast/off/{id}")
     public void broadcastOff(@DestinationVariable Long id) {
-        tBroadcastService.broadcastOnAndOff(id, false);
+        bidService.broadcastOnAndOff(id, false);
         simpMessagingTemplate.convertAndSend("/sub/broadcast/off/"+id,id);
     }
 
-    //---사용자---
-    //입찰
-
+    //pub : 사용자 - 입찰
+    //sub : 사용자 - 입찰 내역 확인
     @MessageMapping("/auction/bid")
     public void bid(BidDto bidRequestDto) {
         //TODO :클라이언트에서 받은 email과 실제인증 유저의 email이 같은지 검증할 필요가 있음
@@ -71,6 +66,5 @@ public class TStompController {
     }
 
 
-    //---공통---
-    //채팅
+    //TODO : 채팅 기능 -> openvidu or websocket 아직 미정
 }

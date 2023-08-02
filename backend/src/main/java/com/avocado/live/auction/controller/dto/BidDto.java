@@ -1,4 +1,4 @@
-package com.avocado.live.temp_liveAuction.controller.dto;
+package com.avocado.live.auction.controller.dto;
 
 import lombok.*;
 

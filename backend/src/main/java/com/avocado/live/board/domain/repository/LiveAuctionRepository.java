@@ -7,12 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LiveAuctionRepository extends JpaRepository <LiveAuction, Long> {
-
-//    @Query("Select b from Broadcast b ")
-//    List<BroadcastResponseEntryDto> findAllBroadcast();
     Optional<List<LiveAuction>> findByBroadcast_Id(Long broadcast_id);
-
-
-
 }
 
