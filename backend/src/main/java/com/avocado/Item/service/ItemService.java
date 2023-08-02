@@ -6,6 +6,7 @@ import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.Item.domain.repository.MySaleResponseMapping;
 import com.avocado.live.domain.Broadcast;
 import com.avocado.live.service.BroadcastService;
+import com.avocado.member.domain.entity.Member;
 import com.avocado.normal.auction.domain.repository.NormalHistoryRepository;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.service.NormalBoardService;
@@ -30,9 +31,9 @@ public class ItemService {
 
     // 위탁 요청 물품 등록
     @Transactional
-    public boolean saveItem(ConsignRequestDto consignRequestDto) {
+    public boolean saveItem(ConsignRequestDto consignRequestDto, Member member) {
         try {
-            itemRepository.save(consignRequestDto.ConsignRequestDtoToEntity());
+            itemRepository.save(consignRequestDto.ConsignRequestDtoToEntity(member));
             return true;
         } catch (Exception e) {
 
@@ -42,9 +43,7 @@ public class ItemService {
 
     // 나의 위탁 물품 리스트 가져오기
     public MySaleResponseDto getMySales(Long memberId) {
-        List<MySaleResponseMapping> items = itemRepository.findItemsByMemberId(memberId);
-        List<MySaleResponseEntries> entries = items.stream().map(MySaleResponseEntries::new)
-                .collect(Collectors.toList());
+        List<MySaleResponseEntries> entries = itemRepository.findItemsByMemberId(memberId);
 
         return new MySaleResponseDto(entries);
     }
@@ -55,7 +54,10 @@ public class ItemService {
 
         NormalItemDetailResponseDto normalItemDetailResponseDto = normalBoardService.getItemDetail(itemId);
         NormalHistory forTopBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(normalItemDetailResponseDto.getAuctionId()).orElse(null);
-        Integer currentBid = forTopBid.getBidPrice();
+        Integer currentBid = 0; // 프론트에서 처리
+        if(forTopBid != null) {
+            currentBid = forTopBid.getBidPrice();
+        }
         return new MySaleDetailResponseDto(item, normalItemDetailResponseDto, currentBid);
     }
 
@@ -86,10 +88,10 @@ public class ItemService {
     }
 
     // 나의 낙찰 물품 리스트
-//    public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
-//        List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
-//
-//        return new MySuccessBidResponseDto(entries);
-//    }
+    public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
+        List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
+
+        return new MySuccessBidResponseDto(entries);
+    }
 
 }

@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class MySuccessBidEntries {
 
@@ -18,5 +17,13 @@ public class MySuccessBidEntries {
     private Type type;
     private Category category;
     private Integer successBidPrice;
+
+    public MySuccessBidEntries(Long itemId, String name, Type type, Category category, Integer successBidPrice) {
+        this.itemId = itemId;
+        this.name = name;
+        this.type = type;
+        this.category = category;
+        this.successBidPrice = successBidPrice;
+    }
 
 }

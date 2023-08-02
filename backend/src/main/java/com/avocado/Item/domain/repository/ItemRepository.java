@@ -1,6 +1,7 @@
 package com.avocado.Item.domain.repository;
 
 import com.avocado.Item.controller.dto.MyBidResponseEntries;
+import com.avocado.Item.controller.dto.MySaleResponseEntries;
 import com.avocado.Item.controller.dto.MySuccessBidEntries;
 import com.avocado.Item.domain.entity.Item;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -11,7 +12,12 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
     // 상품ID, 이름, 상태, 타입만 가져옴
-    List<MySaleResponseMapping> findItemsByMemberId(Long memberId);
+    @Query("SELECT NEW com.avocado.Item.controller.dto.MySaleResponseEntries" +
+            "(i.id, i.name, i.itemStatus, i.type) " +
+            "FROM item i " +
+            "JOIN member m ON i.member.id = :memberId ")
+            //"WHERE i.member.id = :memberId")
+    List<MySaleResponseEntries> findItemsByMemberId(@Param("memberId") Long memberId);
 
     @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
             "(i.id, nh.normalAuction.id, i.name, i.type, i.category, nh.bidPrice )" +
@@ -32,7 +38,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 //            "LEFT JOIN liveAuction la ON la.successMember = :memberId " +
 //            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL " +
 //            "OR i.type = com.avocado.Item.domain.entity.Type.LIVE ")
-//    List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
+    // 상시 테스트용 쿼리
+    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
+            "(i.id, i.name, i.type, i.category, na.successPrice) " +
+            "FROM item i " +
+            "JOIN normalAuction na ON na.successMember = :memberId " +
+            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL ")
+    List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
     
     
 // TODO : 아래 참고용 쿼리 추후에 지우기

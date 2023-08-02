@@ -3,6 +3,7 @@ package com.avocado.Item.controller;
 import com.avocado.Item.controller.dto.*;
 import com.avocado.Item.domain.entity.Type;
 import com.avocado.Item.service.ItemService;
+import com.avocado.member.domain.entity.Member;
 import com.avocado.member.service.AuthService;
 import com.avocado.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,10 @@ public class ItemController {
 
     // 위탁 요청 물품 등록
     @PostMapping("/consign")
-    public ResponseEntity<Void> save(@RequestBody @Valid ConsignRequestDto consignRequestDto) {
-        if (itemService.saveItem(consignRequestDto)) {
+    public ResponseEntity<Void> save(@RequestHeader("Authorization") String requestAccessToken, @RequestBody @Valid ConsignRequestDto consignRequestDto) {
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Member member = memberService.getMember(email);
+        if (itemService.saveItem(consignRequestDto, member)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -43,7 +46,6 @@ public class ItemController {
     // TODO : 예외 처리에 대한 고민해보기, 어느 단에서 분기를 해야할지 고민해보기
     @GetMapping("/my-sale/{itemId}/{type}")
     public MySaleDetailResponseDto mySaleDetail(@PathVariable(name = "itemId") Long itemId, @PathVariable(name = "type")String type) {
-        
         if(type.equals(Type.NORMAL.getKey())) {
             return itemService.getMyNormalSale(itemId);
         } else if (type.equals(Type.LIVE.getKey())) {
@@ -54,7 +56,7 @@ public class ItemController {
     }
     
     // 마이페이지 - 나의 입찰 상품 리스트 가져오기 (상시만)
-    @GetMapping("/my-bid/{type}")
+    @GetMapping("/my-bid")
     public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
@@ -68,8 +70,8 @@ public class ItemController {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 
-        //return itemService.getMySuccessBids(memberId);
-        return null;
+        return itemService.getMySuccessBids(memberId);
+        //return null;
     }
 
 }

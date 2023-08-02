@@ -1,8 +1,9 @@
 package com.avocado.Item.controller.dto;
 
+import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
 import com.avocado.Item.domain.entity.Type;
-import com.avocado.Item.domain.repository.MySaleResponseMapping;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,11 +16,11 @@ public class MySaleResponseEntries {
     private ItemStatus status;
     private Type type;
 
-    public MySaleResponseEntries(MySaleResponseMapping item) {
-        itemId = item.itemId();
-        name = item.name();
-        status = item.status();
-        type = item.type();
+    public MySaleResponseEntries(Long itemId, String name, ItemStatus itemStatus, Type type) {
+        this.itemId = itemId;
+        this.name = name;
+        this.status = itemStatus;
+        this.type = type;
     }
 
 }
