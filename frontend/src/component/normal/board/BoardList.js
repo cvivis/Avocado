@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from "react";
-import api from '../../../api';
 import { Link } from "react-router-dom";
-
-
+import api from '../../../api';
 
 function BoardList() {
-  const [boardLists, setBoardLists] = useState([]);
+  // Redux store의 searchResults 가져오기
+  const [boardLists,setBoardLists] = useState([]);
+
   useEffect(() => {
     // API 호출
     api.get("/normal/list")
       .then(response => {
         setBoardLists(response.data.entries);
+        // do something with response.data.entries if needed
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
   }, []);
-
-  console.log(boardLists);
-
 
   return (
     <ul>
@@ -31,7 +29,7 @@ function BoardList() {
             </tr>
           </thead>
           <tbody>
-            {boardLists.map((boardList) => (
+            {boardLists.map((boardList) => ( // searchResults가 비어있지 않은 경우에만 map 함수 사용
               <tr key={boardList.itemId}>
                 <td>{boardList.itemId}</td>
                 <td>
@@ -39,15 +37,13 @@ function BoardList() {
                     {boardList.name}
                   </Link>
                 </td>
-
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <Link to={`/normal/${boardList.id}`}>{boardList.name}</Link> */}
       </li>
     </ul>
-
   );
 }
+
 export default BoardList;
