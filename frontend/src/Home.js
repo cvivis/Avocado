@@ -24,7 +24,6 @@ function Home() {
         <h2>홈 화면</h2> 
         <input></input>
         <div className="nav-btn">
-          {/* 검색 결과에 따라서 SearchList 또는 BoardList를 보여줍니다. */}
       {searchResults.length === 0 ? <BoardList /> : <SearchList />}
         
         <button>

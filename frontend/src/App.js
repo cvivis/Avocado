@@ -4,7 +4,7 @@
 
 import Home from './Home';
 import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
-import Detail from './component/normal/board/detail';
+import Detail from './component/normal/board/Detail';
 import SearchList from './component/normal/board/SearchList';
 import BoardList from './component/normal/board/BoardList';
 import CategoryList from './component/normal/board/CategoryList';
