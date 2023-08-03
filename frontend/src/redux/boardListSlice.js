@@ -1,23 +1,25 @@
-// src/redux/searchSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
 import api from '../api';
 
 const initialState = {
-  boardLists : [],
+  boardLists: [],
+  initialLists: [],
 };
 
 const boardListSlice = createSlice({
   name: 'boardList',
   initialState,
   reducers: {
-    setBoardLists(state,action){
+    setBoardLists(state, action) {
       state.boardLists = action.payload;
+    },
+    setInitialLists(state, action) {
+      state.initialLists = action.payload;
     }
   },
 });
 
-export const { setBoardLists } = boardListSlice.actions;
+export const { setBoardLists, setInitialLists } = boardListSlice.actions;
 
 // 비동기 액션을 처리하는 thunk
 export const loadBoardList = () => async (dispatch) => {

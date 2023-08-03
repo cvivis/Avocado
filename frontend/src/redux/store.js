@@ -11,8 +11,8 @@ const store = configureStore({
     // search라는 이름으로 searchSlice.js에서 정의한 리듀서 등록
     // item : itemReducer,
     boardList: boardListReducer,
-    search : searchSlice,
-    category : categorySlice,
+    search: searchSlice,
+    category: categorySlice,
   },
 });
 

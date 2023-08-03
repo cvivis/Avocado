@@ -1,71 +1,53 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import api from "../../../api";
-// import { useDispatch, useSelector } from "react-redux";
-// import { setSearchResults } from "../../../redux/searchSlice";
-// import BoardList from "./BoardList";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchKeyword } from "../../../redux/searchSlice";
+import { setBoardLists } from "../../../redux/boardListSlice";
+import api from '../../../api';
 
-// function SearchList() {
-//   const [searchKeyword, setSearchKeyword] = useState('');
-//   const [isSearching, setIsSearching] = useState(false); // 검색 중인지 여부를 상태로 관리
-//   const dispatch = useDispatch();
-//   const searchResults = useSelector((state) => state.search);
+function SearchList() {
+  const searchKeyword = useSelector((state) => state.search.searchKeyword);
+  const dispatch = useDispatch();
+  const doSelect = useSelector((state) => state.category.doSelect);
+  const selectedCategory = useSelector((state) => state.category.selectedCategory);
+  const initialList = useSelector((state) => state.boardList.initialLists);
 
-//   const handleSearch = () => {     
-//     setIsSearching(true); // 검색 시작 시 isSearching 상태를 true로 변경
-//     // 검색 버튼 클릭 시 API 호출
-//     api.get(`/normal/list/search/${searchKeyword}`)
-//       .then(response => {
-//         dispatch(setSearchResults(response.data.entries));
-//         setIsSearching(false); // 검색 완료 시 isSearching 상태를 false로 변경
-//       })
-//       .catch(error => {
-//         console.error('API 요청 에러:', error);
-//         setIsSearching(false); // 검색 실패 시 isSearching 상태를 false로 변경
-//       });
-//   };
+  const handleSearch = useCallback(() => {
+    if (!doSelect && searchKeyword === '') {
+      dispatch(setBoardLists(initialList)); // 처음 리스트로 초기화
+    } else {
+      const categoryAPI = doSelect ? `/normal/list/sort-category?category=${selectedCategory}` : "/normal/list";
+      api.get(categoryAPI)
+        .then(response => {
+          const boardLists = response.data.entries.filter(item =>
+            item.name.toLowerCase().includes(searchKeyword.toLowerCase())
+          );
+          dispatch(setBoardLists(boardLists));
+        })
+        .catch(error => {
+          console.error('API 요청 에러:', error);
+        });
+    }
+  }, [dispatch, doSelect, searchKeyword, selectedCategory, initialList]);
 
-//   return (
-//     <div>
-//       <input 
-//         type="search" 
-//         placeholder="검색어를 입력하세요"
-//         value={searchKeyword}
-//         onChange={(e)=> setSearchKeyword(e.target.value)}
-//       />
-//       <button onClick={handleSearch}>검색</button>
-//       {isSearching ? (
-//         <p>검색 중...</p>
-//       ) : searchKeyword.length === 0 ? (
-//         <BoardList />
-//       ) : (
-//         <ul>
-//           {searchResults.map((searchList) => (
-//             <li key={searchList.itemId}>
-//               <table>
-//                 <thead>
-//                   <tr>
-//                     <th>아이디</th>
-//                     <th>상품명</th>
-//                   </tr>
-//                 </thead>
-//                 <tbody>
-//                   <tr>
-//                     <td>{searchList.itemId}</td>
-//                     <td>
-//                       <Link to={`/normal/detail/${searchList.itemId}`}>
-//                         {searchList.name}
-//                       </Link>
-//                     </td>
-//                   </tr>
-//                 </tbody>
-//               </table>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// }
+  const handleSearchInputChange = (e) => {
+    dispatch(setSearchKeyword(e.target.value));
+  };
 
-// export default SearchList;
+  const handleSearchButtonClick = () => {
+    handleSearch();
+  };
+
+  return (
+    <div>
+      <input
+        type="search"
+        placeholder="검색어를 입력하세요"
+        value={searchKeyword}
+        onChange={handleSearchInputChange}
+      />
+      <button onClick={handleSearchButtonClick}>검색</button>
+    </div>
+  );
+}
+
+export default SearchList;
