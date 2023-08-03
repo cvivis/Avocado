@@ -1,4 +1,3 @@
-import '../App.css';
 import { useState , useRef, useEffect} from 'react';
 import * as StompJs from '@stomp/stompjs';
 import * as BeforeNormalBid from './beforeNormalBid';
