@@ -1,28 +1,29 @@
 import api from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedCategory } from '../../../redux/categorySlice';
+import { setDoSelect, setSelectedCategory } from '../../../redux/categorySlice';
 import { setBoardLists } from '../../../redux/boardListSlice';
-import { useState } from 'react';
-import Modal from 'react-modal';
+// import { useState } from 'react';;
 // 백엔드 category를 파라미터로 받도록 수정해야함 => 쿼리스트링으로 해결
 
 function CategoryList() {
   const selectedCategory = useSelector((state) => state.category.selectedCategory);
+  
   // const BoardLists = useSelector((state) => state.boardList.boardLists);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleCategoryChange = (category) => {
     dispatch(setSelectedCategory(category));
   };
-  const handleOptionClick = () => {
-    setModalIsOpen(true); // "옵션" 버튼을 누르면 모달 창을 열도록 상태 변경
-  };
-  const handleCloseModal = () => {
-    setModalIsOpen(false); // 모달 창을 닫을 때 상태 변경
-  };
+  // const handleOptionClick = () => {
+  //   setModalIsOpen(true); // "옵션" 버튼을 누르면 모달 창을 열도록 상태 변경
+  // };
+  // const handleCloseModal = () => {
+  //   setModalIsOpen(false); // 모달 창을 닫을 때 상태 변경
+  // };
 
   const handleSearch = () => {
+    dispatch(setDoSelect());
     // 확인 버튼을 누를 때 선택한 토글 값을 사용하여 API 호출
     api.get(`/normal/list/sort-category?category=${selectedCategory}`)
     .then(response => {
@@ -33,20 +34,14 @@ function CategoryList() {
       });
   };
 
-  const handleConfirm = () => {
-    // 검색 실행 후 모달 닫기
-    handleSearch();
-    handleCloseModal();
-  };
+  // const handleConfirm = () => {
+  //   // 검색 실행 후 모달 닫기
+  //   handleSearch();
+  //   handleCloseModal();
+  // };
 
   return (
     <div>
-      <button onClick={handleOptionClick}>카테고리 설정</button>
-      <Modal
-      isOpen = { modalIsOpen}
-      onRequestClose={handleCloseModal}
-      ariaHideApp={false}
-      >
       <label>
         <input
           type="radio"
@@ -83,8 +78,7 @@ function CategoryList() {
         />
         CLOTHES
       </label>
-      <button onClick={handleConfirm}>확인</button>
-      </Modal>
+      {/* <button onClick={handleConfirm}>확인</button> */}
 
       
 
@@ -95,6 +89,7 @@ function CategoryList() {
           </li>
         ))}
       </ul> */}
+      <button onClick={handleSearch}>확인</button>
     </div>
   );
 }

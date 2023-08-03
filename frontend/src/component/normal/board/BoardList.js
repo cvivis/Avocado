@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from '../../../api';
 import { useDispatch, useSelector } from "react-redux";
@@ -7,15 +7,19 @@ import { setSearchKeyword } from "../../../redux/searchSlice";
 import CategoryList from "./CategoryList";
 
 function BoardList() {
-  
+
   // Redux store의 searchResults 가져오기
   const searchKeyword = useSelector((state) => state.search.searchKeyword);
   // const searchResults = useSelector((state) => state.search.searchResults);
   const boardLists = useSelector((state) => state.boardList.boardLists);
   const dispatch = useDispatch();
+  const doSelect = useSelector((state) => state.category.doSelect);
+  const selectedCategory = useSelector((state) => state.category.selectedCategory);
+
+  const [filteredList, setFilteredList] = useState([]);
 
   const handleSearch = () => {
-    if (searchKeyword === '') {
+    if (searchKeyword === '' && !doSelect) {
       // 검색어가 비어있을 때 전체 물품 리스트를 보여줌
       api.get("/normal/list")
         .then(response => {
@@ -24,12 +28,29 @@ function BoardList() {
         .catch(error => {
           console.error('API 요청 에러:', error);
         });
-    } else {
+    } else if (searchKeyword !== '' && !doSelect) {
       // 검색어가 있을 때 검색 결과를 보여줌
       api.get(`/normal/list/search/${searchKeyword}`)
         .then(response => {
           dispatch(setBoardLists(response.data.entries));
         })
+        .catch(error => {
+          console.error('API 요청 에러:', error);
+        });
+    }
+
+    else if (searchKeyword !== '' && doSelect) {
+      // 검색어가 있을 때 검색 결과를 보여줌
+      const filteredList = boardLists.filter(item =>
+        item.name.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      setFilteredList(filteredList);
+    }else{
+      // 선택한 카테고리에 해당하는 API 호출
+      api.get(`/normal/list/sort-category?category=${selectedCategory}`)
+      .then(response => {
+        dispatch(setBoardLists(response.data.entries));
+      })
         .catch(error => {
           console.error('API 요청 에러:', error);
         });
@@ -49,12 +70,12 @@ function BoardList() {
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
-  }, [dispatch]);
+  }, [dispatch, doSelect]);
 
-
+  console.log(doSelect);
   return (
     <div>
-      <CategoryList/>
+      <CategoryList />
       <div>
         <input
           type="search"
@@ -74,16 +95,23 @@ function BoardList() {
               </tr>
             </thead>
             <tbody>
-              {boardLists.map((boardList) => (
-                <tr key={boardList.itemId}>
-                  <td>{boardList.itemId}</td>
-                  <td>
-                    <Link to={`/normal/detail/${boardList.itemId}`}>
-                      {boardList.name}
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+              {filteredList.length > 0
+                ? filteredList.map((item) => (
+                  <tr key={item.itemId}>
+                    <td>{item.itemId}</td>
+                    <td>
+                      <Link to={`/normal/detail/${item.itemId}`}>{item.name}</Link>
+                    </td>
+                  </tr>
+                ))
+                : boardLists.map((item) => (
+                  <tr key={item.itemId}>
+                    <td>{item.itemId}</td>
+                    <td>
+                      <Link to={`/normal/detail/${item.itemId}`}>{item.name}</Link>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </li>
