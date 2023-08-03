@@ -9,7 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity(name= "liveAuction")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

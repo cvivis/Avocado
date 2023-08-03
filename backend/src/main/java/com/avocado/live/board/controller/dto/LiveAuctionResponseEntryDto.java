@@ -19,8 +19,8 @@ public class LiveAuctionResponseEntryDto {
     private  Integer instantPrice;
     private Integer status; // 경매 진행 상태
 
-    public LiveAuctionResponseEntryDto(Long itemId, String name, Integer hopePrice, Category category, Integer instantPrice, Integer status ){
-        this.auctionId=itemId;
+    public LiveAuctionResponseEntryDto(Long auctionId, String name, Integer hopePrice, Category category, Integer instantPrice, Integer status ){
+        this.auctionId=auctionId;
         this.name=name;
         this.hopePrice=hopePrice;
         this.category=category;

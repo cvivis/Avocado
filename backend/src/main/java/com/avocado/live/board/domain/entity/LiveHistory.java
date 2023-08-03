@@ -7,7 +7,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity(name= "liveHistory")
+@Entity
 @NoArgsConstructor
 @Builder
 @Getter

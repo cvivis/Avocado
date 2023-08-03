@@ -37,20 +37,11 @@ public class LiveBoardService {
         return broadcastResponseDto;
     }
 
-    //라이브 방송 경매 리스트 반환
-    public LiveAuctionResponseDto getLiveAuctionsByBroadcastId(Long broadcastId){
-
-            List<LiveAuction> liveAuctionList = liveAuctionRepository.findByBroadcast_Id(broadcastId).orElse(null);
-            if(Collections.isEmpty(liveAuctionList))return null;
-
-            LiveAuctionResponseDto liveAuctionResponseDto = new LiveAuctionResponseDto (liveAuctionList.stream().map(liveAuction -> LiveAuctionResponseEntryDto.builder()
-                    .auctionId(liveAuction.getId())
-                    .name(liveAuction.getItem().getName())
-                    .hopePrice(liveAuction.getItem().getHopePrice())
-                    .category(liveAuction.getItem().getCategory())
-                    .instantPrice(liveAuction.getItem().getInstantPrice())
-                    .status(liveAuction.getStatus())
-                    .build()).collect(Collectors.toList()));
+    public LiveAuctionResponseDto getLiveAuctions(Long broadcast_id){
+        List<LiveAuctionResponseEntryDto> liveAuctionResponseEntryDtos = liveAuctionRepository.findLiveAuctionByBroadcastId(broadcast_id);
+        LiveAuctionResponseDto  liveAuctionResponseDto = new LiveAuctionResponseDto(liveAuctionResponseEntryDtos);
         return liveAuctionResponseDto;
     }
+
+
 }

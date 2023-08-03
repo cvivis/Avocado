@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/live")
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class LiveBoardController {
 
     private final LiveBoardService liveBoardService;
@@ -33,7 +33,8 @@ public class LiveBoardController {
     //방송 상세 경매 리스트
     @GetMapping("/list/{broadcast_id}")
     public ResponseEntity<?> searchLiveAuctionList(@PathVariable Long broadcast_id){
-        LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctionsByBroadcastId(broadcast_id);
+        LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctions(broadcast_id);
         return ResponseEntity.ok().body(liveAuctionList);
     }
+
 }
