@@ -1,5 +1,6 @@
 package com.avocado.live.board.controller;
 
+import com.avocado.live.board.controller.dto.BroadcastLiveAuctionResponseDto;
 import com.avocado.live.board.controller.dto.BroadcastResponseDto;
 import com.avocado.live.board.controller.dto.LiveAuctionResponseDto;
 import com.avocado.live.board.service.LiveBoardService;
@@ -35,6 +36,12 @@ public class LiveBoardController {
     public ResponseEntity<?> searchLiveAuctionList(@PathVariable Long broadcast_id){
         LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctions(broadcast_id);
         return ResponseEntity.ok().body(liveAuctionList);
+    }
+
+    @GetMapping("/list/{broadcast_id}/info")
+    public ResponseEntity<?> aboutBroadcast(@PathVariable Long broadcast_id){
+        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = liveBoardService.getBroadcastAuctionsList(broadcast_id);
+        return ResponseEntity.ok().body(broadcastLiveAuctionResponseDto);
     }
 
 }

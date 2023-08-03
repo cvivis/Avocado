@@ -1,10 +1,7 @@
 package com.avocado.live.board.service;
 
 
-import com.avocado.live.board.controller.dto.LiveAuctionResponseDto;
-import com.avocado.live.board.controller.dto.LiveAuctionResponseEntryDto;
-import com.avocado.live.board.controller.dto.BroadcastResponseDto;
-import com.avocado.live.board.controller.dto.BroadcastResponseEntryDto;
+import com.avocado.live.board.controller.dto.*;
 import com.avocado.live.board.domain.entity.LiveAuction;
 import com.avocado.live.board.domain.repository.LiveAuctionRepository;
 import com.avocado.live.broadcast.domain.Broadcast;
@@ -37,11 +34,19 @@ public class LiveBoardService {
         return broadcastResponseDto;
     }
 
+    //방송 id에 해당하는 경매 리스트 반환
     public LiveAuctionResponseDto getLiveAuctions(Long broadcast_id){
         List<LiveAuctionResponseEntryDto> liveAuctionResponseEntryDtos = liveAuctionRepository.findLiveAuctionByBroadcastId(broadcast_id);
         LiveAuctionResponseDto  liveAuctionResponseDto = new LiveAuctionResponseDto(liveAuctionResponseEntryDtos);
         return liveAuctionResponseDto;
     }
 
+
+    //방송 중인 경매 리스트
+    public BroadcastLiveAuctionResponseDto getBroadcastAuctionsList(Long broacast_id){
+        List<BroadcastLiveAuctionResponseEntryDto> broadcastLiveAuctionResponseEntryDtos = liveAuctionRepository.findBroadcastLiveAuctionsById(broacast_id);
+        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = new BroadcastLiveAuctionResponseDto(broadcastLiveAuctionResponseEntryDtos);
+        return broadcastLiveAuctionResponseDto;
+    }
 
 }
