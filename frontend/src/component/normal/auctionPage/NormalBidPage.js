@@ -3,7 +3,8 @@ import Header from "../../../common/Header";
 import Footer from "../../../common/Footer";
 import { 
     Box, Center,
-    Grid,FormControl, Input, FormHelperText, IconButton, HStack,
+    Grid,FormControl, Input, FormHelperText, IconButton, 
+    HStack, VStack, Spacer,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons"
 import MyCard from "../../../common/MyCard";
@@ -14,7 +15,10 @@ function NormalBidPage() {
     return (
         <Box>
             <Header></Header>
+            <Box h={50}></Box>
+            <VStack>
             <MySearchBar></MySearchBar>
+            <Spacer />
             <Box display="flex" justifyContent="space-between">
                 <Center></Center>
                 <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
@@ -27,6 +31,7 @@ function NormalBidPage() {
                 </Grid>
                 <Center></Center>
             </Box>
+            </VStack>
             <Footer></Footer>
         </Box>
     )
