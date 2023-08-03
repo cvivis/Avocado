@@ -21,6 +21,7 @@ function Home() {
   return (
     
       <div>
+        
         <h2>홈 화면</h2> 
         <input></input>
         <div className="nav-btn">

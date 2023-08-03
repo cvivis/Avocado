@@ -9,22 +9,23 @@ import SearchList from './component/normal/board/SearchList';
 import BoardList from './component/normal/board/BoardList';
 import CategoryList from './component/normal/board/CategoryList';
 import MyPage from './component/member/MyPage';
+import NormalBidPage from './component/normal/auctionPage/NormalBidPage';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/normal/list/search/:keyword" element = {<SearchList/>}></Route>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/normal/list" element={<BoardList />}></Route>
-          <Route path="/normal/detail/:id" element={<Detail />}></Route>
-          <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
-          <Route path="/member/myPage" element={<MyPage />}></Route>
-        </Routes>
-      </div>
-    </Router>
-
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/normal/list/search/:keyword" element = {<SearchList/>}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/normal/list" element={<BoardList />}></Route>
+            <Route path="/normal/detail/:id" element={<Detail />}></Route>
+            <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
+            <Route path="/member/myPage" element={<MyPage />}></Route>
+            <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route>
+          </Routes>
+        </div>
+      </Router>
   );
 }
 
