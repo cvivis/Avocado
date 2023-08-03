@@ -1,29 +1,52 @@
-import React, { useState } from 'react';
 import api from '../../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedCategory } from '../../../redux/categorySlice';
+import { setBoardLists } from '../../../redux/boardListSlice';
+import { useState } from 'react';
+import Modal from 'react-modal';
 // 백엔드 category를 파라미터로 받도록 수정해야함 => 쿼리스트링으로 해결
 
 function CategoryList() {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [searchLists, setSearchLists] = useState([]);
+  const selectedCategory = useSelector((state) => state.category.selectedCategory);
+  // const BoardLists = useSelector((state) => state.boardList.boardLists);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
+    dispatch(setSelectedCategory(category));
+  };
+  const handleOptionClick = () => {
+    setModalIsOpen(true); // "옵션" 버튼을 누르면 모달 창을 열도록 상태 변경
+  };
+  const handleCloseModal = () => {
+    setModalIsOpen(false); // 모달 창을 닫을 때 상태 변경
   };
 
   const handleSearch = () => {
     // 확인 버튼을 누를 때 선택한 토글 값을 사용하여 API 호출
     api.get(`/normal/list/sort-category?category=${selectedCategory}`)
-      .then(response => {
-        setSearchLists(response.data.entries);
-      })
+    .then(response => {
+      dispatch(setBoardLists(response.data.entries));
+    })
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
   };
 
+  const handleConfirm = () => {
+    // 검색 실행 후 모달 닫기
+    handleSearch();
+    handleCloseModal();
+  };
+
   return (
     <div>
-      {/* 토글 선택 */}
+      <button onClick={handleOptionClick}>카테고리 설정</button>
+      <Modal
+      isOpen = { modalIsOpen}
+      onRequestClose={handleCloseModal}
+      ariaHideApp={false}
+      >
       <label>
         <input
           type="radio"
@@ -60,18 +83,18 @@ function CategoryList() {
         />
         CLOTHES
       </label>
+      <button onClick={handleConfirm}>확인</button>
+      </Modal>
 
-      {/* 확인 버튼 */}
-      <button onClick={handleSearch}>확인</button>
+      
 
-      {/* 검색 결과 출력 */}
-      <ul>
-        {searchLists.map((searchList) => (
-          <li key={searchList.itemId}>
-            {searchList.name}
+      {/* <ul>
+        {BoardLists.map((BoardList) => (
+          <li key={BoardList.itemId}>
+            {BoardList.name}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }
