@@ -17,9 +17,10 @@ public class NormalItemDetailResponseDto {
 //    private TopBidMemberResponse topBidMember;
     private Date startAt;
     private Date endAt;
+    private Integer successPrice;
 
     public NormalItemDetailResponseDto(Long auctionId, Long itemId, String name, String content,
-                                       Integer hopePrice, Date startAt, Date endAt) {
+                                       Integer hopePrice, Date startAt, Date endAt, Integer successPrice) {
         this.auctionId=auctionId;
         this.itemId = itemId;
         this.name = name;
@@ -27,5 +28,6 @@ public class NormalItemDetailResponseDto {
         this.hopePrice = hopePrice;
         this.startAt = startAt;
         this.endAt = endAt;
+        this.successPrice = successPrice;
     }
 }
