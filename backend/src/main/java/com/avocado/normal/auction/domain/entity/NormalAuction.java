@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
+@Setter
 public class NormalAuction extends BaseTimeEntity {
 
     @Id
@@ -26,7 +28,7 @@ public class NormalAuction extends BaseTimeEntity {
     private List<NormalHistory> normalHistory;
 
 
-//    private Long successMember
+//    private Long successMember;
 
     private Integer successPrice;
 
