@@ -10,6 +10,7 @@ import BoardList from './component/normal/board/BoardList';
 import CategoryList from './component/normal/board/CategoryList';
 import MyPage from './component/member/MyPage';
 import NormalBidPage from './component/normal/auctionPage/NormalBidPage';
+import LogIn from './component/member/LogIn';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
             <Route path="/member/myPage" element={<MyPage />}></Route>
             <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route>
+            <Route path="/member/LogIn" element={<LogIn />}></Route>
           </Routes>
         </div>
       </Router>

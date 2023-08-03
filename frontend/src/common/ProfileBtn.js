@@ -15,7 +15,9 @@ function ProfileBtn() {
             <MenuItem>
                 <Link to="/member/MyPage">My Page</Link>
             </MenuItem>
-            <MenuItem>Log In</MenuItem>
+            <MenuItem>
+                <Link to="/member/LogIn">Log In</Link>
+            </MenuItem>
             <MenuItem>Log Out</MenuItem>
             {/* </MenuGroup>
             <MenuDivider />
