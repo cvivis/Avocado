@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 import Detail from './component/normal/board/detail';
 import Search from './component/normal/board/search';
 import BoardList from './component/normal/board/boardList';
+import OnlineMeeting from "./component/openvidu/OnlineMeeting"
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/normal/list" element={<BoardList />}></Route>
           <Route path="/normal/detail/:id" element={<Detail />}></Route>
-        
+          <Route path="/openvidu" element={<OnlineMeeting />}></Route>
         </Routes>
       </div>
     </Router>
