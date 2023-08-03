@@ -3,6 +3,8 @@ import "../App.css";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
+
+
 function TimeCheck() {
   const [day, setDay] = useState(); // 남은 시간 (단위: 날)
   const [hour, setHour] = useState(); // 남은 시간 (단위: 시)
@@ -11,6 +13,8 @@ function TimeCheck() {
   const [date, setDate] = useState(); // 남은 시간 (단위: 경매 마감 날짜)
   const [time, setTime] = useState(); // 남은 시간 (단위: )
   const dateForm = "YYYY-MM-DD HH:mm:ss";
+
+  
 
   useEffect(() => {
     const json = "2023-07-31  10:20:00"; // 마감데이터 받아오기 
@@ -27,7 +31,7 @@ function TimeCheck() {
       const now = dayjs(); // 현재 시간 
       let diff = temp.diff(now); // 마감시간과 현재 시간 차이 구하기 
       if(diff <= 0){
-        console.log("마감");
+        console.log("마감"); // 낙찰
         setDay("--");
         setHour("--");
         setHour("--");
