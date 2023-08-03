@@ -40,7 +40,7 @@ public class LiveBoardController {
 
     @GetMapping("/list/{broadcast_id}/info")
     public ResponseEntity<?> aboutBroadcast(@PathVariable Long broadcast_id){
-        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = liveBoardService.getBroadcastAuctionsList(broadcast_id);
+        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = liveBoardService.getLiveAuctionListByBroadcastId(broadcast_id);
         return ResponseEntity.ok().body(broadcastLiveAuctionResponseDto);
     }
 

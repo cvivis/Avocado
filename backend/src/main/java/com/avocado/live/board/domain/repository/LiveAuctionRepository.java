@@ -26,6 +26,8 @@ public interface LiveAuctionRepository extends JpaRepository <LiveAuction, Long>
             "where la.broadcast.id = :id")
     List<BroadcastLiveAuctionResponseEntryDto> findBroadcastLiveAuctionsById(@Param ("id")Long id);
 
+    Optional<List<LiveAuction>> findByBroadcast_Id(Long broadcastId);
+
 
 
 

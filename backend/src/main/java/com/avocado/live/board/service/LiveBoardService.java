@@ -43,10 +43,24 @@ public class LiveBoardService {
 
 
     //방송 중인 경매 리스트
-    public BroadcastLiveAuctionResponseDto getBroadcastAuctionsList(Long broacast_id){
-        List<BroadcastLiveAuctionResponseEntryDto> broadcastLiveAuctionResponseEntryDtos = liveAuctionRepository.findBroadcastLiveAuctionsById(broacast_id);
-        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = new BroadcastLiveAuctionResponseDto(broadcastLiveAuctionResponseEntryDtos);
-        return broadcastLiveAuctionResponseDto;
+//    public BroadcastLiveAuctionResponseDto getBroadcastAuctionsList(Long broacast_id){
+//        List<BroadcastLiveAuctionResponseEntryDto> broadcastLiveAuctionResponseEntryDtos = liveAuctionRepository.findBroadcastLiveAuctionsById(broacast_id);
+//        BroadcastLiveAuctionResponseDto broadcastLiveAuctionResponseDto = new BroadcastLiveAuctionResponseDto(broadcastLiveAuctionResponseEntryDtos);
+//        return broadcastLiveAuctionResponseDto;
+//    }
+
+    public BroadcastLiveAuctionResponseDto getLiveAuctionListByBroadcastId(Long broadcastId) {
+        List<LiveAuction> liveAuctionList = liveAuctionRepository.findByBroadcast_Id(broadcastId).orElse(null);
+        if(Collections.isEmpty(liveAuctionList)) return null;
+        return new BroadcastLiveAuctionResponseDto(liveAuctionList.stream().map(
+                liveAuction -> BroadcastLiveAuctionResponseEntryDto.builder()
+                        .auctionId(liveAuction.getId())
+                        .highestPrice(liveAuction.getSuccessPrice())
+                        .itemName(liveAuction.getItem().getName())
+                        .startPrice(liveAuction.getItem().getHopePrice())
+                        .currentMemberEmail(liveAuction.getEmail())
+                        .status(liveAuction.getStatus()).build()
+        ).collect(Collectors.toList()));
     }
 
 }
