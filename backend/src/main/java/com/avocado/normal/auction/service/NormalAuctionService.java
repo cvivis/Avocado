@@ -74,7 +74,7 @@ public class NormalAuctionService {
         log.info("topBid : "+topBid);
         NormalBidResponseDto normalBidResponseDto = NormalBidResponseDto.builder()
                 .id(topBid.getId())
-                .lastBidAt(topBid.getCreatedAt().toLocalDateTime())
+//                .lastBidAt(topBid.getCreatedAt().toLocalDateTime())
                 .email(topBid.getMember().getEmail())
                 .price(topBid.getBidPrice())
                 .build();
