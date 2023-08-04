@@ -1,17 +1,26 @@
-// src/redux/searchSlice.js
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  searchKeyword: '',
+};
 
 const searchSlice = createSlice({
-  name: "search",
-  initialState: [], // initialState를 빈 배열로 수정
+  name: 'search',
+  initialState,
   reducers: {
-    setSearchResults: (state, action) => {
-      return action.payload;
+
+    setSearchKeyword(state, action) {
+      state.searchKeyword = action.payload;
+    },
+    resetSearchKeyword(state) {
+      state.searchKeyword = '';
     },
   },
 });
 
-export const { setSearchResults } = searchSlice.actions;
+export const {
+  setSearchKeyword,
+  resetSearchKeyword, // 추가된 액션
+} = searchSlice.actions;
 
 export default searchSlice.reducer;
-
