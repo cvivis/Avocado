@@ -4,8 +4,6 @@ import com.avocado.Item.domain.entity.Category;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseEntryDto;
-import com.avocado.normal.entity.Category;
-import com.avocado.normal.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
