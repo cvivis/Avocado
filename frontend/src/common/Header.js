@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { resetSearchKeyword } from "../redux/searchSlice";
 import api from "../api";
-import { setBoardLists } from "../redux/boardListSlice";
+import { setFilterList } from "../redux/boardListSlice";
 import { setDoSelect, setSelectedCategory } from "../redux/categorySlice";
 
 function Header() {
@@ -14,7 +14,7 @@ function Header() {
     dispatch(setDoSelect(false)); // 선택 여부 초기화
     api.get("/normal/list")
       .then(response => {
-        dispatch(setBoardLists(response.data.entries));
+        dispatch(setFilterList(response.data.entries));
         // do something with response.data.entries if needed
       })
       .catch(error => {

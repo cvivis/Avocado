@@ -4,17 +4,17 @@ import api from '../../../api';
 import { useDispatch, useSelector } from "react-redux";
 import CategoryList from "./CategoryList";
 import SearchList from "./SearchList";
-import { setBoardLists, setInitialLists } from "../../../redux/boardListSlice";
+import { setBoardList,setFilterList } from "../../../redux/boardListSlice";
 
 function BoardList() {
   const dispatch = useDispatch();
-  const boardLists = useSelector((state) => state.boardList.boardLists);
+  const filterList = useSelector((state) => state.boardList.filterList);
 
   useEffect(() => {
     api.get("/normal/list")
       .then(response => {
-        dispatch(setBoardLists(response.data.entries));
-        dispatch(setInitialLists(response.data.entries));
+        dispatch(setBoardList(response.data.entries));
+        dispatch(setFilterList(response.data.entries));
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
@@ -26,7 +26,7 @@ function BoardList() {
       <CategoryList />
       <SearchList />
       <ul>
-        {boardLists.map((item) => (
+        {filterList.map((item) => (
           <li key={item.itemId}>
             <Link to={`/normal/detail/${item.itemId}`}>{item.name}</Link>
           </li>
