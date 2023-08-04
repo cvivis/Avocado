@@ -9,6 +9,7 @@ import CategoryList from './component/normal/board/CategoryList';
 import MyPage from './component/member/MyPage';
 import NormalBidPage from './component/normal/auctionPage/NormalBidPage';
 import LogIn from './component/member/LogIn';
+import Regist from './component/member/Regist';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
@@ -28,6 +29,7 @@ function App() {
             <Route path="/member/myPage" element={<MyPage />}></Route>
             <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route>
             <Route path="/member/LogIn" element={<LogIn />}></Route>
+            <Route path="/member/Regist" element={<Regist />}></Route>
           </Routes>
         </div>
       </Router>

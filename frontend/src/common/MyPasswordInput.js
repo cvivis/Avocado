@@ -6,7 +6,7 @@ import {
     LockIcon, ViewIcon, ViewOffIcon,
 } from '@chakra-ui/icons'
 
-function MyPasswordInput() {
+function MyPasswordInput(props) {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
   
@@ -18,7 +18,7 @@ function MyPasswordInput() {
         <Input
           pr='4.5rem'
           type={show ? 'text' : 'password'}
-          placeholder='비밀번호'
+          placeholder={props.MyPlaceholder}
         />
         <InputRightElement width='4.5rem'>
           <Button h='1.75rem' size='sm' onClick={handleClick}>
