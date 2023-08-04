@@ -5,7 +5,6 @@ import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseDto;
 import com.avocado.normal.board.controller.dto.NormalResponseEntryDto;
 import com.avocado.normal.board.domain.repository.NormalBoardRepository;
-import com.avocado.normal.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
