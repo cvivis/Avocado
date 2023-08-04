@@ -5,8 +5,8 @@ import * as BeforeNormalBid from './beforeNormalBid';
 
 
 function NormalBid(props){
-  const [stateChanger,setStateChanger] = useState(true);
-  const [hopePrice,setHopePrice] = useState(10000);
+  // const [stateChanger,setStateChanger] = useState(true);
+  const [hopePrice] = useState(10000);
   const [bidInfo, setBidInfo] = useState({
     nowPrice : props.nowPrice,
     myPrice : props.nowPrice + BeforeNormalBid.setBidPlus(props.nowPrice),

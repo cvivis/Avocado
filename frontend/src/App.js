@@ -9,10 +9,12 @@ import CategoryList from './component/normal/board/CategoryList';
 // import NormalBid from './component/normal/auction/normalBid';
 import Header from './common/Header';
 import Footer from './common/Footer';
+import Login from './component/member/Login';
+import Signup from './component/member/Signup';
 
 function App() {
-  const nowPrice = 10000;
-  const nowBidName = "홍길동";
+  // const nowPrice = 10000;
+  // const nowBidName = "홍길동";
 
   return (
 
@@ -30,6 +32,9 @@ function App() {
           <Route path="/normal/list" element={<BoardList />}></Route>
           <Route path="/normal/detail/:id" element={<Detail />}></Route>
           <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
+          <Route path="/member/login" element={<Login />}></Route>
+          <Route path="/member/signup" element={<Signup />}></Route>
+          
         </Routes>
       </div>
       <footer>

@@ -35,19 +35,17 @@ function Header() {
         <Link to="/normal/list"> 상시 경매 리스트 </Link>
       </button>
 
+      <button>
+        <Link to="/member/login">로그인</Link>
+      </button>
+      <button>
+        <Link to="/member/signup">회원가입</Link>
+      </button>
+
       {/* 로그인 유저 판별해서 로그인 회원가입을 만들지,마이페이지 로그아웃을 만들지 결정 */}
       <button>
         라이브 경매 리스트
       </button>
-
-      <button>
-        로그인
-      </button>
-
-      <button>
-        회원가입
-      </button>
-
 
     </div>
 
