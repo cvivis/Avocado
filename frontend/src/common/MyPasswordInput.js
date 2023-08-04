@@ -11,7 +11,7 @@ function MyPasswordInput() {
     const handleClick = () => setShow(!show)
   
     return (
-      <InputGroup size='md'>
+      <InputGroup size='lg'>
         <InputLeftElement pointerEvents='none'>
             <LockIcon color='gray.300' />
         </InputLeftElement>
