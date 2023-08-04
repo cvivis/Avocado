@@ -189,14 +189,6 @@ class OnlineMeeting extends Component {
 
                         </div>
                     ) : null}
-                    <div id="video-container" className="col-md-6">
-                        {this.state.subscribers.map((sub, i) => (
-                            <div key={sub.id} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                                <span>{sub.id}</span>
-                                <UserVideoComponent streamManager={sub} />
-                            </div>
-                        ))}
-                    </div>
                 </div>
                 ) : null}
             </div>
