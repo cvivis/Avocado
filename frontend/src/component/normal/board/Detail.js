@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from '../../../api';
 import { useParams } from "react-router-dom";
-// import NormalBid from "../auction/normalBid";
 
+import NormalBid from "../auction/normalBid";
 function Detail() {
-  // <NormalBid></NormalBid>
+  const nowPrice = 10000;
+  const nowBidName = "홍길동";
   const { id } = useParams();
   const [boardDetail, setboardDetail] = useState('');
   useEffect(() => {
@@ -21,7 +22,8 @@ function Detail() {
 
 
   return (
-    <ul>
+    <div>
+       <ul>
       <li>
         <table>
           <thead>
@@ -42,6 +44,15 @@ function Detail() {
         {/* <Link to={`/normal/${boardList.id}`}>{boardList.name}</Link> */}
       </li>
     </ul>
+      <div>
+          <NormalBid applyId="1" userId="1" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
+          <NormalBid applyId="1" userId="2" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
+          <NormalBid applyId="1" userId="3" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
+          <p>-------------------------------------------------</p>
+        </div>
+
+    </div>
+   
 
   );
 }

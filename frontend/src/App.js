@@ -1,8 +1,6 @@
 
 // import logo from './logo.svg';
 // import './App.css';
-
-
 import Home from './Home';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Detail from './component/normal/board/Detail';
@@ -13,6 +11,9 @@ import Header from './common/Header';
 import Footer from './common/Footer';
 
 function App() {
+  const nowPrice = 10000;
+  const nowBidName = "홍길동";
+
   return (
 
     <Router>
@@ -23,6 +24,7 @@ function App() {
 
       </div>
       <div className="App">
+
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/normal/list" element={<BoardList />}></Route>
