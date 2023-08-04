@@ -1,48 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from '../../../api';
+import { useDispatch, useSelector } from "react-redux";
+import CategoryList from "./CategoryList";
+import SearchList from "./SearchList";
+import { setBoardList,setFilterList } from "../../../redux/boardListSlice";
 
 function BoardList() {
-  // Redux store의 searchResults 가져오기
-  const [boardLists,setBoardLists] = useState([]);
+  const dispatch = useDispatch();
+  const filterList = useSelector((state) => state.boardList.filterList);
 
   useEffect(() => {
-    // API 호출
     api.get("/normal/list")
       .then(response => {
-        setBoardLists(response.data.entries);
-        // do something with response.data.entries if needed
+        dispatch(setBoardList(response.data.entries));
+        dispatch(setFilterList(response.data.entries));
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
-  }, []);
+  }, [dispatch]);
 
   return (
-    <ul>
-      <li>
-        <table>
-          <thead>
-            <tr>
-              <th>아이디</th>
-              <th>상품명</th>
-            </tr>
-          </thead>
-          <tbody>
-            {boardLists.map((boardList) => ( // searchResults가 비어있지 않은 경우에만 map 함수 사용
-              <tr key={boardList.itemId}>
-                <td>{boardList.itemId}</td>
-                <td>
-                  <Link to={`/normal/detail/${boardList.itemId}`}>
-                    {boardList.name}
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </li>
-    </ul>
+    <div>
+      <CategoryList />
+      <SearchList />
+      <ul>
+        {filterList.map((item) => (
+          <li key={item.itemId}>
+            <Link to={`/normal/detail/${item.itemId}`}>{item.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
