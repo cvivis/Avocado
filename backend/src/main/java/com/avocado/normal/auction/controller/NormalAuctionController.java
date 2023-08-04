@@ -12,6 +12,9 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +31,9 @@ public class NormalAuctionController {
     @MessageMapping("/normal/{id}")
     public void normalBid(@DestinationVariable("id") Long id, NormalBidRequestDto normalBidRequest) {
         log.info(normalBidRequest.toString());
+
         NormalBidResponseDto topBid = normalAuctionService.doBid(normalBidRequest);
+
         simpMessagingTemplate.convertAndSend("/sub/normal/" + id, topBid);
     }
 
