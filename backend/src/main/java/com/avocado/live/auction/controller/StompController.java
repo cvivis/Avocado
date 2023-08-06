@@ -1,10 +1,12 @@
 package com.avocado.live.auction.controller;
 
+import com.avocado.live.auction.controller.dto.ChatDto;
 import com.avocado.live.auction.service.BidService;
 import com.avocado.live.board.domain.entity.LiveAuction;
 import com.avocado.live.auction.controller.dto.AuctionOnAndOffDto;
 import com.avocado.live.auction.controller.dto.BidDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -14,6 +16,7 @@ import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class StompController {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -34,6 +37,7 @@ public class StompController {
         }
         else if(status == 2) {
             //경매 종료
+            //TODO : item 테이블 업데이트(유찰,낙찰)
             LiveAuction liveAuction = bidService.liveAuctionStop(auctionOnAndOffDto.getAuctionId());
             if(!Objects.isNull(liveAuction)) {
                 auctionOnAndOffDto.setTitle(liveAuction.getItem().getName());
@@ -67,4 +71,9 @@ public class StompController {
 
 
     //TODO : 채팅 기능 -> openvidu or websocket 아직 미정
+    @MessageMapping("/chat")
+    public void chat(ChatDto chatDto) {
+        log.info("[StompController chat] chatDto: {}", chatDto.getBroadcastId());
+        simpMessagingTemplate.convertAndSend("/sub/chat/"+chatDto.getBroadcastId(),chatDto);
+    }
 }

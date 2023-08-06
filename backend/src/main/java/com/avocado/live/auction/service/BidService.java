@@ -28,7 +28,7 @@ public class BidService {
     @Transactional
     public LiveAuction liveAuctionBegin(Long id) {
         LiveAuction liveAuction = liveAuctionRepository.findById(id).orElse(null);
-        if(Objects.isNull(liveAuction)) return null;
+        if(Objects.isNull(liveAuction) || liveAuction.getStatus() != 0) return null;
         liveAuction.setStatus(1);
         return liveAuctionRepository.save(liveAuction);
     }
@@ -38,7 +38,7 @@ public class BidService {
     @Transactional
     public LiveAuction liveAuctionStop(Long id) {
         LiveAuction liveAuction = liveAuctionRepository.findById(id).orElse(null);
-        if(Objects.isNull(liveAuction)) return null;
+        if(Objects.isNull(liveAuction) || liveAuction.getStatus() != 1) return null;
         liveAuction.setStatus(2);
         return liveAuctionRepository.save(liveAuction);
     }
