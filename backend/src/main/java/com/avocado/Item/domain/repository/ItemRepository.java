@@ -84,7 +84,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "WHERE i.itemStatus = :itemStatus and i.type = :type")
     List<NormalItemApproveResponseEntry> findByItemApproveAndType(ItemStatus itemStatus, Type type);
 
-    @Query("SELECT new com.avocado.admin.controller.dto.normal.NormalItemAssignResponseEntry(i.id, i.member.id,i.name, i.hopePrice, i.category, i.createdAt,i.startAt,i.endAt) " +
+    @Query("SELECT new com.avocado.admin.controller.dto.normal.NormalItemAssignResponseEntry(i.id, i.member.id,i.name, i.hopePrice, i.category, i.createdAt,na.startAt,na.endAt) " +
             "FROM item as i " +
             "JOIN normalAuction as na " +
             "ON i.id = na.item.id " +

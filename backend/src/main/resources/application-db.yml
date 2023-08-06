@@ -21,7 +21,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/avocado?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: ssafy
+    password: hsy0408
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect

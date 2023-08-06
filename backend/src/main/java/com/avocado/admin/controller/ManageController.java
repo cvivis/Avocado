@@ -68,5 +68,10 @@ public class ManageController {
         return ResponseEntity.ok().body(response);
     }
 
+    //방송 편성 등록하기
+    //방송 편성 조회하기
+    //방송 편성 상세보기
+    //라이브인 상세 상품 조회하기
+    //승인 상품 라이브 등록하기
 
 }
