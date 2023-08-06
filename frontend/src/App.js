@@ -34,12 +34,12 @@ function App() {
           <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
           <Route path="/member/login" element={<Login />}></Route>
           <Route path="/member/signup" element={<Signup />}></Route>
-          
+
         </Routes>
       </div>
       <footer>
-          <Footer></Footer>
-        </footer>
+        <Footer></Footer>
+      </footer>
     </Router>
 
 

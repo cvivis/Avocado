@@ -1,12 +1,20 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { resetSearchKeyword } from "../redux/searchSlice";
 import api from "../api";
 import { setFilterList } from "../redux/boardListSlice";
 import { setDoSelect, setSelectedCategory } from "../redux/categorySlice";
+import logout from "../component/member/Logout";
 
 function Header() {
   const dispatch = useDispatch();
+
+  const isLogin = useSelector((state) => state.login.isLogin);
+  // 로그아웃 핸들러
+  const handleLogout = () => {
+    logout(dispatch);
+  }
+
 
   const handleReloadBoardList = () => {
     dispatch(resetSearchKeyword()); // 검색어 초기화
@@ -35,12 +43,27 @@ function Header() {
         <Link to="/normal/list"> 상시 경매 리스트 </Link>
       </button>
 
-      <button>
-        <Link to="/member/login">로그인</Link>
-      </button>
-      <button>
-        <Link to="/member/signup">회원가입</Link>
-      </button>
+      {!isLogin ? (
+        <>
+          <button>
+            <Link to="/member/login">로그인</Link>
+          </button>
+          <button>
+            <Link to="/member/signup">회원가입</Link>
+          </button>
+        </>
+      ) : (
+        <>
+          <button>
+            {/* <Link to="/member/login">로그인</Link> */}
+            마이페이지
+          </button>
+          <button onClick={handleLogout}>
+            로그아웃
+          </button>
+        </>
+      )}
+
 
       {/* 로그인 유저 판별해서 로그인 회원가입을 만들지,마이페이지 로그아웃을 만들지 결정 */}
       <button>
