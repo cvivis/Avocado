@@ -3,6 +3,7 @@ import api from "../../api";
 import { setIsLogin } from "../../redux/loginSlice";
 import { useEffect } from "react";
 import { MenuItem } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 function Logout(dispatch) {
 
@@ -12,6 +13,8 @@ function Logout(dispatch) {
     console.log(accessToken);
     console.log(typeof (accessToken));
 
+    const navigate = useNavigate();
+
     const handlelogout=()=>{
     api.post('/member/logout', {}, { headers: { Authorization: accessToken } })
     .then(() => {
@@ -20,6 +23,8 @@ function Logout(dispatch) {
         console.log("로그아웃 되었습니다.");
         // alert("로그아웃 되었습니다.")
         // dispatch(setIsLogin(false));
+        navigate('/');
+        
 
     })
     .catch(error => {
