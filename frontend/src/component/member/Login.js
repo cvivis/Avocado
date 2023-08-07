@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
-import { resetLoginForm, setIsLogin, setEmail, setPassword, setMember } from "../../redux/loginSlice";
+import { resetLoginForm, setIsLogin, setEmail, setPassword, setMember, setAccessToken } from "../../redux/loginSlice";
 
 function Login() {
 
@@ -14,15 +14,16 @@ function Login() {
   const email = useSelector((state) => state.login.email);
   const password = useSelector((state) => state.login.password);
   const isLogin = useSelector((state) => state.login.isLogin);
+  const accessToken = useSelector((state)=>state.login.accessToken);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetLoginForm());
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetLoginForm());
+  //   }
+  // }, [dispatch]);
 
   const handleLogin = (e) => {
-
+    
     e.preventDefault();
 
     const loginData = {
@@ -34,13 +35,14 @@ function Login() {
       .then(response => {
         const token = response.headers.authorization;
         // 토큰을 쿠키에 저장
-        document.cookie = `token=${token}; path=/;`;
-
+        // document.cookie = `token=${token}; path=/;`;
+        dispatch(setAccessToken(token));
         dispatch(setIsLogin(true));
         dispatch(setMember(response.data));
 
         alert(`${loginData.email}님 반갑습니다.`);
         navigate('/');
+
       })
       .catch(error => {
         console.error('로그인 실패:', error);

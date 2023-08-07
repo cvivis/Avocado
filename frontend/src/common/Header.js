@@ -44,11 +44,6 @@ function Header() {
     return (
         <div>
             <Flex as="nav" p="30px" alignItems="center">
-                <button>
-                    <Link to="/broadcastList">
-                        방송
-                    </Link>
-                </button>
 
                 <Button bg={"white"}>
                     <Link to="/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1n2KE9iWPb_CKLzQ3adFwE9aPfJrOXMXYn1lFo8&s" alt="Logo"></img></Link>
@@ -59,7 +54,9 @@ function Header() {
                         <Button bg={"white"}>
                             <Link to="/normal/auctionPage/NormalBidPage">상시 경매</Link>
                         </Button>
-                        <Button bg={"white"}>라이브 경매</Button>
+                        <Button bg={"white"}>
+                            <Link to ="/broadcastList">
+                            라이브 경매</Link></Button>
                         <Button bg={"white"}>물품 입찰 요청</Button>
                         <Button onClick={handleReloadBoardList}>
                             <Link to="/normal/list"> 상시 경매 리스트 </Link>
