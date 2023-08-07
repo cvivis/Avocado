@@ -1,4 +1,8 @@
+
+import { useDispatch, useSelector } from "react-redux";
+
 import React from "react";
+
 import { Link } from "react-router-dom";
 import {
     Button,
@@ -6,17 +10,23 @@ import {
     Flex, Spacer, HStack,
 } from '@chakra-ui/react';
 import ProfileBtn from "./ProfileBtn";
-import { useDispatch } from "react-redux";
 import { resetSearchKeyword } from "../redux/searchSlice";
 import api from "../api";
 import { setFilterList } from "../redux/boardListSlice";
 import { setDoSelect, setSelectedCategory } from "../redux/categorySlice";
+import logout from "../component/member/Logout";
 
 function Header() {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.login.isLogin);
+  // 로그아웃 핸들러
+  const handleLogout = () => {
+    logout(dispatch);
+  }
 
-    const handleReloadBoardList = () => {
+
+  const handleReloadBoardList = () => {
     dispatch(resetSearchKeyword()); // 검색어 초기화
     dispatch(setSelectedCategory('')); // 선택 카테고리 초기화
     dispatch(setDoSelect(false)); // 선택 여부 초기화

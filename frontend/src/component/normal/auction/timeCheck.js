@@ -1,4 +1,4 @@
-import NormalBid from "./normalBid";
+// import NormalBid from "./normalBid";
 import "../App.css";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
