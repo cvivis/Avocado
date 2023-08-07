@@ -1,5 +1,5 @@
 import { useState , useRef, useEffect} from 'react';
-import api from '../../api';
+import api from '../../../api';
 import { useLocation } from 'react-router-dom';
 import * as StompJs from '@stomp/stompjs';
 
@@ -20,10 +20,12 @@ function Broadcast() {
 
 
   useEffect(() => {
+    console.log(location.state.broadcastId)
     broadcastId.current = location.state.broadcastId;
     api.get(`/live/list/${broadcastId.current}/info`)
       .then(response => {
         const list = response.data.entries
+        console.log(list)
         if(list) {
           setAuctionList(list)
           setCurrentAuction(list[0])

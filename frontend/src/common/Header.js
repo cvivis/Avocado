@@ -18,32 +18,38 @@ import logout from "../component/member/Logout";
 
 function Header() {
 
-  const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.login.isLogin);
-  // 로그아웃 핸들러
-  const handleLogout = () => {
-    logout(dispatch);
-  }
+    const dispatch = useDispatch();
+    const isLogin = useSelector((state) => state.login.isLogin);
+    // 로그아웃 핸들러
+    const handleLogout = () => {
+        logout(dispatch);
+    }
 
 
-  const handleReloadBoardList = () => {
-    dispatch(resetSearchKeyword()); // 검색어 초기화
-    dispatch(setSelectedCategory('')); // 선택 카테고리 초기화
-    dispatch(setDoSelect(false)); // 선택 여부 초기화
-    api.get("/normal/list")
-    .then(response => {
-        dispatch(setFilterList(response.data.entries));
-        // do something with response.data.entries if needed
-    })
-    .catch(error => {
-        console.error('API 요청 에러:', error);
-    });
-};
+    const handleReloadBoardList = () => {
+        dispatch(resetSearchKeyword()); // 검색어 초기화
+        dispatch(setSelectedCategory('')); // 선택 카테고리 초기화
+        dispatch(setDoSelect(false)); // 선택 여부 초기화
+        api.get("/normal/list")
+            .then(response => {
+                dispatch(setFilterList(response.data.entries));
+                // do something with response.data.entries if needed
+            })
+            .catch(error => {
+                console.error('API 요청 에러:', error);
+            });
+    };
 
 
     return (
         <div>
             <Flex as="nav" p="30px" alignItems="center">
+                <button>
+                    <Link to="/broadcastList">
+                        방송
+                    </Link>
+                </button>
+
                 <Button bg={"white"}>
                     <Link to="/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1n2KE9iWPb_CKLzQ3adFwE9aPfJrOXMXYn1lFo8&s" alt="Logo"></img></Link>
                 </Button>
@@ -58,7 +64,7 @@ function Header() {
                         <Button onClick={handleReloadBoardList}>
                             <Link to="/normal/list"> 상시 경매 리스트 </Link>
                         </Button>
-                    </ButtonGroup> 
+                    </ButtonGroup>
                 </HStack>
                 <Spacer />
                 <ProfileBtn />
