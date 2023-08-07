@@ -32,8 +32,8 @@ const loginSlice = createSlice({
       return {
         email: initialState.email,
         password: initialState.password,
-        isLogin: initialState.isLogin,
-        member: initialState.member,
+        // isLogin: initialState.isLogin,
+        // member: initialState.member,
       };
     },
   },

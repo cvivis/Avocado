@@ -4,6 +4,7 @@ import {
     Button, Avatar,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import Logout from "../component/member/Logout"
 
 
 function ProfileBtn() {
@@ -23,13 +24,14 @@ function ProfileBtn() {
                         Log In
                     </MenuItem>
                 </Link>
-                <Link to="/member/logout">
+                <Logout/>
+                {/* <Link to="/member/logout">
                     <MenuItem>
 
 
                         Log Out
                     </MenuItem>
-                    </Link>
+                    </Link> */}
                 {/* </MenuGroup>
             <MenuDivider />
             <MenuGroup title='Help'>
