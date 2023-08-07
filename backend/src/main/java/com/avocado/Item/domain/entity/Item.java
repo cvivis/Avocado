@@ -31,7 +31,7 @@ public class Item extends BaseTimeEntity {
     @Min(value = 0) // 최솟값 설정
     private int hopePrice;
     // 즉시구매가 임시 스펙 아웃
-    //private int instantPrice;
+    private int instantPrice;
     @Enumerated(EnumType.STRING)
     //@EnumValid(enumClass = Type.class)
     private Type type;

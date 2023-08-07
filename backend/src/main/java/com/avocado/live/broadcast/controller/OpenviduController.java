@@ -1,6 +1,6 @@
-package com.avocado.live.controller;
+package com.avocado.live.broadcast.controller;
 
-import com.avocado.live.service.BroadcastService;
+import com.avocado.live.broadcast.service.BroadcastService;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
