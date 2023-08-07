@@ -3,7 +3,7 @@ import api from '../../../api';
 import { useLocation } from 'react-router-dom';
 import * as StompJs from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
-
+import { useNavigate } from "react-router-dom";
 
 function Broadcast() {
   const [auctionList, setAuctionList] = useState([]); //경매리스트
@@ -11,8 +11,6 @@ function Broadcast() {
   const location = useLocation();
   const broadcastId = useRef(0); //현재참여중인 방송id 
   const client  = useRef({}); //websocket client
-  // const userinfo = {"email" : "ssafy"} // TODO : 로그인한 값으로 수정
-  // const userinfo = useSelector((state)=>state.login.email)
   const userinfo = useSelector((state) => state.login.email);
   const bidPrice = useRef(0); //입찰가격 input
   const [bidResponse, setBidResponse] = useState({}); //ws으로 받은 입찰응답
@@ -21,10 +19,8 @@ function Broadcast() {
   const [chatResponse, setChatResponse] = useState({}); //ws으로 받은 채팅응답
   const [auctionOnAndOff, setAuctionOnAndOff] = useState({});
   const isLogin = useSelector((state) => state.login.isLogin);
-  console.log(userinfo);
-  // console.log(isLogin);
   const member = useSelector((state) => state.login.member);
-  // console.log(member);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(location.state.broadcastId)
@@ -60,10 +56,7 @@ function Broadcast() {
   }, [bidResponse]);
 
   useEffect(() => {
-
-    // setChatResponse({})
     setChatHistory((prev) => [...prev, chatResponse])
-    // if(chatResponse) setChatResponse({})
   }, [chatResponse]);
 
   useEffect(() => {
@@ -90,13 +83,10 @@ function Broadcast() {
     }
   }, [auctionOnAndOff]);
 
-
-
   const disconnect = () => {
       client.current.deactivate(); // 활성화된 연결 끊기 
   };
   
-
   const connect = () =>{
     client.current = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/live-auction',
@@ -108,7 +98,6 @@ function Broadcast() {
     client.current.activate();
   }
 
-
   const subcribe = () => {
     //입찰
     client.current.subscribe("/sub/auction/bid/" + broadcastId.current, response => {
@@ -119,7 +108,8 @@ function Broadcast() {
    //방송 종료
     client.current.subscribe("/sub/broadcast/off/" + broadcastId.current, response => {
       const content = JSON.parse(response.body)
-      console.log(content)
+      alert("방송 종료")
+      navigate("/broadcastList");
     });
 
    //경매 온오프
@@ -189,7 +179,7 @@ function Broadcast() {
 
   //임시 어드민 기능 : 방송 종료
   const broadcastOff = () => {
-
+    client.current.publish({ destination: "/pub//broadcast/off/"+ broadcastId.current});
   }
 
   return (
