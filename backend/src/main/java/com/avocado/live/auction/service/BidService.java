@@ -1,5 +1,8 @@
 package com.avocado.live.auction.service;
 
+import com.avocado.Item.domain.entity.Item;
+import com.avocado.Item.domain.entity.ItemStatus;
+import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.live.board.domain.entity.LiveAuction;
 import com.avocado.live.board.domain.entity.LiveHistory;
 import com.avocado.live.board.domain.repository.LiveAuctionRepository;
@@ -23,6 +26,7 @@ public class BidService {
     private final BroadcastRepository broadcastRepository;
 
     private final MemberService memberService;
+    private final ItemRepository itemRepository;
 
     //웹소켓통신 : 경매 시작
     @Transactional
@@ -39,6 +43,10 @@ public class BidService {
     public LiveAuction liveAuctionStop(Long id) {
         LiveAuction liveAuction = liveAuctionRepository.findById(id).orElse(null);
         if(Objects.isNull(liveAuction) || liveAuction.getStatus() != 1) return null;
+        Item item = liveAuction.getItem();
+        if(!Objects.isNull(liveAuction.getSuccessPrice())) item.setItemStatus(ItemStatus.SUCCESS);
+        else item.setItemStatus(ItemStatus.FAIL);
+        itemRepository.save(item);
         liveAuction.setStatus(2);
         return liveAuctionRepository.save(liveAuction);
     }

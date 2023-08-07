@@ -5,12 +5,17 @@ const initialState = {
   password: '',
   isLogin: false,
   member: null,
+  accessToken : '',
 };
 
 const loginSlice = createSlice({
   name: 'login',
   initialState,
   reducers: {
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
+    },
+
     setEmail(state, action) {
       state.email = action.payload;
     },
@@ -27,13 +32,13 @@ const loginSlice = createSlice({
       return {
         email: initialState.email,
         password: initialState.password,
-        isLogin: initialState.isLogin,
-        member: initialState.member,
+        // isLogin: initialState.isLogin,
+        // member: initialState.member,
       };
     },
   },
 });
 
-export const { setMember, setIsLogin, resetLoginForm, setEmail, setPassword } = loginSlice.actions;
+export const { setMember, setIsLogin, resetLoginForm, setEmail, setPassword,setAccessToken} = loginSlice.actions;
 
 export default loginSlice.reducer;
