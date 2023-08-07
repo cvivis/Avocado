@@ -12,12 +12,16 @@ function ProfileBtn() {
         <MenuButton as={Avatar} colorScheme='green'></MenuButton>
         <MenuList>
             {/* <MenuGroup title='Profile'> */}
+            <Link to="/member/MyPage">
             <MenuItem>
-                <Link to="/member/MyPage">My Page</Link>
+            My Page
             </MenuItem>
+           </Link>
+           <Link to="/member/login">
             <MenuItem>
-                <Link to="/member/LogIn">Log In</Link>
+            Log In
             </MenuItem>
+            </Link>
             <MenuItem>Log Out</MenuItem>
             {/* </MenuGroup>
             <MenuDivider />

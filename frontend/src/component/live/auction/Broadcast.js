@@ -2,6 +2,7 @@ import { useState , useRef, useEffect} from 'react';
 import api from '../../../api';
 import { useLocation } from 'react-router-dom';
 import * as StompJs from '@stomp/stompjs';
+import { useSelector } from 'react-redux';
 
 
 function Broadcast() {
@@ -10,14 +11,20 @@ function Broadcast() {
   const location = useLocation();
   const broadcastId = useRef(0); //현재참여중인 방송id 
   const client  = useRef({}); //websocket client
-  const userinfo = {"email" : "ssafy"} // TODO : 로그인한 값으로 수정
+  // const userinfo = {"email" : "ssafy"} // TODO : 로그인한 값으로 수정
+  // const userinfo = useSelector((state)=>state.login.email)
+  const userinfo = useSelector((state) => state.login.email);
   const bidPrice = useRef(0); //입찰가격 input
   const [bidResponse, setBidResponse] = useState({}); //ws으로 받은 입찰응답
   const [chatHistory, setChatHistory] = useState([]); //전체채팅기록
   const currentChat = useRef(""); //채팅메세지 input
   const [chatResponse, setChatResponse] = useState({}); //ws으로 받은 채팅응답
   const [auctionOnAndOff, setAuctionOnAndOff] = useState({});
-
+  const isLogin = useSelector((state) => state.login.isLogin);
+  console.log(userinfo);
+  // console.log(isLogin);
+  const member = useSelector((state) => state.login.member);
+  // console.log(member);
 
   useEffect(() => {
     console.log(location.state.broadcastId)
@@ -142,7 +149,7 @@ function Broadcast() {
   const bid = (currentAuction) =>  {
     const price = bidPrice.current;
     if(price > currentAuction.startPrice && price > currentAuction.highestPrice) {
-      client.current.publish({ destination: "/pub/auction/bid", body: JSON.stringify({auctionId : currentAuction.auctionId, bid_price : price, bidMemberEmail : userinfo.email, broadcastId : broadcastId.current}) });
+      client.current.publish({ destination: "/pub/auction/bid", body: JSON.stringify({auctionId : currentAuction.auctionId, bid_price : price, bidMemberEmail : userinfo, broadcastId : broadcastId.current}) });
     }
     else {
       alert("입찰가를 확인하십시오")
@@ -159,7 +166,7 @@ function Broadcast() {
   }
 
   const sendChat = () => {
-    client.current.publish({ destination: "/pub/chat", body: JSON.stringify({broadcastId : broadcastId.current, sender : userinfo.email, message : currentChat.current})});
+    client.current.publish({ destination: "/pub/live/chat", body: JSON.stringify({broadcastId : broadcastId.current, sender : userinfo, message : currentChat.current})});
   }
   
   const displayChat = (chats) => {
@@ -200,7 +207,7 @@ function Broadcast() {
         <div className="row" style={{display:'flex'}}>
           <div style={{width:'25%', border : '1px solid black'}}>
             {auctionList.map((auction , i) => (
-              <div style={{border : '1px solid black'}} onClick={() => setCurrentAuction(()=> auction)}>
+              <div key={i} style={{border : '1px solid black'}} onClick={() => setCurrentAuction(()=> auction)}>
                 {auction.itemName} {status(auction)}
               </div>
               ))}
@@ -221,7 +228,7 @@ function Broadcast() {
             <button disabled={currentAuction.status === 1 ? false : true} onClick={() => bid(currentAuction)}>입찰</button>
           </div>        
         </div>
-        <div className='row' style={{marginTop: '20px'}}>
+        <div className='row' style={{marginTop: '20px', marginBottom:'150px'}}>
           <div>임시 어드민 기능</div>
           <button onClick={() => start(currentAuction)}>경매시작</button>
           <button onClick={() => stop(currentAuction)}>경매종료</button>

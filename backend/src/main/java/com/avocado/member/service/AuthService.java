@@ -77,13 +77,13 @@ public class AuthService {
     @Transactional
     public TokenDto generateToken(String provider, String email, String authorities) {
         // RT가 이미 있을 경우
-//        if(redisService.getValue("RT(" + provider + "):" + email) != null) {
-//            redisService.delete("RT(" + provider + "):" + email);
-//        }
+        if(redisService.getValue("RT(" + provider + "):" + email) != null) {
+            redisService.delete("RT(" + provider + "):" + email);
+        }
 
         // AT, RT 생성 및 Redis에 RT 저장
         TokenDto tokenDto = jwtTokenProvider.createToken(email, authorities);
-//        saveRefreshToken(provider, email, tokenDto.getRefreshToken());
+        saveRefreshToken(provider, email, tokenDto.getRefreshToken());
         return tokenDto;
     }
 

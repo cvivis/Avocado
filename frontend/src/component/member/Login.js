@@ -15,14 +15,14 @@ function Login() {
   const password = useSelector((state) => state.login.password);
   const isLogin = useSelector((state) => state.login.isLogin);
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetLoginForm());
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(resetLoginForm());
+  //   }
+  // }, [dispatch]);
 
   const handleLogin = (e) => {
-
+    
     e.preventDefault();
 
     const loginData = {
@@ -41,6 +41,7 @@ function Login() {
 
         alert(`${loginData.email}님 반갑습니다.`);
         navigate('/');
+
       })
       .catch(error => {
         console.error('로그인 실패:', error);
