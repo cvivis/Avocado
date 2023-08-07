@@ -1,6 +1,7 @@
 package com.avocado.live.board.domain.entity;
 
 
+import com.avocado.Item.domain.entity.Item;
 import com.avocado.live.broadcast.domain.Broadcast;
 import com.avocado.member.domain.entity.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;

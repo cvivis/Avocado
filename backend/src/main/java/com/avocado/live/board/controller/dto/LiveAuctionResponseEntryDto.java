@@ -1,7 +1,8 @@
 package com.avocado.live.board.controller.dto;
 
 
-import com.avocado.live.board.domain.entity.Category;
+
+import com.avocado.Item.domain.entity.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
