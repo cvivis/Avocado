@@ -2,10 +2,7 @@ package com.avocado.Item.domain.entity;
 
 import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
@@ -17,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
+@Setter
 public class Item extends BaseTimeEntity {
 
     @Id
