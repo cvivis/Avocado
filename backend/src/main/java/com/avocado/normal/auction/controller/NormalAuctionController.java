@@ -96,7 +96,7 @@ public class NormalAuctionController {
 
 
     //TODO : 채팅 기능 -> openvidu or websocket 아직 미정
-    @MessageMapping("/chat")
+    @MessageMapping("/live/chat")
     public void chat(ChatDto chatDto) {
         log.info("[StompController chat] chatDto: {}", chatDto.getBroadcastId());
         simpMessagingTemplate.convertAndSend("/sub/chat/"+chatDto.getBroadcastId(),chatDto);
