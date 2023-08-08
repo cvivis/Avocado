@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>login form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/main.css" rel="stylesheet">
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+</head>
+<body>
+
+<div id="main-content" class="container">
+    <div class="row">
+        <div>
+            <label for="id">아이디</label>
+            <input type="text" id="id" class="form-control" placeholder="아이디" value="ssafy">
+            <br>
+            <label for="pw">비밀번호</label>
+            <input type="password" id="pw" class="form-control" placeholder="비밀번호" value="1234">
+            <br>
+        </div>
+        <button id="login" onclick="login()" class="btn btn-default" type="submit">로그인</button>
+    </div>
+</div>
+
+
+<script>
+    function login() {
+        const id = document.querySelector("#id").value;
+        const pw = document.querySelector("#pw").value;
+        localStorage.removeItem("access-token")
+        fetch("http://localhost:8080/member/login", {
+            method: "POST",
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: id,
+                password: pw,
+            }),
+            })
+            .then((response) => {
+                const accessToken = response.headers.get("Authorization")
+                localStorage.setItem("access-token", accessToken)
+                const info = accessToken.split('.')[1]
+                const role = JSON.parse(buffer.Buffer.from(info,"base64")).authority  
+
+                if(role.includes("ADMIN")) window.location.href = "./admin.html"
+                else window.location.href = "./user.html" 
+                
+            })
+        }
+
+            
+
+            
+            
+
+
+
+   
+
+  
+
+  
+
+</script>
+
+</body>
+</html>
