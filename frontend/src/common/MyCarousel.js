@@ -28,7 +28,8 @@ slidesToShow: 1,
 slidesToScroll: 1,
 }
 
-export default function CaptionCarousel() {
+export default function MyCarousel(props) {
+    const { height, width } = props;
 // As we have used custom buttons, we need a reference variable to
 // change the state
 const [slider, setSlider] = useState(null);
@@ -61,8 +62,10 @@ const cards = [
 },
 ]
 
+
+
 return (
-<Box position={'relative'} height={'600px'} width={'600px'} overflow={'hidden'}>
+<Box position={'relative'} height={height} width={width} overflow={'hidden'}>
     {/* CSS files for react-slick */}
     <link
     rel="stylesheet"

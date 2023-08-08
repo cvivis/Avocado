@@ -48,12 +48,12 @@ function App() {
           <Route path="/member/login" element={<Login />}></Route>
           <Route path="/member/signup" element={<Signup />}></Route>
           <Route path="/member/myPage" element={<MyPage />}></Route>
-          <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route>
+          {/* <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route> */}
           <Route path="/broadcastList" element={<BroadcastList />}></Route>
           <Route path="/broadcast" element={<Broadcast />}></Route>
           <Route path="/member/logout" element={<Logout />}></Route>
           <Route path="/member/Regist" element={<Regist />}></Route>
-          <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route>
+          {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
           <Route path="/member/Consign" element={<Consign />}></Route>
         </Routes>
       </div>

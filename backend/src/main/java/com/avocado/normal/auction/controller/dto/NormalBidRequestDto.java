@@ -14,4 +14,5 @@ public class NormalBidRequestDto  {
     private Integer price;
     private Long memberId; // 이메일로 수정 -> 토큰으로 가져오기
     private Long itemId; // 경매 아이디로 수정
+
 }

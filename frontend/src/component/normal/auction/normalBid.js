@@ -1,12 +1,12 @@
 import { useState , useRef, useEffect} from 'react';
 import * as StompJs from '@stomp/stompjs';
-import * as BeforeNormalBid from './beforeNormalBid';
+import * as BeforeNormalBid from "./brforeNormalBid";
 
 
 
 function NormalBid(props){
-  // const [stateChanger,setStateChanger] = useState(true);
-  const [hopePrice] = useState(10000);
+  const [stateChanger,setStateChanger] = useState(true);
+  const [hopePrice,setHopePrice] = useState(10000);
   const [bidInfo, setBidInfo] = useState({
     nowPrice : props.nowPrice,
     myPrice : props.nowPrice + BeforeNormalBid.setBidPlus(props.nowPrice),
@@ -79,6 +79,7 @@ function NormalBid(props){
       <p>현재 입찰자 {bidInfo.nowBidName}</p>
       <p>현재 입찰가 : {BeforeNormalBid.setBidUnit(bidInfo.nowPrice)}</p>
       <p>내 입찰가 : {BeforeNormalBid.setBidUnit(bidInfo.myPrice)}</p>
+
 
       <button onClick={handleBid}> 입찰 </button>
       {/* <p>---------------------------------</p> */}

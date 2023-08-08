@@ -14,7 +14,7 @@ function MyPage() {
 
     return (
         <div>
-            <Header></Header>
+            {/* <Header></Header> */}
             <Grid>
                 <Box h={50}></Box>
                 <Box display="flex" justifyContent="space-between">

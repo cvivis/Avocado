@@ -15,7 +15,7 @@ function Consign() {
 
     return (
         <Box>
-            <Header />
+            {/* <Header /> */}
             <Container centerContent mt={'15px'}>
                 {/* 이미지/썸네일/제목/내용/희망가격/즉구가/경매유형 */}
                 <Heading size={'3xl'} color={'green'}>물품 입찰 요청서</Heading>
