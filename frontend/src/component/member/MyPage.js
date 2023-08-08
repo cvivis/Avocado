@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useEffect} from "react";
+import api from "../../api";
 import Header from "../../common/Header";
 import { 
     Center,
@@ -7,11 +8,30 @@ import {
 } from '@chakra-ui/react';
 import Footer from "../../common/Footer";
 import MyCard from "../../common/MyCard";
+import { useDispatch,useSelector } from "react-redux";
+import { setMyNormalBids } from "../../redux/myNormalBidsSlice";
+import { persistor } from "../..";
+import loginSlice from "../../redux/loginSlice";
 //import api from '../../../api';
 
 function MyPage() {
+    const dispatch=useDispatch();
+    const myNormalBids = useSelector((state) => state.myNormalBids.myNormalBids);
+    const accessToken= useSelector((state)=> state.login.accessToken);
 
-
+    useEffect(()=>{
+        console.log("mypage")
+        api.get('/items/my-bid', { headers: { Authorization: accessToken } })
+        .then(response=>{
+            dispatch(setMyNormalBids(response.data.entries));
+        })
+        .catch(error=>{
+            console.error('API 요청 에러: ',error);
+            
+        });
+    },[dispatch]);
+    console.log(myNormalBids);
+    
     return (
         <div>
             <Header></Header>
