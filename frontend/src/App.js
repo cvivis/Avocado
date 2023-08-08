@@ -12,11 +12,15 @@ import Header from './common/Header';
 import Footer from './common/Footer';
 import Login from './component/member/Login';
 import Signup from './component/member/Signup';
-import MyPage from './component/member/MyPage';
+import MyPage from './component/member-sk/MyPage';
 import NormalBidPage from './component/normal/auctionPage/NormalBidPage';
 import BroadcastList from './component/live/auction/BroadcastList';
 import Broadcast from './component/live/auction/Broadcast';
 import Logout from "./component/member/Logout"
+import LogIn from './component/member-sk/LogIn';
+import Regist from './component/member-sk/Regist';
+import NormalDetailPage from './component/normal/auctionPage/NormalDetailPage';
+import Consign from './component/member-sk/Consign';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
@@ -48,9 +52,9 @@ function App() {
           <Route path="/broadcastList" element={<BroadcastList />}></Route>
           <Route path="/broadcast" element={<Broadcast />}></Route>
           <Route path="/member/logout" element={<Logout />}></Route>
-
-
-
+          <Route path="/member/Regist" element={<Regist />}></Route>
+          <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route>
+          <Route path="/member/Consign" element={<Consign />}></Route>
         </Routes>
       </div>
       <footer>

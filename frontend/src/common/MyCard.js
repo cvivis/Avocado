@@ -3,6 +3,7 @@ import {
     Image, Heading, Text,
     Button, Box,
 } from '@chakra-ui/react';
+import { Link } from "react-router-dom";
 
 function MyCard() {
 
@@ -21,7 +22,11 @@ function MyCard() {
             <Text>간단 상품 설명</Text>
             </CardBody>
             <CardFooter>
-                <Button colorScheme="green" >상세보기(임시)</Button>
+                <Button colorScheme="green" >
+                    <Link to="/normal/auctionPage/NormalDetailPage">
+                        상세보기(임시)
+                    </Link>
+                </Button>
             </CardFooter>
         </Card>
         </Box>
