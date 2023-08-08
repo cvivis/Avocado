@@ -8,8 +8,8 @@ function BroadcastList() {
   const [broadcastList,setBroadcastList] = useState([]);
   
   const navigate = useNavigate();
-  const participate = (broadcast) => {
-    navigate("/broadcast" ,{state : {"broadcastId" : broadcast.id}});
+  const participate = (broadcast) => { // 방송 경로
+    navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.id}});
   };
 
   useEffect(() => {

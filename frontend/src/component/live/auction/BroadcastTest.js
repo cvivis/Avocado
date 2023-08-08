@@ -177,6 +177,7 @@ const navigate = useNavigate();
 
     const sendChat = (e) => {
     client.current.publish({ destination: "/pub/live/chat", body: JSON.stringify({broadcastId : broadcastId.current, sender : userinfo, message : currentChat.current})});
+    currentChat.current = " "
     }
     
     const displayChat = (chats) => {
@@ -229,9 +230,9 @@ const navigate = useNavigate();
                     </Flex>
                     <Box h={'auto'}>
                         <InputGroup>
-                            <Input className="input" onChange={chatChange} placeholder="메세지 보내기">
+                            <Input onChange={chatChange} placeholder="메세지 보내기">
                             </Input>
-                            <Button onClick={() => sendChat()}>채팅</Button>
+                            <Button onClick={(event) => sendChat(event)}>채팅</Button>
                         </InputGroup>
                     </Box>
                 </Flex>
@@ -291,7 +292,7 @@ const navigate = useNavigate();
             <GridItem area={'bid'}>
                 <Flex flexDirection={'column'} h={'100%'}>
                     <Button w={'full'} h={'45%'} mt={'5px'}>
-                        <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice} 원</Text>
+                        <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice+1000} 원</Text>
                     </Button>
                     <Spacer />
                     <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'}>
