@@ -44,8 +44,10 @@ function Header() {
                             <Link to="/normal/auctionPage/NormalBidPage">상시 경매</Link>
                         </Button>
                         <Button bg={"white"}>라이브 경매</Button>
-                        <Button bg={"white"}>물품 입찰 요청</Button>
-                        <Button onClick={handleReloadBoardList}>
+                        <Button bg={"white"}>
+                            <Link to="/member/Consign">물품 입찰 요청</Link>
+                        </Button>
+                        <Button bg={"white"} onClick={handleReloadBoardList}>
                             <Link to="/normal/list"> 상시 경매 리스트 </Link>
                         </Button>
                     </ButtonGroup> 

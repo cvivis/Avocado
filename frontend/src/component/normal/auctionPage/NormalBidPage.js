@@ -6,7 +6,6 @@ import {
     Grid,FormControl, Input, FormHelperText, IconButton, 
     HStack, VStack, Spacer,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons"
 import MyCard from "../../../common/MyCard";
 import MySearchBar from "../../../common/MySearchBar";
 
