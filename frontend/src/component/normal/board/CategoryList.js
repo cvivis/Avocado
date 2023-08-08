@@ -15,7 +15,7 @@ function CategoryList() {
     } else {
       dispatch(setDoSelect(true));
       dispatch(setSelectedCategory(category));
-      if (category === '') { 
+      if (category === '') {
         dispatch(setDoSelect(false));
       };
     }

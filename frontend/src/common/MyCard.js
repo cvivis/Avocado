@@ -14,22 +14,24 @@ function MyCard(props) {
     // console.log(item.content+"내용");
     return (
         <Box w={300}>
-            <Card align='center'>
-                <CardBody>
-                    <Image
-                        objectFit='cover'
-                        src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                        alt='Chakra UI'
-                    />
-                    <Heading size='md'>{item.name}</Heading>
-                    <Text>{item.content}</Text>
-                </CardBody>
-                <CardFooter>
-                    <Button colorScheme="green" >
-                        <Link to={`/normal/detail/${item.itemId}`}>{item.itemId}</Link>
-                    </Button>
-                </CardFooter>
-            </Card>
+            <Link to={`/normal/detail/${item.itemId}`}>
+                <Card align='center'>
+                    <CardBody>
+                        <Image
+                            objectFit='cover'
+                            src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
+                            alt='Chakra UI'
+                        />
+                        <Heading size='md'>{item.name}</Heading>
+                        <Text>{item.content}</Text>
+                    </CardBody>
+                    <CardFooter>
+                        <Button colorScheme="green" >
+                            {item.itemId}
+                        </Button>
+                    </CardFooter>
+                </Card>
+            </Link>
         </Box>
     )
 }

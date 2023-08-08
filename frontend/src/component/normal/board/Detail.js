@@ -45,7 +45,7 @@ function Detail() {
                 </GridItem>
                 <GridItem area={'titleSection'} w={'600px'} h={'600px'}>
                   <Container centerContent>
-                    <MyBidInfo name={boardDetail.name} applyId="1" userId="1" normalAuctionId="1" nowPrice = {nowPrice} />
+                    <MyBidInfo name={boardDetail.name} applyId="1" userId="1" normalAuctionId="1" nowPrice={nowPrice} />
                   </Container>
                 </GridItem>
               </HStack>

@@ -52,7 +52,7 @@ function App() {
           <Route path="/broadcastList" element={<BroadcastList />}></Route>
           <Route path="/broadcast" element={<Broadcast />}></Route>
           <Route path="/member/logout" element={<Logout />}></Route>
-          <Route path="/member/Regist" element={<Regist />}></Route>
+          {/* <Route path="/member/Regist" element={<Regist />}></Route> */}
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
           <Route path="/member/Consign" element={<Consign />}></Route>
         </Routes>

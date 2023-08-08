@@ -19,7 +19,7 @@ import MySearchBar from "../../../common/MySearchBar";
 function BoardList() {
   const dispatch = useDispatch();
   const filterList = useSelector((state) => state.boardList.filterList);
-  
+
   // console.log(filterList);
 
   useEffect(() => {

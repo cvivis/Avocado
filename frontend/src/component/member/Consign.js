@@ -1,6 +1,6 @@
 import React from "react";
-import { 
-    Box, Container, Flex, FormControl, FormLabel, 
+import {
+    Box, Container, Flex, FormControl, FormLabel,
     HStack, Heading, Input, InputGroup, InputRightAddon, Spacer,
     Textarea, VStack, Text, InputLeftAddon, Divider, FormHelperText, Button, Center,
 } from '@chakra-ui/react';
@@ -20,9 +20,9 @@ function Consign() {
                 {/* 이미지/썸네일/제목/내용/희망가격/즉구가/경매유형 */}
                 <Heading size={'3xl'} color={'green'}>물품 입찰 요청서</Heading>
                 <FormControl w={'1000px'} mt={'20px'}>
-                    <Divider mb={'10px'} border={'1px'} color={'green'}/>
+                    <Divider mb={'10px'} border={'1px'} color={'green'} />
                     <InputGroup mb={'10px'}>
-                        <Input type="text" placeholder="물품명을 입력해주세요" required/>
+                        <Input type="text" placeholder="물품명을 입력해주세요" required />
                     </InputGroup>
                     <HStack mb={'10px'}>
                         <Dropzone />
@@ -32,14 +32,14 @@ function Consign() {
                     <ToastEditor />
                     <Flex gap={'30px'} mt={'10px'}>
                         <InputGroup>
-                            <InputLeftAddon as={'b'} fontSize={'xl'} children='희망 시작가' bg={'green.400'}/>
-                            <Input _focus={{boxShadow:'none'}} type="number" placeholder="희망 시작가를 입력해주세요" required/>
-                            <InputRightAddon children='원' bg={'green.400'}/>
+                            <InputLeftAddon as={'b'} fontSize={'xl'} children='희망 시작가' bg={'green.400'} />
+                            <Input _focus={{ boxShadow: 'none' }} type="number" placeholder="희망 시작가를 입력해주세요" required />
+                            <InputRightAddon children='원' bg={'green.400'} />
                         </InputGroup>
                         <InputGroup>
-                        <InputLeftAddon as={'b'} fontSize={'xl'} children='즉시 구매가' bg={'green.400'}/>
-                            <Input _focus={{boxShadow:'none'}} type="number" placeholder="즉시 구매가를 입력해주세요" required/>
-                            <InputRightAddon children='원' bg={'green.400'}/>
+                            <InputLeftAddon as={'b'} fontSize={'xl'} children='즉시 구매가' bg={'green.400'} />
+                            <Input _focus={{ boxShadow: 'none' }} type="number" placeholder="즉시 구매가를 입력해주세요" required />
+                            <InputRightAddon children='원' bg={'green.400'} />
                         </InputGroup>
                     </Flex>
                     <Center m={'100px'} >

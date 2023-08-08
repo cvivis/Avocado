@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../common/Header";
-import { 
+import {
     Center,
     Tabs, TabList, TabPanels, Tab, TabPanel,
     Grid, Box,
@@ -44,7 +44,7 @@ function MyPage() {
                             </TabPanel>
                             <TabPanel>
                                 <Box w={1300}></Box>
-                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'></Grid>  
+                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'></Grid>
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
