@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 라이브 페이지</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/main.css" rel="stylesheet">
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <div id="main-content" class="container">
+        <div class="row">
+            <h2>사용자 페이지</h2>
+            <h3>사용자 방송화면</h3>
+            <div id="broadcastInfo"></div>
+            <div style="display:flex">
+                <div style="width: 70%;">
+                    <div style="height: 300px; background-color:yellowgreen;">실시간 방송화면</div>
+                    <button type="submit" id="closeBtn" onclick="broadcastOut(this.id)">방송 나가기</button>
+                </div>
+    
+                <div style="width: 25%; padding-left: 5%; overflow-y: scroll;">
+                    <table id="conversation" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">채팅</th>
+                        </tr>
+                        </thead>
+                        <tbody id="chat" >
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>경매 번호</th>
+                    <th>경매 물품</th>
+                    <th>시작가</th>
+                    <th>현재 최고 입찰자</th>
+                    <th>현재 입찰가</th>
+                    <th>경매 진행 상황</th>
+                    <th>입찰</th>
+                </tr>
+                </thead>
+                <tbody id="auctions">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        var sockJs;
+        var stomp;
+        window.onload = function(){
+            const broadcastId = localStorage.getItem("current-room-id")
+            
+            const broadcastInfo =  document.querySelector("#broadcastInfo");
+            broadcastInfo.innerText = "방송 번호: "+ broadcastId + "번";
+
+            const closeBtn = document.querySelector("#closeBtn")
+            closeBtn.id = "close"+broadcastId
+
+            fetch("http://localhost:8080/user/auctions/"+broadcastId)
+                .then((response) => response.json()).then((data)=> {
+                    data.forEach(element => {
+                        const auction = document.createElement('tr')
+                        const index = document.createElement('td')
+                        index.innerText = element.id
+                        const title = document.createElement('td')
+                        title.innerText = element.title
+                        const start_price = document.createElement('td')
+                        start_price.innerText = element.start_price
+                        start_price.id = "start_price"+element.id
+
+                        const current_bid_useremail = document.createElement('td')
+                        current_bid_useremail.innerText = element.success_member
+                        current_bid_useremail.id = "bid_member"+element.id
+                        const current_highest_price = document.createElement('td')
+                        current_highest_price.innerText = element.success_price
+                        current_highest_price.id = "current_price"+element.id
+
+                        const auction_status = document.createElement('td')
+                        auction_status.id = "auction_status"+element.id
+                        if(element.status == 0) auction_status.innerText = "시작 전"
+                        else if(element.status == 1) auction_status.innerText = "진행 중"
+                        else if(element.status == 2) auction_status.innerText = "종료"
+
+                        const my_bid_price = document.createElement('td')
+                        const input_price = document.createElement('input')
+                        input_price.id = "bid"+element.id
+                        input_price.setAttribute("type","number")
+                        const bid_btn = document.createElement('button')
+                        bid_btn.className='btn btn-default'
+                        bid_btn.innerText = "입찰하기"
+                        bid_btn.type = "submit"
+                        bid_btn.setAttribute("onclick", "bid(this.id)")
+                        bid_btn.id = "bid_btn"+element.id
+                        if(element.status!=1) bid_btn.disabled = "disabled"
+
+                        my_bid_price.appendChild(input_price);
+                        my_bid_price.appendChild(bid_btn);
+
+
+                        auction.appendChild(index)
+                        auction.appendChild(title)
+                        auction.appendChild(start_price)
+                        auction.appendChild(current_bid_useremail)
+                        auction.appendChild(current_highest_price)
+                        auction.appendChild(auction_status)
+                        auction.appendChild(my_bid_price)
+                        auctions.appendChild(auction)
+                    });
+            })
+            sockJs = new SockJS("/live-auction")
+            stomp = Stomp.over(sockJs)
+            stomp.connect({}, function() {
+                stomp.subscribe("/sub/auction/status/" + broadcastId, function (status) {
+                    var content = JSON.parse(status.body);
+                    bidDisable(content.auctionId, content.onAndOff)
+
+                    const chat = document.querySelector("#chat")
+                    const tr = document.createElement('tr')
+                    const td = document.createElement('td')
+                    tr.appendChild(td)
+                    td.style.color = "red"
+                    const auction_status = document.querySelector("#auction_status"+content.auctionId)
+                    if(content.onAndOff == 1) {
+                        td.innerText = content.title +"의 경매가 시작되었습니다" 
+                        chat.appendChild(tr)
+                        auction_status.innerText = "진행 중"
+                    }
+                    //TODO : 종료시 낙찰가 낙찰자 업데이트 및 채팅창 업데이트
+                    else {
+                        td.innerText = content.title +"의 경매가 종료되었습니다" 
+                        chat.appendChild(tr)
+                        
+                        const current_price = document.querySelector("#current_price"+content.auctionId)
+                        current_price.innerHTML = content.success_price
+                        const success_member = document.querySelector("#bid_member"+content.auctionId)
+                        success_member.innerHTML = content.success_member_email
+
+                        auction_status.innerText = "종료"
+                    }
+                });
+                stomp.subscribe("/sub/auction/bid/" + broadcastId, function (bid) {
+                    var content = JSON.parse(bid.body);
+                    const current_price = document.querySelector("#current_price"+content.auctionId)
+                    current_price.innerHTML = content.bid_price
+                    const success_member = document.querySelector("#bid_member"+content.auctionId)
+                    success_member.innerHTML = content.bidMemberEmail
+                });
+                stomp.subscribe("/sub/broadcast/off/" + broadcastId, function (off) {
+                    var content = JSON.parse(off.body);
+                    console.log(content)
+                    alert("방송이 종료되었습니다.")
+                    window.location.href = "./user.html"
+                });
+            })
+        }
+        
+        function bidDisable(auctionId, onAndOff) {
+            const bid_btn = document.querySelector("#bid_btn"+auctionId)
+             //시작시 입찰버튼 활성화
+            if(onAndOff == 1) {
+                bid_btn.removeAttribute("disabled")
+            }
+            //종료시 입찰버튼 비활성화
+            else if(onAndOff==2) {
+                bid_btn.setAttribute("disabled", "disabled")
+            }
+        }
+
+        function broadcastOut(broadcastId) {
+            const id = broadcastId.slice(-1);     
+            window.location.href = "./user.html"
+        }
+
+       
+
+        function bid(btnId) {
+            const auctionId = btnId.slice(-1);
+            const bid_price = document.querySelector("#bid"+auctionId).value
+            const start_price = document.querySelector("#start_price"+auctionId).textContent
+            const current_price = document.querySelector("#current_price"+auctionId).textContent
+            const accesstoken = localStorage.getItem("access-token")
+            const payload = accesstoken.split('.')[1]
+            const info = buffer.Buffer.from(payload,"base64")
+            const email = JSON.parse(info).email
+            const broadcastId = localStorage.getItem("current-room-id")
+
+            if(+bid_price > +start_price && +bid_price > +current_price) {
+                stomp.send("/pub/auction/bid", {}, JSON.stringify({auctionId : auctionId, bid_price : bid_price, bidMemberEmail : email, broadcastId : broadcastId}))
+            } else {
+                alert("입찰가 확인!")
+            }
+        }
+    </script>
+</body>
+</html>

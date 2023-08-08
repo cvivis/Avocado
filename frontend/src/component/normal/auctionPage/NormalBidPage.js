@@ -13,7 +13,7 @@ function NormalBidPage() {
 
     return (
         <Box>
-            <Header></Header>
+            {/* <Header></Header> */}
             <Box h={50}></Box>
             <VStack>
             <MySearchBar></MySearchBar>
