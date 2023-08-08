@@ -59,17 +59,10 @@ const cards = [
     image:
     'https://images.unsplash.com/photo-1507237998874-b4d52d1dd655?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
 },
-{
-    title: '블랙핑크',
-    text: "재현님의 요청 사항입니다",
-    image:
-    'https://img6.yna.co.kr/mpic/YH/2019/01/13/MYH20190113009300038.jpg',
-},
 ]
 
 return (
-    // 프롭스로 사이즈 등 커스텀 설정할 수 있게 해주세요 / 블랙핑크 지우면 width 600으로 잡아주기
-<Box position={'relative'} height={'600px'} width={'auto'} overflow={'hidden'}>
+<Box position={'relative'} height={'600px'} width={'600px'} overflow={'hidden'}>
     {/* CSS files for react-slick */}
     <link
     rel="stylesheet"
@@ -114,7 +107,7 @@ return (
         position="relative"
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
-        backgroundSize="contain" // cover
+        backgroundSize="cover" // cover
         backgroundImage={`url(${card.image})`}>
         {/* This is the block you need to change, to customize the caption */}
         <Container size="container.lg" height="600px" position="relative">

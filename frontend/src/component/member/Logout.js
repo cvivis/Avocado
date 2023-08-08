@@ -1,14 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../api";
 import { setIsLogin } from "../../redux/loginSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { MenuItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-function Logout(dispatch) {
+function Logout() {
 
     const accessToken = useSelector((state) => state.login.accessToken);
-    const isLogin = useSelector((state) => state.login.isLogin);
+    const stateIsLogin = useSelector((state) => state.login.isLogin);
+    const isLogin = useRef(stateIsLogin);
+    const dispatch = useDispatch();
     console.log(isLogin);
     console.log(accessToken);
     console.log(typeof (accessToken));
@@ -21,8 +23,8 @@ function Logout(dispatch) {
         // 쿠키에서 토큰 제거
         // document.cookie = `token=; path=/; max-age=0`;
         console.log("로그아웃 되었습니다.");
-        // alert("로그아웃 되었습니다.")
-        // dispatch(setIsLogin(false));
+        alert("로그아웃 되었습니다.")
+        dispatch(setIsLogin(false));
         navigate('/');
         
 
