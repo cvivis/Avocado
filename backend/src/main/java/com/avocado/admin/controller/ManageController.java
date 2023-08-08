@@ -28,11 +28,11 @@ public class ManageController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/consign/{id}")
-    public ResponseEntity<?> getConsignItemDetail(@PathVariable Long id){
-        ConsignItemDetailResponse response = consignManageService.getConsignItemDetail(id);
-        return ResponseEntity.ok().body(response);
-    }
+//    @GetMapping("/consign/{id}")
+//        public ResponseEntity<?> getConsignItemDetail(@PathVariable Long id){
+//            ConsignItemDetailResponse response = consignManageService.getConsignItemDetail(id);
+//        return ResponseEntity.ok().body(response);
+//    }
 
     @PutMapping("/consign/{id}") // category 어케 보낼지
     public ResponseEntity<?> consignApprove(@PathVariable Long id , @RequestBody ConsignConfirmRequest consignConfirmRequest){
