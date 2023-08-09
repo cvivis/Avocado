@@ -55,6 +55,7 @@ function App() {
           <Route path="/member/Regist" element={<Regist />}></Route>
           <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route>
           <Route path="/member/Consign" element={<Consign />}></Route>
+          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
         </Routes>
       </div>
       <footer>

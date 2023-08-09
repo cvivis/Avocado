@@ -8,6 +8,7 @@ import signupSlice from "./signupSlice";
 import myNormalBidsSlice from "./myNormalBidsSlice";
 import {persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
+import broadcastListSlice from "./broadcastListSlice";
 
 
 const  reducers = combineReducers({
@@ -17,6 +18,7 @@ const  reducers = combineReducers({
     login: loginSlice,
     signup: signupSlice,
     myNormalBids:myNormalBidsSlice,
+    broadcastList:broadcastListSlice,
 });
 
 const persistConfig = {
