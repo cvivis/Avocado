@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ConsignRequestDto {
 
+
     private Long memberId;
     private String thumbnail;
     private String name;

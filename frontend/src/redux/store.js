@@ -5,6 +5,7 @@ import categorySlice from "./categorySlice";
 import boardListSlice from "./boardListSlice";
 import loginSlice from "./loginSlice";
 import signupSlice from "./signupSlice";
+import consignSlice from "./consignSlice";
 // import itemReducer from "./itemSlice";
 // configureStore : 스토어 생성
 const store = configureStore({
@@ -17,6 +18,7 @@ const store = configureStore({
     category: categorySlice,
     login: loginSlice,
     signup: signupSlice,
+    requireItem: consignSlice,
   },
 });
 
