@@ -10,8 +10,8 @@ import Footer from "../../common/Footer";
 import MyCard from "../../common/MyCard";
 import { useDispatch,useSelector } from "react-redux";
 import { setMyNormalBids } from "../../redux/myNormalBidsSlice";
-import { persistor } from "../..";
-import loginSlice from "../../redux/loginSlice";
+import store from "../../redux/store";
+
 //import api from '../../../api';
 
 function MyPage() {
@@ -29,9 +29,9 @@ function MyPage() {
             console.error('API 요청 에러: ',error);
             
         });
-    },[dispatch]);
-    console.log(myNormalBids);
-    
+    },[]);
+    console.log(useSelector((state)=>state.login));
+
     return (
         <div>
             <Header></Header>

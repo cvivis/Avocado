@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 
 function ProfileBtn() {
 
-    const isLogin = useSelector((state) => state.login.persistor.isLogin)
+    const isLogin = useSelector((state) => state.login.isLogin)
 
     return (
         <Menu>

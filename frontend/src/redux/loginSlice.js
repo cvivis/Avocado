@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { persistor } from '..';
 
 const initialState = {
   email: '',
@@ -7,6 +8,7 @@ const initialState = {
   member: null,
   accessToken : '',
 };
+
 
 const loginSlice = createSlice({
   name: 'login',
