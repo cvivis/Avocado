@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 function Detail() {
   const { id } = useParams();
   const [boardDetail, setboardDetail] = useState('');
-  const nowPrice = 10000;
 
   useEffect(() => {
     // API 호출
@@ -45,7 +44,8 @@ function Detail() {
                 </GridItem>
                 <GridItem area={'titleSection'} w={'600px'} h={'600px'}>
                   <Container centerContent>
-                    <MyBidInfo name={boardDetail.name} applyId="1" userId="1" normalAuctionId="1" nowPrice={nowPrice} />
+                    <MyBidInfo  boardDetail={boardDetail} 
+                    />
                   </Container>
                 </GridItem>
               </HStack>

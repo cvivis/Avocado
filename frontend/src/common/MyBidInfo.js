@@ -8,28 +8,33 @@ import { useState, useRef, useEffect } from 'react';
 import * as StompJs from '@stomp/stompjs';
 import * as BeforeNormalBid from '../component/normal/auction/beforeNormalBid';
 import TimeCheck from '../component/normal/auction/timeCheck';
+import { useSelector } from "react-redux";
 
 function MyBidInfo(props) {
+    const email = useSelector((state)=>state.login.email);
+    const nowP = props.boardDetail.price;
+    const mPrice =  props.boardDetail.price + BeforeNormalBid.setBidPlus(props.boardDetail.price);
 
-    const [stateChanger, setStateChanger] = useState(true);
-    const [hopePrice, setHopePrice] = useState(10000);
+    console.log(nowP +"이건 nowP");
     const [bidInfo, setBidInfo] = useState({
-        nowPrice: props.nowPrice,
-        myPrice: props.nowPrice + BeforeNormalBid.setBidPlus(props.nowPrice),
+        
+        nowPrice : nowP,
+        myPrice :  mPrice
     })
-    const applyId = props.applyId;
+    const auctionId = props.boardDetail.auctionId;
 
     //입찰버튼
     function handleBid() {
         let nowBidUnit = BeforeNormalBid.setBidUnit(bidInfo.nowPrice);
-        let newNowPrice = bidInfo.nowPrice + 1000; // 현재가에 1000원을 더함
-        let newMyPrice = newNowPrice + 1000; // 내 입찰가는 현재가보다 1000원 더 높게 설정
-        console.log(nowBidUnit);
+        // console.log("asdfasdff "+bidInfo.nowPrice);
+        let newNowPrice = bidInfo.nowPrice; // 현재가에 1000원을 더함
+        let newMyPrice = newNowPrice; // 내 입찰가는 현재가보다 1000원 더 높게 설정
+        // console.log(nowBidUnit);
 
-        setBidInfo({
-            nowPrice: newNowPrice,
-            myPrice: newMyPrice
-        });
+        // setBidInfo({
+        //     nowPrice: newNowPrice,
+        //     myPrice: newMyPrice
+        // });
 
         publish();
     }
@@ -50,6 +55,8 @@ function MyBidInfo(props) {
 
     useEffect(() => {
         connect(); // 마운트시 실행
+        // console.log(bidInfo.nowPrice + " 황시은");
+        // const auctionId = props.boardDetail.auctionId;
 
         return () => disconnect(); // 언마운트 시 실행
     }, []);
@@ -62,12 +69,14 @@ function MyBidInfo(props) {
     };
 
     const subscribe = () => {
-        client.current.subscribe('/sub/normal/' + applyId, (res) => { // server에게 메세지 받으면
+        // console.log("야 들어왔냐")
+        console.log(auctionId + "옥션아이디")
+        client.current.subscribe('/sub/normal/' + auctionId, (res) => { // server에게 메세지 받으면
             console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
             setBidInfo((prevState) => {
-                return { ...bidInfo, nowPrice: jsonBody.price, myPrice: jsonBody.price + BeforeNormalBid.setBidPlus(jsonBody.price), nowBidName: jsonBody.email }
+                return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price + BeforeNormalBid.setBidPlus(jsonBody.price), nowBidName: jsonBody.email }
             });
         })
     };
@@ -75,8 +84,8 @@ function MyBidInfo(props) {
 
     const publish = () => {
         client.current.publish({
-            destination: '/pub/normal/' + applyId,
-            body: JSON.stringify({ id: applyId, price: bidInfo.myPrice, memberId: props.userId, itemId: props.normalAuctionId }),
+            destination: '/pub/normal/' + auctionId,
+            body: JSON.stringify({ id: auctionId, price: bidInfo.myPrice, email : email, itemId: props.boardDetail.itemId }),
             skipContentLengthHeader: true,
         });
 
@@ -86,7 +95,7 @@ function MyBidInfo(props) {
     return (
         <Box>
             <Heading size={'2xl'}>
-                {props.name}
+                {props.boardDetail.name}
             </Heading>
             <Divider mt={'20px'} border={'1px'} color={'green'} w={'580px'} />
             <HStack mt={'20px'}>
@@ -95,7 +104,7 @@ function MyBidInfo(props) {
                 </Heading>
                 <Spacer />
                 <Heading size={'lg'} textAlign={'right'}>
-                    {hopePrice}원 {/* 여기에 시작가 프롭스 */}
+                    {props.boardDetail.hopePrice}원 {/* 여기에 시작가 프롭스 */}
                 </Heading>
             </HStack>
             <HStack mt={'20px'}>
@@ -104,18 +113,10 @@ function MyBidInfo(props) {
                 </Heading>
                 <Spacer />
                 <Heading size={'lg'} textAlign={'right'}>
-                    {bidInfo.nowPrice}원 {/* 여기에 현재가 프롭스 */}
+                {BeforeNormalBid.setBidUnit(bidInfo.nowPrice)}원
                 </Heading>
             </HStack>
-            <HStack mt={'20px'}>
-                <Heading size={'lg'} textAlign={'left'}>
-                    내 입찰가
-                </Heading>
-                <Spacer />
-                <Heading size={'lg'} textAlign={'right'}>
-                    {BeforeNormalBid.setBidUnit(bidInfo.myPrice)}원 {/* 여기에 희망가 프롭스 */}
-                </Heading>
-            </HStack>
+
             <Divider mt={'20px'} border={'1px'} color={'green'} w={'580px'} />
             <HStack mt={'20px'}>
                 <Heading size={'lg'} textAlign={'left'}>
@@ -124,7 +125,7 @@ function MyBidInfo(props) {
                 <Spacer />
                 <TimeIcon boxSize={6} />
                 <Heading size={'lg'} textAlign={'right'}>
-                    <TimeCheck></TimeCheck>
+                    {/* <TimeCheck endAt = {props.boardDetail.endAt}></TimeCheck> */}
 
                 </Heading>
             </HStack>
@@ -145,6 +146,9 @@ function MyBidInfo(props) {
 }
 
 export default MyBidInfo;
+
+
+
 
 // import React from "react";
 // import {

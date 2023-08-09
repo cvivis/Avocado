@@ -46,9 +46,9 @@ function BoardList() {
           <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
             {/* 카드 반복문 돌릴 예정 */}
             {filterList.map((item) => (
-              console.log(item.itemId),
-              console.log(item.content),
-              console.log("아이템아이디 위에꺼"),
+              // console.log(item.itemId),
+              // console.log(item.content),
+              // console.log("아이템아이디 위에꺼"),
               <MyCard key={item.itemId} item={item} />
             ))}
           </Grid>
@@ -61,3 +61,5 @@ function BoardList() {
 }
 
 export default BoardList;
+
+
