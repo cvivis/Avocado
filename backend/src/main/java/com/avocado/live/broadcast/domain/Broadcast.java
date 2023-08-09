@@ -1,19 +1,21 @@
 package com.avocado.live.broadcast.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
 @Entity
 @Setter
+@Builder
+@AllArgsConstructor
+@ToString
 public class Broadcast {
 
     @Id
