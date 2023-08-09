@@ -17,18 +17,18 @@ function MyBidInfo(props) {
 
     console.log(nowP +"이건 nowP");
     const [bidInfo, setBidInfo] = useState({
-        
-        nowPrice : nowP,
-        myPrice :  mPrice
+        nowPrice : "",
+        myPrice :  ""
     })
+    console.log(bidInfo.myPrice);
     const auctionId = props.boardDetail.auctionId;
 
     //입찰버튼
     function handleBid() {
         let nowBidUnit = BeforeNormalBid.setBidUnit(bidInfo.nowPrice);
         // console.log("asdfasdff "+bidInfo.nowPrice);
-        let newNowPrice = bidInfo.nowPrice; // 현재가에 1000원을 더함
-        let newMyPrice = newNowPrice; // 내 입찰가는 현재가보다 1000원 더 높게 설정
+        // let newNowPrice = bidInfo.nowPrice; // 현재가에 1000원을 더함
+        // let newMyPrice = newNowPrice; // 내 입찰가는 현재가보다 1000원 더 높게 설정
         // console.log(nowBidUnit);
 
         // setBidInfo({
@@ -54,12 +54,12 @@ function MyBidInfo(props) {
     }
 
     useEffect(() => {
+        setBidInfo( { nowPrice:nowP, myPrice:mPrice});
         connect(); // 마운트시 실행
         // console.log(bidInfo.nowPrice + " 황시은");
         // const auctionId = props.boardDetail.auctionId;
-
         return () => disconnect(); // 언마운트 시 실행
-    }, []);
+    }, [nowP]);
 
 
 
@@ -71,11 +71,13 @@ function MyBidInfo(props) {
     const subscribe = () => {
         // console.log("야 들어왔냐")
         console.log(auctionId + "옥션아이디")
+        console.log(bidInfo.nowPrice);
         client.current.subscribe('/sub/normal/' + auctionId, (res) => { // server에게 메세지 받으면
             console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
             setBidInfo((prevState) => {
+                console.log( "호가: "+BeforeNormalBid.setBidPlus(jsonBody.price));
                 return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price + BeforeNormalBid.setBidPlus(jsonBody.price), nowBidName: jsonBody.email }
             });
         })
@@ -83,6 +85,7 @@ function MyBidInfo(props) {
 
 
     const publish = () => {
+        console.log("in Pub"+bidInfo.myPrice);
         client.current.publish({
             destination: '/pub/normal/' + auctionId,
             body: JSON.stringify({ id: auctionId, price: bidInfo.myPrice, email : email, itemId: props.boardDetail.itemId }),
