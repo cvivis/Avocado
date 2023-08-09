@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistor } from '..';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   email: '',
@@ -30,6 +30,7 @@ const loginSlice = createSlice({
     setMember: (state, action) => {
       state.member = action.payload;
     },
+    
     resetLoginForm: () => {
       return {
         email: initialState.email,
@@ -38,6 +39,9 @@ const loginSlice = createSlice({
         // member: initialState.member,
       };
     },
+  },
+  extraReducers:(builder)=>{
+    builder.addCase(PURGE,()=>initialState);
   },
 });
 

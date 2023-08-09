@@ -30,7 +30,7 @@ function MyPage() {
             
         });
     },[]);
-    console.log(useSelector((state)=>state.login));
+    console.log(myNormalBids);
 
     return (
         <div>
