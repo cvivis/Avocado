@@ -72,17 +72,17 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
 
     //admin 관련 SQL
-    @Query("SELECT new com.avocado.admin.controller.dto.consign.ConsignItemResponseEntry(i.id, i.name, i.type ,i.createdAt) " +
-            "FROM item as i " +
-            "where i.itemStatus = :itemStatus")
-    List<ConsignItemResponseEntry> findByItemStatus(ItemStatus itemStatus);
+//    @Query("SELECT new com.avocado.admin.controller.dto.consign.ConsignItemResponseEntry(i.id, i.name, i.type ,i.createdAt) " +
+//            "FROM item as i " +
+//            "where i.itemStatus = :itemStatus")
+    Optional<List<Item>> findByItemStatus(ItemStatus itemStatus);
 
     Optional<Item> findById(Long id);
 
-    @Query("SELECT new com.avocado.admin.controller.dto.normal.NormalItemApproveResponseEntry(i.id, i.member.id,i.name, i.hopePrice, i.category, i.createdAt) " +
-            "FROM item as i " +
-            "WHERE i.itemStatus = :itemStatus and i.type = :type")
-    List<NormalItemApproveResponseEntry> findByItemApproveAndType(ItemStatus itemStatus, Type type);
+//    @Query("SELECT new com.avocado.admin.controller.dto.normal.NormalItemApproveResponseEntry(i.id, i.member.id,i.name, i.hopePrice, i.category, i.createdAt) " +
+//            "FROM item as i " +
+//            "WHERE i.itemStatus = :itemStatus and i.type = :type")
+    Optional<List<Item>> findByItemStatusAndType(ItemStatus itemStatus, Type type);
 
     @Query("SELECT new com.avocado.admin.controller.dto.normal.NormalItemAssignResponseEntry(i.id, i.member.id,i.name, i.hopePrice, i.category, i.createdAt,na.startAt,na.endAt) " +
             "FROM item as i " +

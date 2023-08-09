@@ -18,19 +18,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class NormalItemApproveResponseEntry {
-    private Long id;
+    private Long ItemId;
     private Long memberId;
     private String name;
     private Integer hopePrice;
     private Category category;
-    private LocalDateTime createAt;
+    private String content;
+//    private LocalDateTime createAt;
 
-    public NormalItemApproveResponseEntry(Long id, Long memberId, String name, Integer hopePrice, Category category, Date createAt) {
-        this.id = id;
-        this.memberId = memberId;
-        this.name = name;
-        this.hopePrice = hopePrice;
-        this.category = category;
-        this.createAt = new Timestamp(createAt.getTime()).toLocalDateTime();
-    }
+
 }
