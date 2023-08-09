@@ -24,7 +24,6 @@ import Consign from './component/member/Consign';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
-import Admin from './component/admin/admin';
 
 function App() {
   // const nowPrice = 10000;
@@ -37,7 +36,6 @@ function App() {
         <header>
           <Header></Header>
         </header>
-        <Admin></Admin>
       </div>
       <div className="App">
 
