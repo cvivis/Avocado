@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Detail from './component/normal/board/Detail';
 import BoardList from './component/normal/board/BoardList';
 import CategoryList from './component/normal/board/CategoryList';
+import OnlineMeeting from "./component/openvidu/OnlineMeeting"
 
 // import NormalBid from './component/normal/auction/normalBid';
 import Header from './common/Header';
@@ -47,6 +48,7 @@ function App() {
           <Route path="/normal/list" element={<BoardList />}></Route>
           <Route path="/normal/detail/:id" element={<Detail />}></Route>
           <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
+          <Route path="/openvidu" element={<OnlineMeeting />}></Route>
           <Route path="/member/login" element={<Login />}></Route>
           <Route path="/member/signup" element={<Signup />}></Route>
           <Route path="/member/myPage" element={<MyPage />}></Route>

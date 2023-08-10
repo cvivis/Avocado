@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/normal")
@@ -26,14 +24,14 @@ public class NormalBoardController {
 
     // 예외 던지는데 exception 클래스는 만들지 않겠음
     @GetMapping("/list")
-    public ResponseEntity<?> itemList(){
+    public ResponseEntity<?> itemList() {
         NormalResponseDto itemlist = normalBoardService.getList();
-        log.info("{}",normalBoardService.getList());
+        log.info("{}", normalBoardService.getList());
         return ResponseEntity.ok().body(itemlist);
     }
 
     @GetMapping("/list/search/{keyword}")
-    public ResponseEntity<?> searchItemList(@PathVariable String keyword){
+    public ResponseEntity<?> searchItemList(@PathVariable String keyword) {
         NormalResponseDto itemlist = normalBoardService.getSearchList(keyword);
         log.info("{}", normalBoardService.getSearchList(keyword));
         return ResponseEntity.ok().body(itemlist);
@@ -44,8 +42,9 @@ public class NormalBoardController {
         NormalItemInfoDto itemInfo = normalBoardService.getItemDetail(id);
         return ResponseEntity.ok().body(itemInfo);
     }
+
     @GetMapping("/list/sort-category")
-    public ResponseEntity<?> SortCategoryList(@RequestParam Category category){
+    public ResponseEntity<?> SortCategoryList(@RequestParam Category category) {
         NormalResponseDto itemlist = normalBoardService.getCategoryList(category);
         return ResponseEntity.ok().body(itemlist);
     }
