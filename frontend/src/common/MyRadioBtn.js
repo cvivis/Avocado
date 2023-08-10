@@ -38,11 +38,11 @@ function RadioCard(props) {
 
 // Step 2: Use the `useRadioGroup` hook to control a group of custom radios.
 function MyRadioBtn({ onChange }) {
-    const options = ['상시 경매', '라이브 경매']
+    const options = ['NORMAL', 'LIVE']
 
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'type',
-        defaultValue: '상시 경매',
+        defaultValue: 'NORMAL',
         onChange: (value) => {
             onChange(value);
         },

@@ -25,6 +25,7 @@ function Consign() {
     const dispatch = useDispatch();
     const accessToken = useSelector((state) => state.login.accessToken);
     const navigate = useNavigate();
+    const email = useSelector((state)=>state.login.email);
 
     const handleConsignRequest = (e) => {
         e.preventDefault();
@@ -34,9 +35,9 @@ function Consign() {
         const content = editorRef.current.getInstance().getMarkdown();
         dispatch(setRequireItem({ content }));
 
-        // 요청 데이터를 requireItem으로부터 가져올 수 있습니다.
+        
         const Data = {
-            memberId: requireItem.memberId,
+            email: email,
             thumbnail: requireItem.thumbnail,
             name: requireItem.name,
             content: requireItem.content,
