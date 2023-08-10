@@ -4,7 +4,7 @@ module.exports = app => {
     "ws",
     createProxyMiddleware(
       {
-        target: 'https://localhost:8080',
+        target: 'http://13.125.211.176:8080',
         changeOrigin: true,
         ws: true,
       }
