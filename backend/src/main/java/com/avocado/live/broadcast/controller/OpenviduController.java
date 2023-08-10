@@ -33,27 +33,25 @@ public class OpenviduController {
     }
 
     @PostMapping("/init/{broadcastId}")
-    public ResponseEntity<String> initializeSession(
-            @PathVariable("broadcastId") Long broadcastId,
-            @RequestBody(required = false) Map<String, Object> params)
+    public ResponseEntity<String> initializeSession(@PathVariable("broadcastId") Long broadcastId)
             throws OpenViduJavaClientException, OpenViduHttpException {
-        SessionProperties properties = SessionProperties.fromJson(params).build();
+        SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
         broadcastService.save(session.getSessionId());
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
 
     @PostMapping("/connections/{broadcastId}")
-    public ResponseEntity<String> createConnection(@PathVariable("broadcastId") Long broadcastId,
-                                                   @RequestBody(required = false) Map<String, Object> params)
+    public ResponseEntity<String> createConnection(@PathVariable("broadcastId") Long broadcastId)
             throws OpenViduJavaClientException, OpenViduHttpException {
         String broadcastSessionId = broadcastService.getBroadcastSessionId(broadcastId);
         Session session = openvidu.getActiveSession(broadcastSessionId);
         if (session == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
+        ConnectionProperties properties = ConnectionProperties.fromJson(null).build();
         Connection connection = session.createConnection(properties);
         return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
     }
 }
+
