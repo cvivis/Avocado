@@ -6,7 +6,7 @@ import {
     Grid, Box,
 } from '@chakra-ui/react';
 import Footer from "../../common/Footer";
-import MyCard from "../../common/MyCard";
+// import MyCard from "../../common/MyCard";
 //import api from '../../../api';
 
 function MyPage() {
@@ -30,12 +30,12 @@ function MyPage() {
                                 <Box w={1300}></Box>
                                 <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
                                     {/* for문으로 카드 반복 돌릴 예정 */}
+                                    {/* <MyCard></MyCard>
                                     <MyCard></MyCard>
                                     <MyCard></MyCard>
                                     <MyCard></MyCard>
                                     <MyCard></MyCard>
-                                    <MyCard></MyCard>
-                                    <MyCard></MyCard>
+                                    <MyCard></MyCard> */}
                                 </Grid>
                             </TabPanel>
                             <TabPanel>

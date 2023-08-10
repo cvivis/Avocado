@@ -12,7 +12,7 @@ import {
   Grid, FormControl, Input, FormHelperText, IconButton,
   HStack, VStack, Spacer,
 } from "@chakra-ui/react";
-import MyCard from "../../../common/MyCard";
+import DetailMyCard from "../../../common/DetailMyCard";
 import MySearchBar from "../../../common/MySearchBar";
 
 
@@ -49,7 +49,7 @@ function BoardList() {
               // console.log(item.itemId),
               // console.log(item.content),
               // console.log("아이템아이디 위에꺼"),
-              <MyCard key={item.itemId} item={item} />
+              <DetailMyCard key={item.itemId} item={item} />
             ))}
           </Grid>
           <Center></Center>
