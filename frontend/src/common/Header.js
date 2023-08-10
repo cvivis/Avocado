@@ -52,7 +52,7 @@ function Header() {
                 <HStack spacing="20px">
                     <ButtonGroup spacing={20}>
                         <Button bg={"white"}>
-                            <Link to="/normal/auctionPage/NormalBidPage">상시 경매</Link>
+                            <Link to="/normal/list">상시 경매</Link>
                         </Button>
                         <Button bg={"white"}>
                             <Link to ="/broadcastList">

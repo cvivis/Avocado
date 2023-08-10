@@ -1,11 +1,19 @@
+import React from "react";
+import {
+  Box,
+  FormControl, Input, InputLeftElement, InputGroup,
+  Grid, Center, VStack, Button, Text, Container,
+} from "@chakra-ui/react";
+import {
+  EmailIcon, SunIcon,
+} from '@chakra-ui/icons'
+import MyPasswordInput from "../../common/MyPasswordInput";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSignupForm, setEmail, setNickname, setPassword } from "../../redux/signupSlice";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from "../../api";
 import { useEffect } from "react";
-
 function Signup() {
-
   // 회원가입 성공시 페이지 이동을 위한 navigate
   const navigate = useNavigate();
   // 회원가입 후 input값 초기화
@@ -47,22 +55,55 @@ function Signup() {
       });
   };
 
+
   return (
-    <div>
-      <form onSubmit={handleSignup}>
-        <input type="text" placeholder="아이디를 입력하세요"
-          value={email}
-          onChange={(e) => dispatch(setEmail(e.target.value))} />
-        <input type="password" placeholder="비밀번호"
-          value={password}
-          onChange={(e) => dispatch(setPassword(e.target.value))} />
-        {/* <input type="password" placeholder="비밀번호 확인"/> */}
-        <input type="text" placeholder="닉네임을 입력하세요"
-          value={nickname}
-          onChange={(e) => dispatch(setNickname(e.target.value))} />
-        <button type="submit">회원가입</button>
-      </form>
-    </div>
+    <Grid>
+      <Container centerContent>
+        <VStack>
+          <Box mt={50}>
+            <Link to="/">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1n2KE9iWPb_CKLzQ3adFwE9aPfJrOXMXYn1lFo8&s" alt="Logo"></img>
+            </Link>
+          </Box>
+          <FormControl mt={50} >
+            <InputGroup size='lg'>
+              <InputLeftElement pointerEvents='none'>
+                <EmailIcon color='gray.300' />
+              </InputLeftElement>
+              <Input
+                placeholder='이메일'
+                value={email}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
+              />
+            </InputGroup>
+            <InputGroup size='lg'>
+              <InputLeftElement pointerEvents='none'>
+                <SunIcon color='gray.300' />
+              </InputLeftElement>
+              <Input
+                value={nickname}
+                onChange={(e) => dispatch(setNickname(e.target.value))}
+                placeholder='닉네임'
+              />
+            </InputGroup>
+            {/* 비밀번호 입력 인풋 */}
+            <MyPasswordInput value={password}
+              onChange={(e) => dispatch(setPassword(e.target.value))} MyPlaceholder={'비밀번호'}></MyPasswordInput >
+            {/* <MyPasswordInput MyPlaceholder={'비밀번호 확인'}></MyPasswordInput> */}
+            <Button
+              onClick={handleSignup}
+              mt={10}
+              colorScheme='green'
+              type='submit'
+              size='lg'
+              w='500px'
+            >
+              <Text>회 원 가 입</Text>
+            </Button>
+          </FormControl>
+        </VStack>
+      </Container>
+    </Grid>
   );
 }
 

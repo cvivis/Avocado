@@ -39,9 +39,10 @@ public class NormalAuctionController {
     @MessageMapping("/normal/{id}")
     public void normalBid(@DestinationVariable("id") Long id, NormalBidRequestDto normalBidRequest) {
         log.info(normalBidRequest.toString());
+        log.info("야아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
 
         NormalBidResponseDto topBid = normalAuctionService.doBid(normalBidRequest);
-
+        log.info("topBid {}" , topBid);
         simpMessagingTemplate.convertAndSend("/sub/normal/" + id, topBid);
     }
 
