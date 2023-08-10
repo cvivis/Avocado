@@ -1,4 +1,4 @@
-package com.avocado.live.controller;
+package com.avocado.live.temp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

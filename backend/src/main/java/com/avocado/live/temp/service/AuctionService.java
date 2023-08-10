@@ -1,6 +1,6 @@
-package com.avocado.live.service;
+package com.avocado.live.temp.service;
 
-import com.avocado.live.domain.AuctionRepository;
+import com.avocado.live.temp.domain.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

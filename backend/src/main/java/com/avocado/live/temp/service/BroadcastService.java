@@ -1,7 +1,7 @@
-package com.avocado.live.service;
+package com.avocado.live.temp.service;
 
-import com.avocado.live.domain.Broadcast;
-import com.avocado.live.domain.BroadcastRepository;
+import com.avocado.live.temp.domain.Broadcast;
+import com.avocado.live.temp.domain.BroadcastRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

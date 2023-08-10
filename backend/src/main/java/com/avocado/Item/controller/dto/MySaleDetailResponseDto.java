@@ -4,12 +4,10 @@ import com.avocado.Item.domain.entity.Category;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
 import com.avocado.Item.domain.entity.Type;
-import com.avocado.live.domain.Broadcast;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter

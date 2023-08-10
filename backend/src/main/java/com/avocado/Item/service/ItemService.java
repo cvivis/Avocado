@@ -3,9 +3,7 @@ package com.avocado.Item.service;
 import com.avocado.Item.controller.dto.*;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.repository.ItemRepository;
-import com.avocado.Item.domain.repository.MySaleResponseMapping;
-import com.avocado.live.domain.Broadcast;
-import com.avocado.live.service.BroadcastService;
+import com.avocado.live.temp.service.BroadcastService;
 import com.avocado.member.domain.entity.Member;
 import com.avocado.normal.auction.domain.repository.NormalHistoryRepository;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
@@ -15,9 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

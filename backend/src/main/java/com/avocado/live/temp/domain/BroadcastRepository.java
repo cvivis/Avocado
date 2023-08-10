@@ -1,4 +1,4 @@
-package com.avocado.live.domain;
+package com.avocado.live.temp.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

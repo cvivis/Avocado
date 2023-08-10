@@ -1,4 +1,4 @@
-package com.avocado.live.domain;
+package com.avocado.live.temp.domain;
 
 import com.avocado.common.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
