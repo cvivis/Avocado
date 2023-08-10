@@ -36,8 +36,12 @@ function App() {
       <div>
         {/* <header>
           <Header></Header>
+<<<<<<< HEAD
         </header> */}
 
+=======
+        </header>
+>>>>>>> a4bf9174b7fe7ddf79aca841e98273f2927e3af1
       </div>
       <div className="App">
 

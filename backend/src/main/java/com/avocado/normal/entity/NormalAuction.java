@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Getter
-public class NormalAuction extends BaseTimeEntity {
+public class    NormalAuction extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
