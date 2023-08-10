@@ -2,9 +2,15 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchKeyword } from "../../../redux/searchSlice";
 import { setFilterList } from "../../../redux/boardListSlice";
-import api from '../../../api';
+import api from '../../../api'
+import {
+  Box, Center,
+  Grid, FormControl, Input, FormHelperText, IconButton, HStack, Select,
+} from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons"
+import CategoryList from "./CategoryList";
 
-function SearchList() {
+function MySearchBar() {
   const searchKeyword = useSelector((state) => state.search.searchKeyword);
   const dispatch = useDispatch();
   const doSelect = useSelector((state) => state.category.doSelect);
@@ -38,16 +44,29 @@ function SearchList() {
   };
 
   return (
-    <div>
-      <input
-        type="search"
-        placeholder="검색어를 입력하세요"
-        value={searchKeyword}
-        onChange={handleSearchInputChange}
-      />
-      <button onClick={handleSearchButtonClick}>검색</button>
-    </div>
+    <Box>
+      <FormControl>
+        <HStack>
+          <CategoryList></CategoryList>
+          <Input type='search'
+            color='green'
+            placeholder='검색어를 입력하세요'
+            _placeholder={{ color: 'inherit' }}
+            htmlSize={30}
+            width='auto'
+            value={searchKeyword}
+            onChange={handleSearchInputChange}
+          />
+          <IconButton
+            onClick={handleSearchButtonClick}
+            aria-label='Search database'
+            colorScheme='green'
+            icon={<SearchIcon />}
+          />
+        </HStack>
+      </FormControl>
+    </Box>
   );
 }
 
-export default SearchList;
+export default MySearchBar;

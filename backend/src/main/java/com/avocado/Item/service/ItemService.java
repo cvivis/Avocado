@@ -9,6 +9,7 @@ import com.avocado.live.broadcast.service.BroadcastService;
 import com.avocado.member.domain.entity.Member;
 import com.avocado.normal.auction.domain.repository.NormalHistoryRepository;
 import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
+import com.avocado.normal.board.controller.dto.NormalItemInfoDto;
 import com.avocado.normal.board.service.NormalBoardService;
 import com.avocado.normal.entity.NormalHistory;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class ItemService {
     public MySaleDetailResponseDto getMyNormalSale(Long itemId) {
         Item item = itemRepository.findById(itemId).orElse(null);
 
-        NormalItemDetailResponseDto normalItemDetailResponseDto = normalBoardService.getItemDetail(itemId);
+        NormalItemInfoDto normalItemDetailResponseDto = normalBoardService.getItemDetail(itemId);
         NormalHistory forTopBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(normalItemDetailResponseDto.getAuctionId()).orElse(null);
         Integer currentBid = 0; // 프론트에서 처리
         if(forTopBid != null) {

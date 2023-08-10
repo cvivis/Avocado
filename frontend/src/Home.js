@@ -9,13 +9,13 @@ import MyCarousel from "./common/MyCarousel";
 
 function Home() {
   return (
-      <Box>
-        <Header />
-        <Center>
-          <MyCarousel />
-        </Center>
-        <Footer />
-      </Box>
+    <Box>
+      {/* <Header /> */}
+      <Center>
+        <MyCarousel height={1000} weight={900} />
+      </Center>
+      <Footer />
+    </Box>
   );
 }
 

@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import api from "../../api";
 import Header from "../../common/Header";
-import { 
+import {
     Center,
     Tabs, TabList, TabPanels, Tab, TabPanel,
     Grid, Box,
@@ -34,7 +34,7 @@ function MyPage() {
 
     return (
         <div>
-            <Header></Header>
+            {/* <Header></Header> */}
             <Grid>
                 <Box h={50}></Box>
                 <Box display="flex" justifyContent="space-between">
@@ -68,7 +68,7 @@ function MyPage() {
                             </TabPanel>
                             <TabPanel>
                                 <Box w={1300}></Box>
-                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'></Grid>  
+                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'></Grid>
                             </TabPanel>
                         </TabPanels>
                     </Tabs>

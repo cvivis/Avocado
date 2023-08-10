@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
-import api from '../../../api';
+import {
+  Box, Grid, VStack, HStack, GridItem, Container, StackDivider,
+} from "@chakra-ui/react"
+import Header from "../../../common/Header";
+import Footer from "../../../common/Footer";
+import MyCarousel from "../../../common/MyCarousel";
+import MyBidInfo from "../../../common/MyBidInfo";
+import api from "../../../api";
 import { useParams } from "react-router-dom";
 
-import NormalBid from "../auction/normalBid";
 function Detail() {
-  const nowPrice = 10000;
-  const nowBidName = "홍길동";
   const { id } = useParams();
   const [boardDetail, setboardDetail] = useState('');
+
   useEffect(() => {
     // API 호출
     api.get(`/normal/detail/${id}`)
       .then(response => {
         setboardDetail(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
@@ -20,40 +26,43 @@ function Detail() {
   }, [id]);
 
 
-
   return (
-    <div>
-       <ul>
-      <li>
-        <table>
-          <thead>
-            <tr>
-              <th>아이디</th>
-              <th>상품명</th>
-              <th>상품설명</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr key={boardDetail.itemId}>
-              <td>{boardDetail.itemId}</td>
-              <td>{boardDetail.name}</td>
-              <td>{boardDetail.content}</td>
-            </tr>
-          </tbody>
-        </table>
-        {/* <Link to={`/normal/${boardList.id}`}>{boardList.name}</Link> */}
-      </li>
-    </ul>
-      <div>
-          <NormalBid applyId="1" userId="1" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
-          <NormalBid applyId="1" userId="2" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
-          <NormalBid applyId="1" userId="3" normalAuctionId="1" nowPrice = {nowPrice} nowBidName={nowBidName}></NormalBid>
-          <p>-------------------------------------------------</p>
-        </div>
+    <Box>
+      {/* <Header /> */}
+      <Container centerContent mt={'15px'}>
+        <Grid
+          templateAreas={`"imageSection titleSection"
+                                        "contentSection contentSection"`}
+        >
+          <VStack divider={<StackDivider border={"1px"} borderColor='green' />}>
+            <Box>
+              <HStack>
+                <GridItem area={'imageSection'} w={'600px'} h={'600px'}>
 
-    </div>
-   
+                  <MyCarousel height={'600px'} weight={'600px'} />
 
+                </GridItem>
+                <GridItem area={'titleSection'} w={'600px'} h={'600px'}>
+                  <Container centerContent>
+                    <MyBidInfo  boardDetail={boardDetail} 
+                    />
+                  </Container>
+                </GridItem>
+              </HStack>
+            </Box>
+            <Box>
+              <GridItem area={'contentSection'} w={'1208px'}>
+                <Container centerContent>
+                  {boardDetail.content}
+                </Container>
+              </GridItem>
+            </Box>
+          </VStack>
+        </Grid>
+      </Container>
+      <Footer />
+    </Box>
   );
 }
+
 export default Detail;

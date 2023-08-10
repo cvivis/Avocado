@@ -6,7 +6,7 @@ const initialState = {
   password: '',
   isLogin: false,
   member: null,
-  accessToken : '',
+  accessToken: '',
 };
 
 
@@ -45,6 +45,6 @@ const loginSlice = createSlice({
   },
 });
 
-export const { setMember, setIsLogin, resetLoginForm, setEmail, setPassword,setAccessToken} = loginSlice.actions;
+export const { setMember, setIsLogin, resetLoginForm, setEmail, setPassword, setAccessToken } = loginSlice.actions;
 
 export default loginSlice.reducer;
