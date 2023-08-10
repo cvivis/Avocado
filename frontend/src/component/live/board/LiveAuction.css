@@ -1,0 +1,6 @@
+.date-picker-calendar {
+    .react-datepicker__header {
+        background-color: rebeccapurple;
+        border-bottom: none;
+    }
+}
