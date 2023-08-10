@@ -47,9 +47,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     // 상시 테스트용 쿼리
     @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
             "(i.id, i.name, i.type, i.category, na.successPrice) " +
-            "FROM item i " +
-            "JOIN normalAuction na ON na.successMember = :memberId " +
-            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL ")
+                    "FROM item i " +
+                    "JOIN normalAuction na ON na.successMember = :memberId " +
+                    "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL ")
     List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
 
 

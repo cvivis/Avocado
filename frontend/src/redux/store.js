@@ -10,6 +10,8 @@ import myNormalBidsSlice from "./myNormalBidsSlice";
 import {persistReducer} from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 import broadcastListSlice from "./broadcastListSlice";
+import mySuccessNormalbidsSlice from "./mySuccessNormalbidsSlice";
+import myNormalSaleSlice from "./myNormalSaleSlice";
 
 
 const  reducers = combineReducers({
@@ -21,6 +23,8 @@ const  reducers = combineReducers({
     requireItem: consignSlice,
     myNormalBids:myNormalBidsSlice,
     broadcastList:broadcastListSlice,
+    mySuccessNormalBids:mySuccessNormalbidsSlice,
+    myNormalSale:myNormalSaleSlice,
 });
 
 const persistConfig = {
