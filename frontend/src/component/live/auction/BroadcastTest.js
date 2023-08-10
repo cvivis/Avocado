@@ -282,9 +282,9 @@ const navigate = useNavigate();
     function ControlBox() {
 
         // 현재 로그인 된 계정이 관리지인지 일반사용자인지 받아와야 함
-        const role = 'ADMIN';
+        const role = 'USER';
 
-        if (role === 'USER') {
+        if (role === 'ADMIN') {
             return (
                 <GridItem area={'bid'}>
                     <Center mt={'20px'}>
