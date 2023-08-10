@@ -39,3 +39,6 @@ out/
 ### docker ###
 *.env
 env.*
+
+### SSL ###
+keystore.*
