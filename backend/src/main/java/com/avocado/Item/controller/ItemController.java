@@ -7,6 +7,7 @@ import com.avocado.member.domain.entity.Member;
 import com.avocado.member.service.AuthService;
 import com.avocado.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
+@Slf4j
 public class ItemController {
     private final ItemService itemService;
     private final MemberService memberService;
@@ -58,6 +60,7 @@ public class ItemController {
     // 마이페이지 - 나의 입찰 상품 리스트 가져오기 (상시만)
     @GetMapping("/my-bid")
     public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken) {
+        log.info("[itemcontroller mybids] accesstoken : {}",requestAccessToken);
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 

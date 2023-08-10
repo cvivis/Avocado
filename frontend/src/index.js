@@ -6,15 +6,21 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { ChakraProvider } from '@chakra-ui/react';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+
+export const persistor = persistStore(store);
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 // Redux의 상태를 컴포넌트에 제공하기 위해 Provider 컴포넌트 사용
 root.render(
   <ChakraProvider>
-  <React.StrictMode>
+  <React.StrictMode> 
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
         <App />
+        </PersistGate>
       </Provider>
   </React.StrictMode>
   </ChakraProvider>,

@@ -4,6 +4,7 @@ import { setIsLogin } from "../../redux/loginSlice";
 import { useEffect, useRef } from "react";
 import { MenuItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { persistor } from "../..";
 
 function Logout() {
 
@@ -16,17 +17,22 @@ function Logout() {
     console.log(typeof (accessToken));
 
     const navigate = useNavigate();
-
-    const handlelogout = () => {
-        api.post('/member/logout', {}, { headers: { Authorization: accessToken } })
-            .then(() => {
-                // 쿠키에서 토큰 제거
-                // document.cookie = `token=; path=/; max-age=0`;
-                console.log("로그아웃 되었습니다.");
-                alert("로그아웃 되었습니다.")
-                dispatch(setIsLogin(false));
-                navigate('/');
-
+    const purge = async ()=>{
+        await persistor.purge();
+    }
+    const handlelogout=()=>{
+        
+    api.post('/member/logout', {}, { headers: { Authorization: accessToken } })
+    .then(() => {
+        
+        // 쿠키에서 토큰 제거
+        // document.cookie = `token=; path=/; max-age=0`;
+        console.log("로그아웃 되었습니다.");
+        purge();
+        alert("로그아웃 되었습니다.")
+        dispatch(setIsLogin(false));
+        navigate('/');
+        
 
             })
             .catch(error => {
