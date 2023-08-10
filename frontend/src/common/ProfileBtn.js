@@ -16,7 +16,7 @@ function ProfileBtn() {
         <Menu>
             <MenuButton as={Avatar} colorScheme='green'></MenuButton>
             <MenuList>
-            {/* Fragment(<></>) => 2개 이상 사용하려면, 이렇게 사용해야함 */}
+                {/* Fragment(<></>) => 2개 이상 사용하려면, 이렇게 사용해야함 */}
                 {isLogin ? (
                     <>
                         <Link to="/member/MyPage">
@@ -26,9 +26,14 @@ function ProfileBtn() {
                     </>
                 )
                     : (
-                        <Link to="/member/login">
-                            <MenuItem>Log In</MenuItem>
-                        </Link>
+                        <>
+                            <Link to="/member/login">
+                                <MenuItem>Log In</MenuItem>
+                            </Link>
+                            <Link to="/member/signup">
+                                <MenuItem>Sign up</MenuItem>
+                            </Link>
+                        </>
                     )}
 
                 {/* <MenuGroup title='Profile'> */}
