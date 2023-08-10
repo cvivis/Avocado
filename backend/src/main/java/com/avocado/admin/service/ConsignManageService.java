@@ -2,15 +2,18 @@ package com.avocado.admin.service;
 
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
+import com.avocado.Item.domain.entity.Type;
 import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.admin.controller.dto.consign.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +24,18 @@ public class ConsignManageService {
 
     // consign 상태의 상품 가져오기
     public ConsignItemResponse getConsignList(){
-        List<ConsignItemResponseEntry> list = itemRepository.findByItemStatus(ItemStatus.CONSIGN);
-        ConsignItemResponse response = new ConsignItemResponse(list);
-        return response;
+        List<Item> list = itemRepository.findByItemStatus(ItemStatus.CONSIGN).orElse(null);
+        if(CollectionUtils.isEmpty(list)) return null;
+        return new ConsignItemResponse(list.stream().map(
+                item -> ConsignItemResponseEntry.builder()
+                        .ItemId(item.getId())
+                        .name(item.getName())
+                        .auctionType(item.getType())
+                        .content(item.getContent())
+                        .hopePrice(item.getHopePrice()).build()
+        ).collect(Collectors.toList()));
     }
+
 
     // consign 상태의 상품 상세 보기 이게 필요한가
     public ConsignItemDetailResponse getConsignItemDetail(Long id){
