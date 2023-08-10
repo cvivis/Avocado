@@ -18,6 +18,12 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
+  redis:
+    image: redis:latest
+    ports:
+      - "8379:6379"
+        
+
         #  nginx:
         #    image: nginx:latest
         #    ports:
