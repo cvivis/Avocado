@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -36,11 +38,16 @@ public class Broadcast {
 
     private Date startAt;
 
-
-
+    public void onOff() {
+        if (this.status) {
+            this.startAt = Timestamp.from(Instant.now());
+        }
+        this.status = !this.status;
+    }
 
     public Broadcast(String sessionId) {
         this.sessionId = sessionId;
+        this.status = true;
     }
 
     protected Broadcast() {}
