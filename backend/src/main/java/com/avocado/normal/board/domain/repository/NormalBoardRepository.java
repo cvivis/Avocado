@@ -16,14 +16,14 @@ public interface NormalBoardRepository extends JpaRepository<Item, Long> {
     // save는 추후에
 
     // 전체 리스트 반환
-    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
+    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, i.content, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
             "FROM item i " +
             "JOIN normalAuction a ON i.id = a.item.id " +
             "JOIN normalHistory nh ON a.id = nh.normalAuction.id")
     List<NormalResponseEntryDto> findAllItemList();
 
     // 검색 리스트 반환
-    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
+    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, i.content, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
             "FROM item i " +
             "JOIN normalAuction a ON i.id = a.item.id " +
             "JOIN normalHistory nh ON a.id = nh.normalAuction.id " +
@@ -38,7 +38,7 @@ public interface NormalBoardRepository extends JpaRepository<Item, Long> {
     NormalItemDetailResponseDto findDetailById(@Param("id") Long id);
 
     // 카테고리 리스트 보기
-    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
+    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(nh.normalAuction.id,i.id, i.name, i.content, nh.bidPrice, i.hopePrice, a.startAt, a.endAt) " +
             "FROM item i " +
             "JOIN normalAuction a ON i.id = a.item.id " +
             "JOIN normalHistory nh ON a.id = nh.normalAuction.id " +

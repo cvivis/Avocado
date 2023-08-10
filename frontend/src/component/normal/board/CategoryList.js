@@ -1,77 +1,47 @@
-import React, { useState } from 'react';
-import api from '../../../api';
-// 백엔드 category를 파라미터로 받도록 수정해야함 => 쿼리스트링으로 해결
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDoSelect, setSelectedCategory } from '../../../redux/categorySlice';
+import { Select } from '@chakra-ui/react';
+import { setFilterList } from '../../../redux/boardListSlice';
 
 function CategoryList() {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [searchLists, setSearchLists] = useState([]);
+  const selectedCategory = useSelector((state) => state.category.selectedCategory);
+  const dispatch = useDispatch();
 
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
+    if (selectedCategory === category) {
+      dispatch(setDoSelect(false));
+      dispatch(setSelectedCategory(''));
+    } else {
+      dispatch(setDoSelect(true));
+      dispatch(setSelectedCategory(category));
+      if (category === '') {
+        dispatch(setDoSelect(false));
+      };
+    }
+  }
 
-  const handleSearch = () => {
-    // 확인 버튼을 누를 때 선택한 토글 값을 사용하여 API 호출
-    api.get(`/normal/list/sort-category?category=${selectedCategory}`)
-      .then(response => {
-        setSearchLists(response.data.entries);
-      })
-      .catch(error => {
-        console.error('API 요청 에러:', error);
-      });
-  };
+
 
   return (
     <div>
-      {/* 토글 선택 */}
-      <label>
-        <input
-          type="radio"
-          value="ELECTRONICS"
-          checked={selectedCategory === 'ELECTRONICS'}
-          onChange={() => handleCategoryChange('ELECTRONICS')}
-        />
-        ELECTRONICS
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="HANDICRAFT"
-          checked={selectedCategory === 'HANDICRAFT'}
-          onChange={() => handleCategoryChange('HANDICRAFT')}
-        />
-        HANDICRAFT
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="PETSUPPLIES"
-          checked={selectedCategory === 'PETSUPPLIES'}
-          onChange={() => handleCategoryChange('PETSUPPLIES')}
-        />
-        PETSUPPLIES
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="CLOTHES"
-          checked={selectedCategory === 'CLOTHES'}
-          onChange={() => handleCategoryChange('CLOTHES')}
-        />
-        CLOTHES
-      </label>
+      <Select width='auto'
+        value={selectedCategory}
+        onChange={(e) => handleCategoryChange(e.target.value)}>
+        <option value=''>카테고리</option>
+        <option value='ELECTRONICS'
+        >ELECTRONICS</option>
 
-      {/* 확인 버튼 */}
-      <button onClick={handleSearch}>확인</button>
+        <option value='HANDICRAFT'
+        >HANDICRAFT</option>
 
-      {/* 검색 결과 출력 */}
-      <ul>
-        {searchLists.map((searchList) => (
-          <li key={searchList.itemId}>
-            {searchList.name}
-          </li>
-        ))}
-      </ul>
+        <option value='PETSUPPLIES'
+        >PETSUPPLIES</option>
+
+        <option value='CLOTHES'
+        >CLOTHES</option>
+      </Select>
+
     </div>
   );
 }

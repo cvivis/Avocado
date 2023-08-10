@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 페이지</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/main.css" rel="stylesheet">
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+</head>
+<body>
+    <div id="main-content" class="container">
+        <div class="row">
+            <h2>사용자 페이지</h2>
+            <h3>방송 목록</h3>
+            <div id="userBroadcast"></div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function(){
+            const userbroadcastlist = document.querySelector("#userBroadcast")
+            fetch("http://localhost:8080/user/broadcasts")
+            .then((response) => response.json()).then((data)=> {
+                data.forEach(element => {
+                    const userBroadcast = document.createElement('div')
+                    const info = document.createTextNode(element.id + '. ' +element.title+" \n");
+                    const part_btn = document.createElement('button')
+                    part_btn.className='btn btn-default'
+                    part_btn.innerText = "방송 참여"
+                    part_btn.type = "submit"
+                    if(!element.status)part_btn.disabled = "disabled"
+                    part_btn.id = "part" + element.id
+                    part_btn.setAttribute("onclick", "particiapte(this.id)")
+                    userBroadcast.appendChild(info)
+                    userBroadcast.appendChild(part_btn)
+                    userbroadcastlist.appendChild(userBroadcast)
+                });
+            })
+        }
+
+        function particiapte(broadcastId) {
+            const id = broadcastId.slice(-1);
+            localStorage.setItem("current-room-id",id)
+            //TODO : 방송이 종료된 상태인지 확인해야함 (REST API) // 페이지가 열려있는 상태에서 방송상태가 변경되었을 경우 고려
+            window.location.href = "./user_live.html"
+        }
+    </script>
+</body>
+</html>

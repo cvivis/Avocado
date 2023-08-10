@@ -2,10 +2,8 @@ package com.avocado.Item.domain.entity;
 
 import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import reactor.util.annotation.Nullable;
 
 import javax.persistence.*;
@@ -17,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
+@Setter
 public class Item extends BaseTimeEntity {
 
     @Id
@@ -33,7 +32,8 @@ public class Item extends BaseTimeEntity {
     @Min(value = 0) // 최솟값 설정
     private int hopePrice;
     // 즉시구매가 임시 스펙 아웃
-    //private int instantPrice;
+    @ColumnDefault("0")
+    private int instantPrice;
     @Enumerated(EnumType.STRING)
     //@EnumValid(enumClass = Type.class)
     private Type type;

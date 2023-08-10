@@ -1,49 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from '../../../api';
+import { useDispatch, useSelector } from "react-redux";
+import CategoryList from "./CategoryList";
+import SearchList from "./SearchList";
+import { setBoardList, setFilterList } from "../../../redux/boardListSlice";
+import Header from "../../../common/Header";
+import Footer from "../../../common/Footer";
+import {
+  Box, Center,
+  Grid, FormControl, Input, FormHelperText, IconButton,
+  HStack, VStack, Spacer,
+} from "@chakra-ui/react";
+import DetailMyCard from "../../../common/DetailMyCard";
+import MySearchBar from "../../../common/MySearchBar";
+
 
 function BoardList() {
-  // Redux store의 searchResults 가져오기
-  const [boardLists,setBoardLists] = useState([]);
+  const dispatch = useDispatch();
+  const filterList = useSelector((state) => state.boardList.filterList);
+
+  // console.log(filterList);
 
   useEffect(() => {
-    // API 호출
     api.get("/normal/list")
       .then(response => {
-        setBoardLists(response.data.entries);
-        // do something with response.data.entries if needed
+        // console.log(response.data.entries + "이것은 리스폰스 데이터");
+        dispatch(setBoardList(response.data.entries));
+        dispatch(setFilterList(response.data.entries));
+        // console.log(filterList);
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
-  }, []);
+  }, [dispatch]);
 
   return (
-    <ul>
-      <li>
-        <table>
-          <thead>
-            <tr>
-              <th>아이디</th>
-              <th>상품명</th>
-            </tr>
-          </thead>
-          <tbody>
-            {boardLists.map((boardList) => ( // searchResults가 비어있지 않은 경우에만 map 함수 사용
-              <tr key={boardList.itemId}>
-                <td>{boardList.itemId}</td>
-                <td>
-                  <Link to={`/normal/detail/${boardList.itemId}`}>
-                    {boardList.name}
-                  </Link>
-                </td>
-              </tr>
+    <Box>
+      <Box h={50}></Box>
+      <VStack>
+        <SearchList></SearchList>
+        <Spacer />
+        <Box display="flex" justifyContent="space-between">
+          <Center></Center>
+          <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
+            {/* 카드 반복문 돌릴 예정 */}
+            {filterList.map((item) => (
+              // console.log(item.itemId),
+              // console.log(item.content),
+              // console.log("아이템아이디 위에꺼"),
+              <DetailMyCard key={item.itemId} item={item} />
             ))}
-          </tbody>
-        </table>
-      </li>
-    </ul>
+          </Grid>
+          <Center></Center>
+        </Box>
+      </VStack>
+      <Footer></Footer>
+    </Box>
   );
 }
 
 export default BoardList;
+
+

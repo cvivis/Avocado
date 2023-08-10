@@ -4,7 +4,7 @@ import com.avocado.Item.domain.entity.Category;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.entity.ItemStatus;
 import com.avocado.Item.domain.entity.Type;
-import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
+import com.avocado.normal.board.controller.dto.NormalItemInfoDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +28,7 @@ public class MySaleDetailResponseDto {
     private Integer successPrice;
 
     // 상시 경매용
-    public MySaleDetailResponseDto(Item item, NormalItemDetailResponseDto normalItemDetailResponseDto, Integer currentBid) {
+    public MySaleDetailResponseDto(Item item, NormalItemInfoDto normalItemDetailResponseDto, Integer currentBid) {
         itemId = item.getId();
         auctionId = normalItemDetailResponseDto.getAuctionId(); // 추후 추가
         name = item.getName();
