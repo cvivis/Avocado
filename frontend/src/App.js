@@ -21,6 +21,7 @@ import Logout from "./component/member/Logout"
 import Regist from './component/member/Regist';
 import NormalDetailPage from './component/normal/auctionPage/NormalDetailPage';
 import Consign from './component/member/Consign';
+import BroadcastTest from './component/live/auction/BroadcastTest';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
@@ -33,9 +34,14 @@ function App() {
 
     <Router>
       <div>
-        <header>
+        {/* <header>
           <Header></Header>
+<<<<<<< HEAD
+        </header> */}
+
+=======
         </header>
+>>>>>>> a4bf9174b7fe7ddf79aca841e98273f2927e3af1
       </div>
       <div className="App">
 
@@ -54,11 +60,12 @@ function App() {
           <Route path="/member/Regist" element={<Regist />}></Route>
           <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route>
           <Route path="/member/Consign" element={<Consign />}></Route>
+          <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
         </Routes>
       </div>
-      <footer>
+      {/* <footer>
         <Footer></Footer>
-      </footer>
+      </footer> */}
     </Router>
   );
 }
