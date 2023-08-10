@@ -14,19 +14,9 @@ function TimeCheck(props) {
   const [time, setTime] = useState(); // 남은 시간 (단위: )
   const dateForm = "YYYY-MM-DD HH:mm:ss";
   const endTime = props.endAt;
-  // console.log(endTime);
-
-
-
-  // console.log(props.endAt + "야야야야야야야야야야야야ㅑ양");
-  // useEffect(() => {
-   
-  //   // console.log(dayjs(date).format() + "");
-  // }, []);
 
   useEffect(() => {
     const json = endTime; // 마감데이터 받아오기 
-    // console.log("지금 유즈 이펙트 실행되었어요")
     const dateJson = dayjs(json).format(dateForm);
     setDate(dateJson);
     setTime(dateJson);

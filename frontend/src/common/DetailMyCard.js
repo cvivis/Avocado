@@ -3,15 +3,10 @@ import {
     Image, Heading, Text,
     Button, Box,
 } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 function MyCard(props) {
-    // const filterList = useSelector((state) => state.boardList.filterList);
     const { item } = props;
-    // console.log(item.itemId+"아이디");
-    // console.log(item.name+"이름");
-    // console.log(item.content+"내용");
     return (
         <Box w={300}>
             <Link to={`/normal/detail/${item.itemId}`}>

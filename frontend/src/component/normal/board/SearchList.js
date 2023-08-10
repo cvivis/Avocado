@@ -4,8 +4,7 @@ import { setSearchKeyword } from "../../../redux/searchSlice";
 import { setFilterList } from "../../../redux/boardListSlice";
 import api from '../../../api'
 import {
-  Box, Center,
-  Grid, FormControl, Input, FormHelperText, IconButton, HStack, Select,
+  Box, FormControl, Input, IconButton, HStack,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons"
 import CategoryList from "./CategoryList";

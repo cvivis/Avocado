@@ -1,6 +1,6 @@
 import { React } from "react";
 import {
-    Box, HStack, useRadio, useRadioGroup, Text, Spacer,
+    Box, HStack, useRadio, useRadioGroup, Text,
 } from "@chakra-ui/react";
 
 // 1. Create a component that consumes the `useRadio` hook

@@ -1,8 +1,8 @@
 import React from "react";
 import {
-    Box, Container, Flex, FormControl, FormLabel,
+    Box, Container, Flex, FormControl,
     HStack, Heading, Input, InputGroup, InputRightAddon, Spacer,
-    Textarea, VStack, Text, InputLeftAddon, Divider, FormHelperText, Button, Center,
+    InputLeftAddon, Divider, Button, Center,
 } from '@chakra-ui/react';
 import Header from "../../common/Header";
 import Footer from "../../common/Footer";
@@ -10,7 +10,6 @@ import Footer2 from "../../common/Footer-new";
 import ToastEditor from "../../common/ToastEditor";
 import MyRadioBtn from "../../common/MyRadioBtn";
 import Dropzone from "../../common/Dropzone";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setRequireItem } from "../../redux/consignSlice";
 import api from "../../api";
@@ -92,11 +91,6 @@ function Consign() {
                                 _focus={{ boxShadow: 'none' }} type="number" placeholder="희망 시작가를 입력해주세요" required />
                             <InputRightAddon children='원' bg={'green.400'} />
                         </InputGroup>
-                        {/* <InputGroup>
-                            <InputLeftAddon as={'b'} fontSize={'xl'} children='즉시 구매가' bg={'green.400'} />
-                            <Input _focus={{ boxShadow: 'none' }} type="number" placeholder="즉시 구매가를 입력해주세요" required />
-                            <InputRightAddon children='원' bg={'green.400'} />
-                        </InputGroup> */}
                     </Flex>
                     <Center m={'100px'} >
                         <HStack gap={'20px'}>

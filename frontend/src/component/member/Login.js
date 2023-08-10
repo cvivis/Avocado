@@ -9,29 +9,17 @@ import {
   EmailIcon,
 } from '@chakra-ui/icons'
 import MyPasswordInput from "../../common/MyPasswordInput";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../api";
-import { resetLoginForm, setIsLogin, setEmail, setPassword, setMember, setAccessToken } from "../../redux/loginSlice";
+import { setIsLogin, setEmail, setPassword, setMember, setAccessToken, setRole } from "../../redux/loginSlice";
 
 function LogIn() {
-
-  // 로그인 성공시 페이지 이동을 위한 navigate
   const navigate = useNavigate();
-  // 로그인 후 input값 초기화
   const dispatch = useDispatch();
 
   const email = useSelector((state) => state.login.email);
   const password = useSelector((state) => state.login.password);
-  const isLogin = useSelector((state) => state.login.isLogin);
-  const accessToken = useSelector((state) => state.login.accessToken);
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(resetLoginForm());
-  //   }
-  // }, [dispatch]);
 
   const handleLogin = (e) => {
 
@@ -45,8 +33,15 @@ function LogIn() {
     api.post('/member/login', loginData)
       .then(response => {
         const token = response.headers.authorization;
-        // 토큰을 쿠키에 저장
-        // document.cookie = `token=${token}; path=/;`;
+        const tokenParts = token.split('.');
+        const encodedPayload = tokenParts[1];
+
+        const decodedPayload = atob(encodedPayload); // Base64 디코딩
+
+        const payloadObject = JSON.parse(decodedPayload);
+
+        const role = payloadObject.authority;
+        dispatch(setRole(role));
         dispatch(setAccessToken(token));
         dispatch(setIsLogin(true));
         dispatch(setMember(response.data));

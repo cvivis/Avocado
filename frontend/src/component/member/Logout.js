@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../api";
 import { setIsLogin } from "../../redux/loginSlice";
-import { useEffect, useRef } from "react";
 import { MenuItem } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { persistor } from "../..";
@@ -9,12 +8,7 @@ import { persistor } from "../..";
 function Logout() {
 
     const accessToken = useSelector((state) => state.login.accessToken);
-    const stateIsLogin = useSelector((state) => state.login.isLogin);
-    const isLogin = useRef(stateIsLogin);
     const dispatch = useDispatch();
-    console.log(isLogin);
-    console.log(accessToken);
-    console.log(typeof (accessToken));
 
     const navigate = useNavigate();
     const purge = async ()=>{

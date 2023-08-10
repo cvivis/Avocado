@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDoSelect, setSelectedCategory } from '../../../redux/categorySlice';
 import { Select } from '@chakra-ui/react';
-import { setFilterList } from '../../../redux/boardListSlice';
 
 function CategoryList() {
   const selectedCategory = useSelector((state) => state.category.selectedCategory);

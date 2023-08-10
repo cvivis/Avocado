@@ -7,8 +7,6 @@ import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 // 한국어 설정
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import { useRef } from 'react';
-import { useEffect } from 'react';
 import { forwardRef } from 'react';
 
 const EditorBox = forwardRef((props, ref) => (

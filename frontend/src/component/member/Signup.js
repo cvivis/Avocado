@@ -2,7 +2,7 @@ import React from "react";
 import {
   Box,
   FormControl, Input, InputLeftElement, InputGroup,
-  Grid, Center, VStack, Button, Text, Container,
+  Grid, VStack, Button, Text, Container,
 } from "@chakra-ui/react";
 import {
   EmailIcon, SunIcon,

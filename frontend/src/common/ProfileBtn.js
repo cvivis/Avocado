@@ -1,7 +1,7 @@
 import React from "react";
 import {
-    Menu, MenuButton, MenuList, MenuGroup, MenuItem, MenuDivider,
-    Button, Avatar,
+    Menu, MenuButton, MenuList, MenuItem,
+    Avatar,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Logout from "../component/member/Logout"
@@ -16,7 +16,6 @@ function ProfileBtn() {
         <Menu>
             <MenuButton as={Avatar} colorScheme='green'></MenuButton>
             <MenuList>
-                {/* Fragment(<></>) => 2개 이상 사용하려면, 이렇게 사용해야함 */}
                 {isLogin ? (
                     <>
                         <Link to="/member/MyPage">
@@ -35,22 +34,6 @@ function ProfileBtn() {
                             </Link>
                         </>
                     )}
-
-                {/* <MenuGroup title='Profile'> */}
-
-                {/* <Link to="/member/logout">
-                    <MenuItem>
-
-
-                        Log Out
-                    </MenuItem>
-                    </Link> */}
-                {/* </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title='Help'>
-            <MenuItem>Docs</MenuItem>
-            <MenuItem>FAQ</MenuItem>
-            </MenuGroup> */}
             </MenuList>
         </Menu>
     )

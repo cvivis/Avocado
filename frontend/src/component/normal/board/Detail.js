@@ -18,7 +18,6 @@ function Detail() {
     api.get(`/normal/detail/${id}`)
       .then(response => {
         setboardDetail(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.error('API 요청 에러:', error);
