@@ -61,7 +61,7 @@ function App() {
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
           <Route path="/member/Consign" element={<Consign />}></Route>
           <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
-          <Route path="/adminPage" element={<AdminPage />}></Route>
+          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
         </Routes>
       </div>
       {/* <footer>

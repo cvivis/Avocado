@@ -21,16 +21,26 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT NEW com.avocado.Item.controller.dto.MySaleResponseEntries" +
             "(i.id, i.name, i.itemStatus, i.type) " +
             "FROM item i " +
-            "JOIN member m ON i.member.id = :memberId ")
+            "Where i.member.id = :memberId ")
     //"WHERE i.member.id = :memberId")
     List<MySaleResponseEntries> findItemsByMemberId(@Param("memberId") Long memberId);
 
+    //상시 경매 입찰 내역
     @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
             "(i.id, nh.normalAuction.id, i.name, i.type, i.category, nh.bidPrice )" +
             "FROM normalHistory nh " +
             "JOIN item i ON nh.normalAuction.item.id = i.id " +
             "WHERE nh.member.id = :memberId AND i.itemStatus = com.avocado.Item.domain.entity.ItemStatus.ASSIGN")
     List<MyBidResponseEntries> findMyNormalBidsByMemberId(@Param("memberId") Long memberId);
+
+    //라이브 경매 입찰 내역
+    @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +
+            "(i.id, lh.liveAuction.id, i.name, i.type, i.category, lh.bidPrice )" +
+            "FROM LiveHistory lh " +
+            "JOIN item i ON lh.liveAuction.id = i.id " +
+            "WHERE lh.member.id = :memberId AND i.itemStatus = com.avocado.Item.domain.entity.ItemStatus.ASSIGN")
+    List<MyBidResponseEntries> findMyLiveBidsByMemberId(@Param("memberId") Long memberId);
+
 
     //    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
 //            "(i.id, i.name, i.type, i.category, " +
@@ -45,12 +55,29 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 //            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL " +
 //            "OR i.type = com.avocado.Item.domain.entity.Type.LIVE ")
     // 상시 테스트용 쿼리
+
+
+    //상시 경매 낙찰 물품 리스트
     @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
             "(i.id, i.name, i.type, i.category, na.successPrice) " +
-            "FROM item i " +
-            "JOIN normalAuction na ON na.successMember = :memberId " +
-            "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL ")
+                    "FROM item i " +
+                    "JOIN normalAuction na ON na.successMember = :memberId " +
+                    "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL "+
+                    "and i.id=na.item.id"
+
+    )
     List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
+
+
+    //라이브 경매 낙찰 물품 리스트
+    @Query("SELECT NEW com.avocado.Item.controller.dto.MySuccessBidEntries" +
+            "(i.id, i.name, i.type, i.category, la.successPrice) " +
+            "FROM item i " +
+            "JOIN LiveAuction la ON la.member.id = :memberId " +
+            "WHERE i.type = com.avocado.Item.domain.entity.Type.LIVE " +
+            "and i.id=la.item.id"
+    )
+    List<MySuccessBidEntries> findMySuccessLiveBidByMemberId(Long memberId);
 
 
 // TODO : 아래 참고용 쿼리 추후에 지우기
