@@ -21,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT NEW com.avocado.Item.controller.dto.MySaleResponseEntries" +
             "(i.id, i.name, i.itemStatus, i.type) " +
             "FROM item i " +
-            "JOIN member m ON i.member.id = :memberId ")
+            "Where i.member.id = :memberId ")
     //"WHERE i.member.id = :memberId")
     List<MySaleResponseEntries> findItemsByMemberId(@Param("memberId") Long memberId);
 
@@ -62,7 +62,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "(i.id, i.name, i.type, i.category, na.successPrice) " +
                     "FROM item i " +
                     "JOIN normalAuction na ON na.successMember = :memberId " +
-                    "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL ")
+                    "WHERE i.type = com.avocado.Item.domain.entity.Type.NORMAL "+
+                    "and i.id=na.item.id"
+
+    )
     List<MySuccessBidEntries> findMySuccessBidByMemberId(Long memberId);
 
 
@@ -71,7 +74,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "(i.id, i.name, i.type, i.category, la.successPrice) " +
             "FROM item i " +
             "JOIN LiveAuction la ON la.member.id = :memberId " +
-            "WHERE i.type = com.avocado.Item.domain.entity.Type.LIVE ")
+            "WHERE i.type = com.avocado.Item.domain.entity.Type.LIVE " +
+            "and i.id=la.item.id"
+    )
     List<MySuccessBidEntries> findMySuccessLiveBidByMemberId(Long memberId);
 
 

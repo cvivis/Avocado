@@ -16,13 +16,13 @@ function MyNormalSale(){
     useEffect(()=>{
         api.get('items/my-sale',{headers:{Authorization: accessToken}})
         .then(response=>{
+            console.log(response.data.entries);
             dispatch(setMyNormalSale(response.data.entries));
         })
         .catch(error=>{
             console.error('API 요청 에러: ',error);
         });
     },[]);
-
     return(
         <div>
             <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
