@@ -17,6 +17,7 @@ const store = configureStore({
     category: categorySlice,
     login: loginSlice,
     signup: signupSlice,
+    
   },
 });
 
