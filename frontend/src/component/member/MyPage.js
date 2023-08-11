@@ -5,14 +5,8 @@ import {
     Tabs, TabList, TabPanels, Tab, TabPanel,
     Grid, Box,
 } from '@chakra-ui/react';
-import MyNormalBids from "./myNormalBids";
-import MySuccessNormalBids from "./mySuccessNormalBids";
-import MyNormalSale from "./myNormalSale";
-import MyLiveBids from "./myLiveBids";
-import MySuccessLiveBids from "./MySuccessLiveBids";
-
-
-
+import Footer from "../../common/Footer";
+import MyCard from "../../common/MyCard";
 //import api from '../../../api';
 
 function MyPage() {
@@ -34,30 +28,19 @@ function MyPage() {
                         <TabPanels>
                             <TabPanel>
                                 <Box w={1300}></Box>
-                                {/* for문으로 카드 반복 돌릴 예정 */}
-                                <div>
-                                    <div>상시 경매</div>
-                                    <MyNormalBids></MyNormalBids>
-
-
-                                </div>
-                                <div>
-                                    <div>라이브 경매</div>
-                                    <MyLiveBids></MyLiveBids>
-                                </div>
-
+                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
+                                    {/* for문으로 카드 반복 돌릴 예정 */}
+                                    <MyCard></MyCard>
+                                    <MyCard></MyCard>
+                                    <MyCard></MyCard>
+                                    <MyCard></MyCard>
+                                    <MyCard></MyCard>
+                                    <MyCard></MyCard>
+                                </Grid>
                             </TabPanel>
                             <TabPanel>
                                 <Box w={1300}></Box>
-                                <div>
-                                    <div>상시 경매</div>
-                                    <MySuccessNormalBids></MySuccessNormalBids>
-                                </div>
-
-                                <div>
-                                    <div>라이브 경매</div>
-                                    <MySuccessLiveBids></MySuccessLiveBids>
-                                </div>
+                                <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'></Grid>
                             </TabPanel>
                             <TabPanel>
                                 <Box w={1300}></Box>
