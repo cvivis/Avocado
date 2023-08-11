@@ -61,7 +61,6 @@ function MyPage() {
                             </TabPanel>
                             <TabPanel>
                                 <Box w={1300}></Box>
-                                <div>상시 경매</div>
                                 <MyNormalSale></MyNormalSale>
                             </TabPanel>
                         </TabPanels>
