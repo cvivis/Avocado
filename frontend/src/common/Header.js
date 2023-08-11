@@ -44,23 +44,21 @@ function Header() {
     return (
         <div>
             <Flex as="nav" p="30px" alignItems="center">
-
-                <Button bg={"white"}>
-                    <Link to="/"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1n2KE9iWPb_CKLzQ3adFwE9aPfJrOXMXYn1lFo8&s" alt="Logo"></img></Link>
-                </Button>
+                <Link to="/"><img src={`${process.env.PUBLIC_URL}/아보카도.png`} alt="Logo"></img></Link>
                 <Spacer />
                 <HStack spacing="20px">
                     <ButtonGroup spacing={20}>
-                        <Button bg={"white"}>
+                        <Button bg={"white"} fontSize={'3xl'}>
                             <Link to="/normal/list">상시 경매</Link>
                         </Button>
-                        <Button bg={"white"}>
+                        <Button bg={"white"} fontSize={'3xl'}>
                             <Link to ="/broadcastList">
-                            라이브 경매</Link></Button>
-                        <Button bg={"white"}>
+                            라이브 경매</Link>
+                        </Button>
+                        <Button bg={"white"} fontSize={'3xl'}>
                             <Link to="/member/Consign">물품 입찰 요청</Link>
                         </Button>
-                        <Button bg={"white"} onClick={handleReloadBoardList}>
+                        <Button bg={"white"} onClick={handleReloadBoardList} fontSize={'3xl'}>
                             <Link to="/normal/list"> 상시 경매 리스트 </Link>
                         </Button>
                     </ButtonGroup>

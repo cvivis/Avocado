@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import CategoryList from "./CategoryList";
 import SearchList from "./SearchList";
 import { setBoardList, setFilterList } from "../../../redux/boardListSlice";
-import Header from "../../../common/Header";
-import Footer from "../../../common/Footer";
 import {
   Box, Center,
   Grid, FormControl, Input, FormHelperText, IconButton,
@@ -55,7 +53,6 @@ function BoardList() {
           <Center></Center>
         </Box>
       </VStack>
-      <Footer></Footer>
     </Box>
   );
 }

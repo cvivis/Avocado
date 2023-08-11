@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Box, Grid, VStack, HStack, GridItem, Container, StackDivider,
-} from "@chakra-ui/react"
-import Header from "../../../common/Header";
-import Footer from "../../../common/Footer";
+} from "@chakra-ui/react";
 import MyCarousel from "../../../common/MyCarousel";
 import MyBidInfo from "../../../common/MyBidInfo";
 import api from "../../../api";
@@ -60,7 +58,6 @@ function Detail() {
           </VStack>
         </Grid>
       </Container>
-      <Footer />
     </Box>
   );
 }

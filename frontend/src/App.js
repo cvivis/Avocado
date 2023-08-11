@@ -9,8 +9,6 @@ import CategoryList from './component/normal/board/CategoryList';
 import OnlineMeeting from "./component/openvidu/OnlineMeeting"
 
 // import NormalBid from './component/normal/auction/normalBid';
-import Header from './common/Header';
-import Footer from './common/Footer';
 import Login from './component/member/Login';
 import Signup from './component/member/Signup';
 import MyPage from './component/member/MyPage';
@@ -29,6 +27,7 @@ import BroadcastTest from './component/live/auction/BroadcastTest';
 import AdminPage from './component/admin/admin'
 // 테스트용
 import LiveAuctionPage from './component/live/board/LiveAuctionPage';
+import MainLayout from './common/MainLayout';
 
 function App() {
   // const nowPrice = 10000;
@@ -37,39 +36,33 @@ function App() {
   return (
 
     <Router>
-      <div>
-        <header>
-          <Header></Header>
-        </header>
-
-
-      </div>
       <div className="App">
-
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/normal/list" element={<BoardList />}></Route>
-          <Route path="/normal/detail/:id" element={<Detail />}></Route>
-          <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
+          {/* 헤더, 푸터를 적용 할 컴포넌트 */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/normal/list" element={<BoardList />}></Route>
+            <Route path="/normal/detail/:id" element={<Detail />}></Route>
+            <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
+            <Route path="/member/myPage" element={<MyPage />}></Route>
+            <Route path="/broadcastList" element={<BroadcastList />}></Route>
+            <Route path="/broadcast" element={<Broadcast />}></Route>
+            <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
+            <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
+            <Route path="/member/Consign" element={<Consign />}></Route>
+          </Route>
+          {/* 헤더, 푸터를 적용하지 않을 컴포넌트 */}
           <Route path="/openvidu" element={<OnlineMeeting />}></Route>
           <Route path="/member/login" element={<Login />}></Route>
           <Route path="/member/signup" element={<Signup />}></Route>
-          <Route path="/member/myPage" element={<MyPage />}></Route>
-          {/* <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route> */}
-          <Route path="/broadcastList" element={<BroadcastList />}></Route>
-          <Route path="/broadcast" element={<Broadcast />}></Route>
           <Route path="/member/logout" element={<Logout />}></Route>
+          
+          <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
+          {/* <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route> */}
           {/* <Route path="/member/Regist" element={<Regist />}></Route> */}
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
-          <Route path="/member/Consign" element={<Consign />}></Route>
-          <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
-          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
-          <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
         </Routes>
       </div>
-      {/* <footer>
-        <Footer></Footer>
-      </footer> */}
     </Router>
   );
 }

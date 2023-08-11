@@ -74,10 +74,10 @@ function LogIn() {
   return (
     <Grid>
       <Container centerContent>
-        <VStack>
-          <Box mt={50}>
+        <VStack mt={150}>
+          <Box mb={50}>
             <Link to="/">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU1n2KE9iWPb_CKLzQ3adFwE9aPfJrOXMXYn1lFo8&s" alt="Logo"></img>
+              <img src={`${process.env.PUBLIC_URL}/아보카도.png`} alt="Logo" />
             </Link>
           </Box>
           <FormControl mt={50}>
@@ -91,9 +91,12 @@ function LogIn() {
                 placeholder='이메일'
               />
             </InputGroup>
+            {/* 비밀번호 인풋 HOTFIX 요함 */}
             <Input MyPlaceholder={'비밀번호'} value={password}
-            type="password"
-              onChange={(e) => dispatch(setPassword(e.target.value))}></Input>
+              type="password"
+              onChange={(e) => dispatch(setPassword(e.target.value))}
+              placeholder={'비밀번호'}
+            />
             <Button
               onClick={handleLogin}
               mt={10}
