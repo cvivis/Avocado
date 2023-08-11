@@ -45,7 +45,7 @@ function BroadcastList() {
                             <td>{i+1}</td>
                             <td>{broadcast.title}</td>
                             <td>{broadcast.startAt}</td>
-                            <td><button disabled={broadcast.status == false ? true : false} onClick={() => participate(broadcast)}>방송참여</button></td>
+                            <td><button disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</button></td>
                             <td><button onClick={() => getAuctionList(broadcast)}>경매보기</button></td>
                         </tr>
                     ))}

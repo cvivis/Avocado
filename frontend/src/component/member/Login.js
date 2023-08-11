@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../api";
-import { resetLoginForm, setIsLogin, setEmail, setPassword, setMember, setAccessToken } from "../../redux/loginSlice";
+import { resetLoginForm, setIsLogin, setEmail, setPassword, setMember, setAccessToken, setRole } from "../../redux/loginSlice";
 
 function LogIn() {
 
@@ -45,6 +45,15 @@ function LogIn() {
     api.post('/member/login', loginData)
       .then(response => {
         const token = response.headers.authorization;
+        const tokenParts = token.split('.');
+        const encodedPayload = tokenParts[1];
+
+        const decodedPayload = atob(encodedPayload); // Base64 디코딩
+
+        const payloadObject = JSON.parse(decodedPayload);
+
+        const role = payloadObject.authority;
+        dispatch(setRole(role));
         // 토큰을 쿠키에 저장
         // document.cookie = `token=${token}; path=/;`;
         dispatch(setAccessToken(token));
