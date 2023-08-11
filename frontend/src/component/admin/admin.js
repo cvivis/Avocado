@@ -134,7 +134,7 @@ function Admin() {
   const createBroadcast = () => {
     if(broadcastInfo.startAt === "" || broadcastInfo.title === "" || broadcastInfo.introduce === "") alert("입력 미완료")
     else {
-      api.post("/manage/items/broadcast", broadcastInfo).then( response => {
+      api.post("/broadcast/init", broadcastInfo).then( response => {
         if(response.status === 200) {
           console.log(response.status)
         }
