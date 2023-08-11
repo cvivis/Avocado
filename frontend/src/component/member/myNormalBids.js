@@ -36,7 +36,6 @@ function MyNormalBids() {
             ))}
             </Grid>
 
-
         </div>
     )
 }
