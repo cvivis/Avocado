@@ -1,5 +1,6 @@
 package com.avocado.live.broadcast.controller;
 
+import com.avocado.admin.controller.dto.live.BroadcastCreateDto;
 import com.avocado.live.broadcast.service.BroadcastService;
 import io.openvidu.java.client.*;
 import lombok.RequiredArgsConstructor;
@@ -32,12 +33,12 @@ public class OpenviduController {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
     }
 
-    @PostMapping("/init/{broadcastId}")
-    public ResponseEntity<String> initializeSession(@PathVariable("broadcastId") Long broadcastId)
+    @PostMapping("/init")
+    public ResponseEntity<String> initializeSession(@RequestBody BroadcastCreateDto broadcastCreateDto)
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
-        broadcastService.save(session.getSessionId());
+        broadcastService.save(session.getSessionId(), broadcastCreateDto);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
 
