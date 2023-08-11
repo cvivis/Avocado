@@ -4,6 +4,8 @@ import com.avocado.Item.controller.dto.*;
 import com.avocado.Item.domain.entity.Item;
 import com.avocado.Item.domain.repository.ItemRepository;
 import com.avocado.Item.domain.repository.MySaleResponseMapping;
+import com.avocado.live.board.domain.entity.LiveHistory;
+import com.avocado.live.board.domain.repository.LiveHistoryRepository;
 import com.avocado.live.broadcast.domain.Broadcast;
 import com.avocado.live.broadcast.service.BroadcastService;
 import com.avocado.member.domain.entity.Member;
@@ -29,6 +31,7 @@ public class ItemService {
     //private final LiveAuctionService liveAuctionService; // 추후 변경
     private final BroadcastService broadcastService;
     private final NormalHistoryRepository normalHistoryRepository;
+    private final LiveHistoryRepository liveHistoryRepository;
 
     // 위탁 요청 물품 등록
     @Transactional
@@ -88,9 +91,30 @@ public class ItemService {
         return myBidResponseDto;
     }
 
+    //내 라이브 경매 입찰 물품 리스트
+
+    public MyBidResponseDto getMyLiveBids(Long memberId) {
+        List<MyBidResponseEntries> entries = itemRepository.findMyLiveBidsByMemberId(memberId);
+        for(MyBidResponseEntries entry : entries) {
+            LiveHistory forTopBid = liveHistoryRepository.findFirstByLiveAuction_IdOrderByBidPriceDescCreatedAtAsc(entry.getAuctionId()).orElse(null);
+            entry.setCurrentBid(forTopBid.getBidPrice());
+        }
+        MyBidResponseDto myBidResponseDto = new MyBidResponseDto(entries);
+
+        return myBidResponseDto;
+    }
+
     // 나의 낙찰 물품 리스트
     public MySuccessBidResponseDto getMySuccessBids(Long memberId) {
         List<MySuccessBidEntries> entries = itemRepository.findMySuccessBidByMemberId(memberId);
+
+        return new MySuccessBidResponseDto(entries);
+    }
+
+
+    //나의 라이브 낙찰 물품 리스트
+    public MySuccessBidResponseDto getMyLiveSuccessBids(Long memberId) {
+        List<MySuccessBidEntries> entries = itemRepository.findMySuccessLiveBidByMemberId(memberId);
 
         return new MySuccessBidResponseDto(entries);
     }

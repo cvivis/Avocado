@@ -5,14 +5,11 @@ import {
     Tabs, TabList, TabPanels, Tab, TabPanel,
     Grid, Box,
 } from '@chakra-ui/react';
-import Footer from "../../common/Footer";
-import { useDispatch, useSelector } from "react-redux";
-import { setMyNormalBids } from "../../redux/myNormalBidsSlice";
-import MyCard from "../../common/MyCard";
-import { setMySuccessNormalBids } from "../../redux/mySuccessNormalbidsSlice";
 import MyNormalBids from "./myNormalBids";
 import MySuccessNormalBids from "./mySuccessNormalBids";
 import MyNormalSale from "./myNormalSale";
+import MyLiveBids from "./myLiveBids";
+import MySuccessLiveBids from "./MySuccessLiveBids";
 
 
 
@@ -39,14 +36,14 @@ function MyPage() {
                                 <Box w={1300}></Box>
                                 {/* for문으로 카드 반복 돌릴 예정 */}
                                 <div>
-                                    <div>상시경매</div>
+                                    <div>상시 경매</div>
                                     <MyNormalBids></MyNormalBids>
 
 
                                 </div>
                                 <div>
                                     <div>라이브 경매</div>
-
+                                    <MyLiveBids></MyLiveBids>
                                 </div>
 
                             </TabPanel>
@@ -55,7 +52,11 @@ function MyPage() {
                                 <div>
                                     <div>상시 경매</div>
                                     <MySuccessNormalBids></MySuccessNormalBids>
+                                </div>
 
+                                <div>
+                                    <div>라이브 경매</div>
+                                    <MySuccessLiveBids></MySuccessLiveBids>
                                 </div>
                             </TabPanel>
                             <TabPanel>

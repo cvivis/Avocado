@@ -12,6 +12,8 @@ import storage from "redux-persist/lib/storage/session";
 import broadcastListSlice from "./broadcastListSlice";
 import mySuccessNormalbidsSlice from "./mySuccessNormalbidsSlice";
 import myNormalSaleSlice from "./myNormalSaleSlice";
+import myLiveBidsSlice from "./myLiveBidsSlice";
+import mySuccessLiveBidsSlice from "./mySuccessLiveBidsSlice";
 
 
 const  reducers = combineReducers({
@@ -25,6 +27,8 @@ const  reducers = combineReducers({
     broadcastList:broadcastListSlice,
     mySuccessNormalBids:mySuccessNormalbidsSlice,
     myNormalSale:myNormalSaleSlice,
+    myLiveBids:myLiveBidsSlice,
+    mySuccessLiveBids:mySuccessLiveBidsSlice,
 });
 
 const persistConfig = {
