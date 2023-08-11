@@ -11,17 +11,24 @@ import { useSelector } from "react-redux";
 function ProfileBtn() {
 
     const isLogin = useSelector((state) => state.login.isLogin)
-    
+    const role = useSelector((state) => state.login.role);
     return (
         <Menu>
             <MenuButton as={Avatar} colorScheme='green'></MenuButton>
             <MenuList>
-                {/* Fragment(<></>) => 2개 이상 사용하려면, 이렇게 사용해야함 */}
                 {isLogin ? (
                     <>
-                        <Link to="/member/MyPage">
-                            <MenuItem>My Page</MenuItem>
-                        </Link>
+                        {role === "ROLE_ADMIN" ? (
+                            <Link to="/adminPage">
+                                <MenuItem>관리자</MenuItem>
+                            </Link>
+                        )
+                            : (
+                                <Link to="/member/MyPage">
+                                    <MenuItem>My Page</MenuItem>
+                                </Link>
+                            )}
+
                         <Logout />
                     </>
                 )

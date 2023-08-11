@@ -26,6 +26,7 @@ import BroadcastTest from './component/live/auction/BroadcastTest';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
+import AdminPage from './component/admin/admin'
 
 function App() {
   // const nowPrice = 10000;
@@ -60,6 +61,7 @@ function App() {
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
           <Route path="/member/Consign" element={<Consign />}></Route>
           <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
+          <Route path="/adminPage" element={<AdminPage />}></Route>
         </Routes>
       </div>
       {/* <footer>
