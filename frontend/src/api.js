@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://13.125.211.176/api'
+  baseURL: 'https://i9a407.p.ssafy.io/api'
 });
 
 export default api;
