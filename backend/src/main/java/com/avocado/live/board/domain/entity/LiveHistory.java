@@ -1,6 +1,7 @@
 package com.avocado.live.board.domain.entity;
 
 
+import com.avocado.common.BaseTimeEntity;
 import com.avocado.member.domain.entity.Member;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @Setter
-public class LiveHistory {
+public class LiveHistory extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -44,6 +44,8 @@ public class ItemController {
         return itemService.getMySales(memberId);
     }
 
+
+
     // 마이페이지 - 나의 위탁 물품 상세보기
     // TODO : 예외 처리에 대한 고민해보기, 어느 단에서 분기를 해야할지 고민해보기
     @GetMapping("/my-sale/{itemId}/{type}")
@@ -66,6 +68,16 @@ public class ItemController {
 
         return itemService.getMyNormalBids(memberId);
     }
+
+    //마이페이지 - 나의 라이브 입찰 상품 리스트 가져오기
+    @GetMapping("/my-livebid")
+    public MyBidResponseDto myLiveBids(@RequestHeader("Authorization") String requestAccessToken) {
+        log.info("[itemcontroller mybids] accesstoken : {}",requestAccessToken);
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Long memberId = memberService.getMember(email).getId();
+
+        return itemService.getMyLiveBids(memberId);
+    }
     
     // 마이페이지 - 나의 낙찰 상품 리스트 가져오기
     @GetMapping("/my-success-bid")
@@ -74,6 +86,15 @@ public class ItemController {
         Long memberId = memberService.getMember(email).getId();
 
         return itemService.getMySuccessBids(memberId);
+        //return null;
+    }
+
+    @GetMapping("/my-success-livebid")
+    public MySuccessBidResponseDto mySuccessLiveBid(@RequestHeader("Authorization") String requestAccessToken) {
+        String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
+        Long memberId = memberService.getMember(email).getId();
+
+        return itemService.getMyLiveSuccessBids(memberId);
         //return null;
     }
 
