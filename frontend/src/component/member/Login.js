@@ -42,6 +42,7 @@ function LogIn() {
       password: password,
     };
 
+    console.log(loginData)
     api.post('/member/login', loginData)
       .then(response => {
         const token = response.headers.authorization;
@@ -90,8 +91,9 @@ function LogIn() {
                 placeholder='이메일'
               />
             </InputGroup>
-            <MyPasswordInput MyPlaceholder={'비밀번호'} value={password}
-              onChange={(e) => dispatch(setPassword(e.target.value))}></MyPasswordInput>
+            <Input MyPlaceholder={'비밀번호'} value={password}
+            type="password"
+              onChange={(e) => dispatch(setPassword(e.target.value))}></Input>
             <Button
               onClick={handleLogin}
               mt={10}

@@ -9,18 +9,25 @@ import * as StompJs from '@stomp/stompjs';
 import * as BeforeNormalBid from '../component/normal/auction/beforeNormalBid';
 import TimeCheck from '../component/normal/auction/timeCheck';
 import { useSelector } from "react-redux";
+import { type } from "@testing-library/user-event/dist/type";
 
 function MyBidInfo(props) {
     const email = useSelector((state)=>state.login.email);
-    const nowP = props.boardDetail.price;
-    const mPrice =  props.boardDetail.price + BeforeNormalBid.setBidPlus(props.boardDetail.price);
+    const nowP = props.boardDetail.hopePrice;
+    // console.log(nowP+"나우피");
+    const mPrice =  props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.price);
+    // const endAtDate = props.boardDetail.endAt;    
+    // const endAt = new (endAtDate);
+    // const currentDateTime = new Date();
 
-    console.log(nowP +"이건 nowP");
+    // console.log(props.boardDetail.hopePrice +"이건 nowP");
     const [bidInfo, setBidInfo] = useState({
-        nowPrice : "",
-        myPrice :  ""
+        nowPrice : 0,
+        myPrice :  0
     })
-    console.log(bidInfo.myPrice);
+    console.log(typeof(bidInfo.nowPrice) + "나우프라이스 타입");
+    console.log(typeof(nowP)+"나우피 타입")
+    console.log(bidInfo.myPrice +"비드인포마이프라이스");
     const auctionId = props.boardDetail.auctionId;
 
     //입찰버튼
@@ -59,9 +66,9 @@ function MyBidInfo(props) {
         // console.log(bidInfo.nowPrice + " 황시은");
         // const auctionId = props.boardDetail.auctionId;
         return () => disconnect(); // 언마운트 시 실행
-    }, [nowP]);
+    }, []);
 
-
+    
 
 
     const disconnect = () => {
@@ -134,7 +141,7 @@ function MyBidInfo(props) {
             </HStack>
             <HStack>
                 <Spacer />
-                <Button onClick={handleBid} size={'lg'} mt={'20px'} bg={'green.500'} color={'whiteAlpha.900'} _hover={{ bg: 'green' }} w={'300px'}> {/* 여기에 입찰 기능 버튼 */}
+                    <Button onClick={handleBid} size={'lg'} mt={'20px'} bg={'green.500'} color={'whiteAlpha.900'} _hover={{ bg: 'green' }} w={'300px'}> {/* 여기에 입찰 기능 버튼 */}
                     <Text textAlign={'left'}>
                         입찰하기
                     </Text>
@@ -143,6 +150,7 @@ function MyBidInfo(props) {
                         {BeforeNormalBid.setBidUnit(bidInfo.myPrice)} 원
                     </Text>
                 </Button>
+                
             </HStack>
         </Box>
     )
