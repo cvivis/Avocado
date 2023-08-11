@@ -79,13 +79,8 @@ public class ManageController {
 //        return ResponseEntity.ok().body(response);
 //    }
 
-    //방송 편성
-    @PostMapping("/broadcast")
-    public ResponseEntity<?> createBroadcast(@RequestBody BroadcastCreateDto broadcastCreateDto){
-        log.info("[ManageController createBroadcast] broadcastCreateDto : {}",broadcastCreateDto.getStartAt());
-        if(adminService.saveBroadcast(broadcastCreateDto)) return ResponseEntity.ok().build();
-        return ResponseEntity.badRequest().build();
-    }
+    //방송 편성 -> openvidu controller 로 이동
+
 
     //방송 편성 조회하기
     @GetMapping("/broadcast/{date}")
