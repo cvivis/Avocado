@@ -10,7 +10,6 @@ import com.avocado.live.broadcast.domain.Broadcast;
 import com.avocado.live.broadcast.service.BroadcastService;
 import com.avocado.member.domain.entity.Member;
 import com.avocado.normal.auction.domain.repository.NormalHistoryRepository;
-import com.avocado.normal.board.controller.dto.NormalItemDetailResponseDto;
 import com.avocado.normal.board.controller.dto.NormalItemInfoDto;
 import com.avocado.normal.board.service.NormalBoardService;
 import com.avocado.normal.entity.NormalHistory;
@@ -18,9 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
