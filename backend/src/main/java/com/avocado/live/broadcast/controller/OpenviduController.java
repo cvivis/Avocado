@@ -32,16 +32,15 @@ public class OpenviduController {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
     }
 
-    @PostMapping("/init/{broadcastId}")
-    public ResponseEntity<String> initializeSession(@PathVariable("broadcastId") Long broadcastId)
-            throws OpenViduJavaClientException, OpenViduHttpException {
+    @PostMapping("/init")
+    public ResponseEntity<Long> initializeSession() throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
-        broadcastService.save(session.getSessionId());
-        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+        Long broadcastId = broadcastService.save(session.getSessionId());
+        return new ResponseEntity<>(broadcastId, HttpStatus.OK);
     }
 
-    @PostMapping("/connections/{broadcastId}")
+    @PostMapping("/connection/{broadcastId}")
     public ResponseEntity<String> createConnection(@PathVariable("broadcastId") Long broadcastId)
             throws OpenViduJavaClientException, OpenViduHttpException {
         String broadcastSessionId = broadcastService.getBroadcastSessionId(broadcastId);
