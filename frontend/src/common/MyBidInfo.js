@@ -41,7 +41,7 @@ function MyBidInfo(props) {
   const client = useRef({});
   const connect = () => {
     client.current = new StompJs.Client({
-      brokerURL: "wss://i9a407.p.ssafy.io/ws/normal-auction",
+      brokerURL: "wss://i9a407.p.ssafy.io:8080/ws/normal-auction",
       onConnect: () => {
         // Do something, all subscribes must be done is this callback
         console.log("연결 SUB");
