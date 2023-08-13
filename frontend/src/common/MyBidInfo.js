@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
     Box, Divider, HStack, Heading, Flex, Spacer, Button, Text,
 } from '@chakra-ui/react';
@@ -12,43 +12,34 @@ import { useSelector } from "react-redux";
 import { type } from "@testing-library/user-event/dist/type";
 
 function MyBidInfo(props) {
-    const email = useSelector((state)=>state.login.email);
-    const nowP = props.boardDetail.hopePrice;
-    // console.log(nowP+"나우피");
-    const mPrice =  props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.price);
+
+    const email = useSelector((state) => state.login.email);
+    const isBidEnd = useSelector((state) => state.myNormalBids.isBidEnd[props.id]);
+    const isBidBeforeStart = useSelector((state) => state.myNormalBids.isBidBeforeStart[props.id]);
+
+    const [bidInfo, setBidInfo] = useState({
+        nowPrice: props.boardDetail.hopePrice,
+        myPrice: 0
+    })
+
+    // const mPrice = props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.price);
     // const endAtDate = props.boardDetail.endAt;    
     // const endAt = new (endAtDate);
     // const currentDateTime = new Date();
 
-    // console.log(props.boardDetail.hopePrice +"이건 nowP");
-    const [bidInfo, setBidInfo] = useState({
-        nowPrice : 0,
-        myPrice :  0
-    })
-    console.log(typeof(bidInfo.nowPrice) + "나우프라이스 타입");
-    console.log(typeof(nowP)+"나우피 타입")
-    console.log(bidInfo.myPrice +"비드인포마이프라이스");
+
+
     const auctionId = props.boardDetail.auctionId;
+
 
     //입찰버튼
     function handleBid() {
-        let nowBidUnit = BeforeNormalBid.setBidUnit(bidInfo.nowPrice);
-        // console.log("asdfasdff "+bidInfo.nowPrice);
-        // let newNowPrice = bidInfo.nowPrice; // 현재가에 1000원을 더함
-        // let newMyPrice = newNowPrice; // 내 입찰가는 현재가보다 1000원 더 높게 설정
-        // console.log(nowBidUnit);
-
-        // setBidInfo({
-        //     nowPrice: newNowPrice,
-        //     myPrice: newMyPrice
-        // });
-
         publish();
     }
 
     /*stomp 관련 */
     const client = useRef({});
-    const connect = () => {
+    const connect = useCallback(() => {
         client.current = new StompJs.Client({
             brokerURL: 'ws://localhost:8080/ws/chat',
             onConnect: () => {
@@ -58,17 +49,20 @@ function MyBidInfo(props) {
             },
         });
         client.current.activate();
-    }
-
-    useEffect(() => {
-        setBidInfo( { nowPrice:nowP, myPrice:mPrice});
-        connect(); // 마운트시 실행
-        // console.log(bidInfo.nowPrice + " 황시은");
-        // const auctionId = props.boardDetail.auctionId;
-        return () => disconnect(); // 언마운트 시 실행
     }, []);
 
-    
+    useEffect(() => {
+        const nowP = props.boardDetail.hopePrice;
+        const mPrice = props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.price);
+        setBidInfo({
+            nowPrice: nowP,
+            myPrice: mPrice
+        });
+        connect(); // 마운트시 실행
+        return () => disconnect(); // 언마운트 시 실행
+    }, [connect, props.boardDetail.hopePrice, props.boardDetail.price]);
+
+
 
 
     const disconnect = () => {
@@ -79,12 +73,13 @@ function MyBidInfo(props) {
         // console.log("야 들어왔냐")
         console.log(auctionId + "옥션아이디")
         console.log(bidInfo.nowPrice);
+        console.log(client.current + "클라이언트얍1");
         client.current.subscribe('/sub/normal/' + auctionId, (res) => { // server에게 메세지 받으면
             console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
             setBidInfo((prevState) => {
-                console.log( "호가: "+BeforeNormalBid.setBidPlus(jsonBody.price));
+                console.log("호가: " + BeforeNormalBid.setBidPlus(jsonBody.price));
                 return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price + BeforeNormalBid.setBidPlus(jsonBody.price), nowBidName: jsonBody.email }
             });
         })
@@ -92,15 +87,18 @@ function MyBidInfo(props) {
 
 
     const publish = () => {
-        console.log("in Pub"+bidInfo.myPrice);
+        console.log("in Pub" + bidInfo.myPrice);
         client.current.publish({
             destination: '/pub/normal/' + auctionId,
-            body: JSON.stringify({ id: auctionId, price: bidInfo.myPrice, email : email, itemId: props.boardDetail.itemId }),
+            body: JSON.stringify({ id: auctionId, price: bidInfo.myPrice, email: email, itemId: props.boardDetail.itemId }),
             skipContentLengthHeader: true,
         });
 
     }
+    // console.log(isBidBeforeStart + "비포스타토" + isBidEnd);
+    // console.log(props.id, isBidEnd);
 
+    // 마감시간 여부 state로 관리하고 timeCheck에서 받아오기
 
     return (
         <Box>
@@ -123,7 +121,7 @@ function MyBidInfo(props) {
                 </Heading>
                 <Spacer />
                 <Heading size={'lg'} textAlign={'right'}>
-                {BeforeNormalBid.setBidUnit(bidInfo.nowPrice)}원
+                    {BeforeNormalBid.setBidUnit(bidInfo.nowPrice)}원
                 </Heading>
             </HStack>
 
@@ -135,23 +133,52 @@ function MyBidInfo(props) {
                 <Spacer />
                 <TimeIcon boxSize={6} />
                 <Heading size={'lg'} textAlign={'right'}>
-                    {/* <TimeCheck endAt = {props.boardDetail.endAt}></TimeCheck> */}
+
+                    <TimeCheck id={props.id} endAt={props.boardDetail.endAt} startAt={props.boardDetail.startAt}></TimeCheck>
+
 
                 </Heading>
             </HStack>
             <HStack>
                 <Spacer />
-                    <Button onClick={handleBid} size={'lg'} mt={'20px'} bg={'green.500'} color={'whiteAlpha.900'} _hover={{ bg: 'green' }} w={'300px'}> {/* 여기에 입찰 기능 버튼 */}
-                    <Text textAlign={'left'}>
-                        입찰하기
-                    </Text>
-                    <Spacer />
-                    <Text textAlign={'right'}>
-                        {BeforeNormalBid.setBidUnit(bidInfo.myPrice)} 원
-                    </Text>
-                </Button>
-                
+                {
+                    !isBidEnd ? (
+                        <Button size={'lg'} mt={'20px'} bg={'black'} color={'white'} w={'300px'}
+                            isDisabled={isBidEnd}
+                            _hover={{
+                                bg: 'black'
+                            }}
+                            _active={{
+                                bg: 'black'
+                            }}
+                            _disabled={{
+                                bg: 'black',
+                                color: 'white',
+                                cursor: 'not-allowed',
+                                opacity: 1
+                            }}>
+                            <Text textAlign={'center'}>
+                                마감
+                            </Text>
+                        </Button>
+                    ) : (
+                        <Button onClick={handleBid} size={'lg'} mt={'20px'} bg={'green.500'} color={'whiteAlpha.900'} _hover={{ bg: 'green' }} w={'300px'}>
+                            <Text textAlign={'left'}>
+
+                                {isBidBeforeStart ? <Text textAlign={'center'} color={"blue"}>
+                                    시작전
+                                </Text> : '입찰하기'}
+                            </Text>
+                            <Spacer />
+                            <Text textAlign={'right'}>
+                                {isBidBeforeStart ? null : `${BeforeNormalBid.setBidUnit(bidInfo.myPrice)} 원`}
+
+                            </Text>
+                        </Button>
+                    )
+                }
             </HStack>
+
         </Box>
     )
 }

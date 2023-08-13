@@ -3,6 +3,8 @@ import {
     Image, Heading, Text,
     Button, Box,
 } from '@chakra-ui/react';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
@@ -12,6 +14,13 @@ function MyCard(props) {
     // console.log(item.itemId+"아이디");
     // console.log(item.name+"이름");
     // console.log(item.content+"내용");
+    const dateForm = "YYYY-MM-DD HH:mm:ss";
+    const startTime = dayjs(props.startAt).format(dateForm);
+    const startTimeTimeInDayjs = dayjs(startTime);
+    // useEffect(()=>{
+
+    // })
+
     return (
         <Box w={300}>
             <Link to={`/normal/detail/${item.itemId}`}>
@@ -24,6 +33,7 @@ function MyCard(props) {
                         />
                         <Heading size='md'>{item.name}</Heading>
                         <Text>{item.content}</Text>
+                        <Text></Text>
                     </CardBody>
                     <CardFooter>
                         <Button colorScheme="green" >
