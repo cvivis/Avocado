@@ -15,7 +15,7 @@ import * as StompJs from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
-function Broadcast() {
+function BroadcastTest() {
 
 const [auctionList, setAuctionList] = useState([]); //경매리스트
 const [currentAuction, setCurrentAuction] = useState({}); //선택한 경매 
