@@ -6,10 +6,10 @@ import { useParams } from "react-router-dom";
 
 
 function LiveAuctionList(){
-    const {id}=useParams();
+    const id=useSelector((state)=>state.broadcastId.broadcastId);
     const dispatch=useDispatch();
     const liveAuctionList = useSelector((state) => state.liveAuctionList.liveAuctionList);
-
+    
     useEffect(()=>{
         api.get(`/live/list/${id}`)
         .then(response=>{
@@ -23,7 +23,7 @@ function LiveAuctionList(){
     },[id]);
     return(
         <div>
-        {liveAuctionList.map((liveauction)=>(
+        {liveAuctionList&&liveAuctionList.map((liveauction)=>(
             <div key = {liveauction.auctionId}>
                 <div>{liveauction.auctionId}</div>
                 <div>{liveauction.name}</div>

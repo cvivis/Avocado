@@ -311,4 +311,4 @@ const navigate = useNavigate();
     )
 }
 
-export default BroadcastTest;
+export default Broadcast;

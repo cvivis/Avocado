@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import UserVideoComponent from './UserVideoComponent';
 
-const API_SERVER_URL = "https://i9a407.p.ssafy.io:8080/broadcast/";
+const API_SERVER_URL = "http://localhost:8080/broadcast/";
 
 class OnlineMeeting extends Component {
 
@@ -63,6 +63,16 @@ class OnlineMeeting extends Component {
 
                 // --- 4) Connect to the session with a valid user token ---
                 this.getToken().then((token) => {
+
+                    const storedRootData = sessionStorage.getItem('persist:root');
+                    const parsedRootData = JSON.parse(storedRootData);
+
+                    // 'login' 데이터를 파싱합니다.
+                    const parsedLoginData = JSON.parse(parsedRootData.login);
+
+                    // 해당 객체에서 'role' 값을 가져옵니다.
+                    const userRole = parsedLoginData.role;
+
                     mySession.connect(token, { clientData: this.state.myUserName })
                     .then(async () => {
                         // --- 5) Get your own camera stream ---
@@ -71,13 +81,17 @@ class OnlineMeeting extends Component {
                             videoSource: undefined, // The source of video. If undefined default webcam
                             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                            resolution: '640x480', // The resolution of your video
+                            resolution: '320x320', // The resolution of your video
                             frameRate: 30, // The frame rate of your video
                             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                             mirror: false, // Whether to mirror your local video or not
                         });
 
                         // --- 6) Publish your stream ---
+                        // if (userRole !== "ROLE_ADMIN") {
+                        //     console.log('You do not have ADMIN permissions to perform this action.');
+                        //     return;
+                        // }
 
                         mySession.publish(publisher);
                         // Set the main video in the page to display our webcam and store our Publisher
@@ -99,7 +113,7 @@ class OnlineMeeting extends Component {
     
     async createToken(sessionId) {
 	console.log(API_SERVER_URL)
-        const response = await axios.post(API_SERVER_URL + 'connection/' + sessionId, {}, {
+        const response = await axios.post(API_SERVER_URL + 'connections/' + sessionId, {}, {
             headers: { 'Content-Type': 'application/json', },
         });
         return response.data; // The token
@@ -185,13 +199,28 @@ class OnlineMeeting extends Component {
                         </div>
 
                         <div id="video-container" className="col-md-6">
-			{<div key={this.state.subscribers[1].id} 
-			      className="stream-container col-md-6 col-xs-6" 
-			      onClick={() => this.handleMainVideoStream(this.state.subscribers[1])}>
-			        <span>{this.state.subscribers[1].id}</span>
-					<UserVideoComponent streamManager={this.state.subscribers[1]} />
-    			</div>}
-			</div>
+                            
+                        {this.state.mainStreamManager !== undefined ? (
+                            <div id="main-video" className="col-md-6">
+                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
+
+                            </div>
+                        ) : null}
+                        <div id="video-container" className="col-md-6">
+                            {this.state.publisher !== undefined ? (
+                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                                    <UserVideoComponent
+                                        streamManager={this.state.publisher} />
+                                </div>
+                            ) : null}
+                            {this.state.subscribers.map((sub, i) => (
+                                <div key={sub.id} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    <span>{sub.id}</span>
+                                    <UserVideoComponent streamManager={sub} />
+                                </div>
+                            ))}
+                        </div>
+			            </div>
                    </div>
                 ) : null}
             </div>

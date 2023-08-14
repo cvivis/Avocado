@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from '../../../api';
 import { useNavigate } from "react-router-dom";
+import { setBroadcastId } from "../../../redux/broadcastIdSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 function BroadcastList() {
-
   const [broadcastList,setBroadcastList] = useState([]);
-  
+  const id = useSelector((state)=> state.broadcastId.broadcastId);
   const navigate = useNavigate();
   const participate = (broadcast) => { // 방송 경로
     navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.id}});
   };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     api.get("/live/list")
@@ -21,11 +24,6 @@ function BroadcastList() {
         console.error('API 요청 에러:', error);
       });
   }, []);
-
-  function getAuctionList(broadcast) {
-    console.log(broadcast)
-  }
-
   return (
     <div className="container">
         <div className="row">
@@ -41,12 +39,13 @@ function BroadcastList() {
                 </thead>
                 <tbody>
                     {broadcastList.map((broadcast , i) => ( 
+                      console.log(broadcast.startAt),
                         <tr key={broadcast.id}>
                             <td>{i+1}</td>
                             <td>{broadcast.title}</td>
                             <td>{broadcast.startAt}</td>
                             <td><button disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</button></td>
-                            <td><button onClick={() => getAuctionList(broadcast)}>경매보기</button></td>
+                            <td><button onClick={() => {dispatch(setBroadcastId(broadcast.id))}}>상세 보기</button></td>
                         </tr>
                     ))}
                 </tbody>
