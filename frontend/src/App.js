@@ -26,6 +26,9 @@ import BroadcastTest from './component/live/auction/BroadcastTest';
 // // import NormalBid from './component/normal/auction/normalBid';
 // import Header from './common/Header';
 // import Footer from './common/Footer';
+import AdminPage from './component/admin/admin'
+// 테스트용
+import LiveAuctionPage from './component/live/board/LiveAuctionPage';
 
 function App() {
   // const nowPrice = 10000;
@@ -60,6 +63,8 @@ function App() {
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
           <Route path="/member/Consign" element={<Consign />}></Route>
           <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
+          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
+          <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
         </Routes>
       </div>
       {/* <footer>

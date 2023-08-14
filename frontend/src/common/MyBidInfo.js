@@ -7,6 +7,7 @@ import * as StompJs from "@stomp/stompjs";
 import * as BeforeNormalBid from "../component/normal/auction/beforeNormalBid";
 import TimeCheck from "../component/normal/auction/timeCheck";
 import { useSelector } from "react-redux";
+import { type } from "@testing-library/user-event/dist/type";
 
 function MyBidInfo(props) {
   const email = useSelector((state) => state.login.email);

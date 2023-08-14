@@ -11,6 +11,7 @@ function Admin() {
 
   //요청 물품 목록 (승인 or 반려)
   const [consignItems, setConsignItems] = useState([]); //요청 물품 리스트
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get(`/manage/items/consign`)
@@ -133,7 +134,7 @@ function Admin() {
   const createBroadcast = () => {
     if(broadcastInfo.startAt === "" || broadcastInfo.title === "" || broadcastInfo.introduce === "") alert("입력 미완료")
     else {
-      api.post("/manage/items/broadcast", broadcastInfo).then( response => {
+      api.post("/broadcast/init", broadcastInfo).then( response => {
         if(response.status === 200) {
           console.log(response.status)
         }
@@ -170,6 +171,7 @@ function Admin() {
 
   const broadcastStart = (broadcast) => {
     console.log(broadcast)
+    navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.broadcastId}});
     //방송화면 이동하면 끄읏
   }
 
@@ -345,7 +347,7 @@ function Admin() {
                   <td>{sliceDate(broadcast)}</td>
                   <td>{broadcastOnOff(broadcast)}</td>
                   <td>
-                    <button disabled={broadcast.status ? false : true} onClick={() => broadcastStart(broadcast)}>방송시작</button>
+                    <button disabled={broadcast.status ? true : false} onClick={() => broadcastStart(broadcast)}>방송시작</button>
                   </td>
                   <td>
                     <button onClick={() => auctionListByBroadcast(broadcast)}>경매보기</button>
