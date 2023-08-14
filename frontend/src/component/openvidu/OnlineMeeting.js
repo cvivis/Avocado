@@ -63,6 +63,14 @@ class OnlineMeeting extends Component {
 
                 // --- 4) Connect to the session with a valid user token ---
                 this.getToken().then((token) => {
+
+		    const userRole = sessionStorage.getItem('role');
+
+    		    // If user is not an ADMIN, exit the function
+    		    if (userRole !== "ROLE_ADMIN") {
+        		console.log('You do not have ADMIN permissions to perform this action.');
+        		return;
+    		    }
                     mySession.connect(token, { clientData: this.state.myUserName })
                     .then(async () => {
                         // --- 5) Get your own camera stream ---
