@@ -67,7 +67,7 @@ class OnlineMeeting extends Component {
                     const userRole = sessionStorage.getItem('role');
 
                     // If user is not an ADMIN, exit the function
-                    if (userRole !== "ADMIN") {
+                    if (userRole !== "ROLE_ADMIN") {
                         console.log('You do not have ADMIN permissions to perform this action.');
                         return;
                     }
