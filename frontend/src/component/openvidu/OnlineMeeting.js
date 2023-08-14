@@ -73,14 +73,6 @@ class OnlineMeeting extends Component {
                     // 해당 객체에서 'role' 값을 가져옵니다.
                     const userRole = parsedLoginData.role;
 
-                    console.log(sessionStorage)
-                    console.log(userRole);
-
-                    // If user is not an ADMIN, exit the function
-                    if (userRole !== "ROLE_ADMIN") {
-                        console.log('You do not have ADMIN permissions to perform this action.');
-                        return;
-                    }
                     mySession.connect(token, { clientData: this.state.myUserName })
                     .then(async () => {
                         // --- 5) Get your own camera stream ---
@@ -96,6 +88,10 @@ class OnlineMeeting extends Component {
                         });
 
                         // --- 6) Publish your stream ---
+                        if (userRole !== "ROLE_ADMIN") {
+                            console.log('You do not have ADMIN permissions to perform this action.');
+                            return;
+                        }
 
                         mySession.publish(publisher);
                         // Set the main video in the page to display our webcam and store our Publisher
