@@ -4,7 +4,7 @@ import {
     Button, Box, Center,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import TimeCheck from '../component/normal/auction/timeCheck';
@@ -44,6 +44,33 @@ function MyCard(props) {
     //         )
     //     }
     // }
+    function TimeBadge() {
+
+        const dateForm = "YYYY-MM-DD HH:mm:ss";
+        const endTime = dayjs(props.item.endAt).format(dateForm);
+        const endTimeInDayjs = dayjs(endTime);
+        const startTime = dayjs(props.item.startAt).format(dateForm);
+        const startTimeInDayjs = dayjs(startTime);
+        const now = dayjs(); // 현재 시간 
+        let diff = endTimeInDayjs.diff(now); // 마감시간과 현재 시간 차이 구하기 
+        let startDiff = startTimeInDayjs.diff(now);
+
+        if(startDiff>0) {
+            return(
+            <Text>
+                시작전</Text>
+                )
+        }else if(diff <=0){
+            return(
+            <Text>마감</Text>
+            )
+        }else{
+            return(
+            <Text>진행중</Text>
+            )
+        }
+
+    }
 
     return (
         <Box w={300}>
@@ -60,10 +87,7 @@ function MyCard(props) {
                         {/* <Progress></Progress> */}
 
                         <Heading size={'md'} textAlign={'left'}>
-                        <TimeCheck id={props.item.id}
-                        endAt={props.item.endAt}
-                        startAt={props.item.startAt}
-                        ></TimeCheck>
+                        <TimeBadge/>
                         </Heading>
                     </CardBody>
                     <CardFooter>
