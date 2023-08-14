@@ -5,7 +5,7 @@ import {
   Grid, Center, VStack, Button, Text, Container,
 } from "@chakra-ui/react";
 import {
-  EmailIcon, SunIcon,
+  EmailIcon, SunIcon, LockIcon,
 } from '@chakra-ui/icons'
 import MyPasswordInput from "../../common/MyPasswordInput";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,11 +88,17 @@ function Signup() {
               />
             </InputGroup>
             {/* 비밀번호 입력 인풋 */}
-            <Input value={password}
-              type="password"
-              onChange={(e) => 
-                dispatch(setPassword(e.target.value))} MyPlaceholder={'비밀번호'}
-              ></Input >
+            <InputGroup size='lg'>
+              <InputLeftElement pointerEvents='none'>
+                <LockIcon color='gray.300' />
+              </InputLeftElement>
+              <Input value={password}
+                type="password"
+                onChange={(e) => 
+                  dispatch(setPassword(e.target.value))} // MyPlaceholder={'비밀번호'}
+                  placeholder={'비밀번호'}
+              / >
+            </InputGroup>
             {/* <MyPasswordInput MyPlaceholder={'비밀번호 확인'}></MyPasswordInput> */}
             <Button
               onClick={handleSignup}

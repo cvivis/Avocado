@@ -6,7 +6,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import {
-  EmailIcon,
+  EmailIcon, LockIcon,
 } from '@chakra-ui/icons'
 import MyPasswordInput from "../../common/MyPasswordInput";
 import { useEffect } from "react";
@@ -92,11 +92,16 @@ function LogIn() {
               />
             </InputGroup>
             {/* 비밀번호 인풋 HOTFIX 요함 */}
-            <Input MyPlaceholder={'비밀번호'} value={password}
-              type="password"
-              onChange={(e) => dispatch(setPassword(e.target.value))}
-              placeholder={'비밀번호'}
-            />
+            <InputGroup size={'lg'}>
+              <InputLeftElement pointerEvents='none'>
+                  <LockIcon color='gray.300' />
+              </InputLeftElement>
+              <Input MyPlaceholder={'비밀번호'} value={password}
+                type="password"
+                onChange={(e) => dispatch(setPassword(e.target.value))}
+                placeholder={'비밀번호'}
+              />
+            </InputGroup>
             <Button
               onClick={handleLogin}
               mt={10}
