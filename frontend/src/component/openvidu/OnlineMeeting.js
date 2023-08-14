@@ -63,6 +63,14 @@ class OnlineMeeting extends Component {
 
                 // --- 4) Connect to the session with a valid user token ---
                 this.getToken().then((token) => {
+
+                    const userRole = sessionStorage.getItem('role');
+
+                    // If user is not an ADMIN, exit the function
+                    if (userRole !== "ADMIN") {
+                        console.log('You do not have ADMIN permissions to perform this action.');
+                        return;
+                    }
                     mySession.connect(token, { clientData: this.state.myUserName })
                     .then(async () => {
                         // --- 5) Get your own camera stream ---
@@ -185,13 +193,28 @@ class OnlineMeeting extends Component {
                         </div>
 
                         <div id="video-container" className="col-md-6">
-			{<div key={this.state.subscribers[1].id} 
-			      className="stream-container col-md-6 col-xs-6" 
-			      onClick={() => this.handleMainVideoStream(this.state.subscribers[1])}>
-			        <span>{this.state.subscribers[1].id}</span>
-					<UserVideoComponent streamManager={this.state.subscribers[1]} />
-    			</div>}
-			</div>
+                            
+                        {this.state.mainStreamManager !== undefined ? (
+                            <div id="main-video" className="col-md-6">
+                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
+
+                            </div>
+                        ) : null}
+                        <div id="video-container" className="col-md-6">
+                            {this.state.publisher !== undefined ? (
+                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                                    <UserVideoComponent
+                                        streamManager={this.state.publisher} />
+                                </div>
+                            ) : null}
+                            {this.state.subscribers.map((sub, i) => (
+                                <div key={sub.id} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                                    <span>{sub.id}</span>
+                                    <UserVideoComponent streamManager={sub} />
+                                </div>
+                            ))}
+                        </div>
+			            </div>
                    </div>
                 ) : null}
             </div>
