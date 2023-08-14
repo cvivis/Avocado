@@ -54,6 +54,11 @@ public class NormalBoardService {
                 .successPrice(item.getSuccessPrice())
                 .build();
     }
+    public NormalItemDetailResponseDto  getItemRealDetail(Long id) {
+        NormalItemDetailResponseDto item = normalBoardRepository.findDetailById(id);
+        return item;
+
+    }
 
     // 카테고리 리스트 보기
     public NormalResponseDto getCategoryList(Category category) {

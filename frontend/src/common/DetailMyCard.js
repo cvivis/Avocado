@@ -1,12 +1,13 @@
 import {
     Card, CardBody, CardFooter,
     Image, Heading, Text,
-    Button, Box,
+    Button, Box, Center,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
+import TimeCheck from '../component/normal/auction/timeCheck';
 
 function MyCard(props) {
     // const filterList = useSelector((state) => state.boardList.filterList);
@@ -17,9 +18,32 @@ function MyCard(props) {
     const dateForm = "YYYY-MM-DD HH:mm:ss";
     const startTime = dayjs(props.startAt).format(dateForm);
     const startTimeTimeInDayjs = dayjs(startTime);
+
+    const isBidBeforeStart = useSelector((state)=>state.myNormalBids.isBidBeforeStart[item.itemId]);
+    const isBidEnd = useSelector((state)=>state.myNormalBids.isBidEnd[item.itemId]);
+
+    console.log(isBidEnd+"엔드")
+    console.log(isBidBeforeStart+"비포스타트")
     // useEffect(()=>{
 
     // })
+    // function Progress(){
+    //     if(isBidBeforeStart){
+    //         return(
+    //         <Text background={'orange.300'} color={'white'} align={'center'} fontSize={'35px'}>시작전</Text>
+    //         )
+    //     }
+        
+    //     else if(!isBidEnd){
+    //         return(
+    //         <Text background={'black'} color={'white'} align={'center'} fontSize={'35px'}>마감</Text>
+    //         )
+    //     }else{
+    //         return(
+    //         <Text background={'green'} color={'white'} align={'center'} fontSize={'35px'}>진행중</Text>
+    //         )
+    //     }
+    // }
 
     return (
         <Box w={300}>
@@ -33,7 +57,14 @@ function MyCard(props) {
                         />
                         <Heading size='md'>{item.name}</Heading>
                         <Text>{item.content}</Text>
-                        <Text></Text>
+                        {/* <Progress></Progress> */}
+
+                        <Heading size={'md'} textAlign={'left'}>
+                        <TimeCheck id={props.item.id}
+                        endAt={props.item.endAt}
+                        startAt={props.item.startAt}
+                        ></TimeCheck>
+                        </Heading>
                     </CardBody>
                     <CardFooter>
                         <Button colorScheme="green" >

@@ -16,18 +16,16 @@ public class NormalResponseEntryDto {
     private Long itemId;
     private String name;
     private String content;
-    private Integer bidPrice;
     private Integer hopePrice;
     private Date startAt;
     private Date endAt;
 
 
-    public NormalResponseEntryDto(Long auctionId, Long itemId, String name, String content, Integer bidPrice, Integer hopePrice, Date startAt, Date endAt) {
+    public NormalResponseEntryDto(Long auctionId, Long itemId, String name, String content, Integer hopePrice, Date startAt, Date endAt) {
         this.auctionId = auctionId;
         this.itemId = itemId;
         this.name = name;
         this.content = content;
-        this.bidPrice = bidPrice;
         this.hopePrice = hopePrice;
         this.startAt = startAt;
         this.endAt = endAt;

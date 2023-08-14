@@ -52,7 +52,7 @@ function TimeCheck(props) {
       if (diff <= 60 * 1000) { // 1분 미만일 때
         setIsBlinking(!isBlinking); // 깜빡거리게 설정
       }
-      console.log(startDiff + "시작시간")
+      // console.log(startDiff + "시작시간")
       if (startDiff > 0) {
         dispatch(setIsBidBeforeStart({ id: props.id, value: true }));
       } else {
@@ -61,7 +61,7 @@ function TimeCheck(props) {
 
 
       if (diff <= 0) {
-        console.log("마감", props.id); // 낙찰
+        // console.log("마감", props.id); // 낙찰
         setDay("--");
         setHour("--");
         setMinute("--");
