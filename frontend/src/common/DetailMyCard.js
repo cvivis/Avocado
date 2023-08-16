@@ -91,7 +91,7 @@ function MyCard(props) {
                             alt='Chakra UI'
                         />
                         <Heading size='md'>{item.name}</Heading>
-                        <Text>{item.content}</Text>
+                        
                         {/* <Progress></Progress> */}
 
                         <Heading size={'md'} textAlign={'left'}>
@@ -100,7 +100,7 @@ function MyCard(props) {
                     </CardBody>
                     <CardFooter>
                         <Button colorScheme="green" >
-                            {item.itemId}
+                            상세보기
                         </Button>
                     </CardFooter>
                 </Card>
