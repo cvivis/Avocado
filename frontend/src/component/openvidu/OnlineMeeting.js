@@ -12,11 +12,12 @@ class OnlineMeeting extends Component {
         super(props)
         this.state = {
             mySessionId: '',
-            myUserName: 'Participant',
+            myUserName: 'Participant' + Math.floor(Math.random() * 100),
             session: undefined,
             mainStreamManager: undefined, // Main video of the page. Will be the 'publisher' or one of the 'subscribers'
             publisher: undefined,
             subscribers: [],
+            
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -24,8 +25,19 @@ class OnlineMeeting extends Component {
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
     }
-
+    componentDidMount(){
+        if(this.state.session === undefined) {
+            this.test(this.props.useId);
+            this.joinSession()
+        }
+        
+    }
+    
+    test(d){
+        console.log(d);
+    }
     joinSession() {
+        
         this.OV = new OpenVidu();
         this.setState(
             {
@@ -109,15 +121,21 @@ class OnlineMeeting extends Component {
     }
 
     async getToken() {
-        return await this.createToken(this.state.mySessionId);
+        return await this.createToken();
     }
     
-    async createToken(sessionId) {
+    async createToken() {
 	console.log(API_SERVER_URL)
-        const response = await axios.post(API_SERVER_URL + 'connection/' + sessionId, {}, {
-            headers: { 'Content-Type': 'application/json', },
-        });
-        return response.data; // The token
+    console.log(this.props.useId + "유저아이디")
+    const uid = this.props.useId;
+        if(uid!=0){
+
+            const response = await axios.post(API_SERVER_URL + 'connection/' +uid, {}, {
+                headers: { 'Content-Type': 'application/json', },
+            });
+            return response.data; // The token
+            
+        }
     }
 
     leaveSession() {
@@ -158,7 +176,7 @@ class OnlineMeeting extends Component {
                 this.state.session === undefined ? (
                     <div id="join">
                         <form className="form-group" onSubmit={this.joinSession}>
-                            <p>
+                            {/* <p>
                                 <label>Participant: </label>
                                 <input
                                     className="form-control"
@@ -168,8 +186,8 @@ class OnlineMeeting extends Component {
                                     onChange={this.handleChangeUserName}
                                     required
                                 />
-                            </p>
-                            <p>
+                            </p> */}
+                            {/* <p>
                                 <label> Session: </label>
                                 <input
                                     className="form-control"
@@ -179,7 +197,7 @@ class OnlineMeeting extends Component {
                                     onChange={this.handleChangeSessionId}
                                     required
                                 />
-                            </p>
+                            </p> */}
                             <p className="text-center">
                                 <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
                             </p>
@@ -189,15 +207,15 @@ class OnlineMeeting extends Component {
 
                 {this.state.session !== undefined ? (
                     <div id="session">
-                        <div id="session-header">
+                        {/* <div id="session-header">
                             <input
                                 className="btn btn-large btn-danger"
                                 type="button"
                                 id="buttonLeaveSession"
                                 onClick={this.leaveSession}
                                 value="Leave session"
-                            />
-                        </div>
+                            /> */}
+                        {/* </div> */}
 
                         <div id="video-container" className="col-md-6">
                             
@@ -227,6 +245,7 @@ class OnlineMeeting extends Component {
             </div>
         )
     }
+    
 }
 
 export default OnlineMeeting;
