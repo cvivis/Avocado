@@ -14,7 +14,8 @@ import mySuccessNormalbidsSlice from "./mySuccessNormalbidsSlice";
 import myNormalSaleSlice from "./myNormalSaleSlice";
 import myLiveBidsSlice from "./myLiveBidsSlice";
 import mySuccessLiveBidsSlice from "./mySuccessLiveBidsSlice";
-
+import broadcastIdSlice from "./broadcastIdSlice";
+import liveAuctionListSlice from "./liveAuctionListSlice";
 
 const  reducers = combineReducers({
     boardList: boardListSlice,
@@ -29,6 +30,8 @@ const  reducers = combineReducers({
     myNormalSale:myNormalSaleSlice,
     myLiveBids:myLiveBidsSlice,
     mySuccessLiveBids:mySuccessLiveBidsSlice,
+    broadcastId:broadcastIdSlice,
+    liveAuctionList:liveAuctionListSlice,
 });
 
 const persistConfig = {

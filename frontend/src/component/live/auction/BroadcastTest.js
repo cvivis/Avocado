@@ -371,7 +371,7 @@ const navigate = useNavigate();
             h={'99vh'}
             w={'199vh'}
         >
-            <GridItem area={'bc'} bg={'black'}>
+            <GridItem >
                 <MyVideo />
             </GridItem>
             <GridItem area={'chat'}>

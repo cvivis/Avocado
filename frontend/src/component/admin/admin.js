@@ -149,6 +149,7 @@ function Admin() {
   const dateForm = "YYYY-MM-DDtHH:mm:ss";
 
   const loadBroadcasts = (e) => {
+    console.log(e.target.value);
     api.get(`manage/items/broadcast/` + e.target.value).then(response => {
       if(response.data) setCurrentBroadcastList(response.data)
     })

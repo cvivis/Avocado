@@ -65,6 +65,7 @@ function App() {
           <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
           <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
           <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
+          <Route path="/adminPage" element={<AdminPage />}></Route>
         </Routes>
       </div>
       {/* <footer>
