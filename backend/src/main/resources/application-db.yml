@@ -17,7 +17,7 @@ spring:
           jdbc.batch_size: ${chunkSize:100}
   redis:
     host: localhost
-    port: 6379
+    port: 8379
 
 OPENVIDU_URL: http://localhost:4443/
 OPENVIDU_SECRET: ssafy
