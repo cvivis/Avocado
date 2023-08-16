@@ -38,21 +38,17 @@ function LiveAuctionPage() {
         if(id === 0) {
             return (
                 <>
-                    <Text as={'b'} fontSize={'xl'}>방송을 선택해 주세요.</Text>
+                    <Text as={'b'} fontSize={'3xl'}>방송을 선택해 주세요</Text>
                 </>
             )
         }
         else{
             return (
                 <>
-                    <Text as={'b'} fontSize={'xl'}>방송 경매 물품 목록</Text>
+                    <Text as={'b'} fontSize={'3xl'}>방송 경매 물품 목록</Text>
                 </>
             )
         }
-
-        return (
-            <></>            
-        )
     }
 
     return (
@@ -79,7 +75,6 @@ function LiveAuctionPage() {
                     </Center>
                     <Center>
                         <BroadcastList value={dayjs(startDate).format(dateForm)} ></BroadcastList>
-
                     </Center>
                 </Card>
                 <Spacer />
@@ -89,7 +84,6 @@ function LiveAuctionPage() {
                     </Center>
                     <Center>
                         <LiveAuctionList></LiveAuctionList>
-
                     </Center>
                 </Card>
                 <Spacer />

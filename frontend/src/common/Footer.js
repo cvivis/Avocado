@@ -1,30 +1,77 @@
-import React from "react";
+'use client'
+
 import {
-    Box
-} from '@chakra-ui/react';
+Box,
+chakra,
+Container,
+Stack,
+Text,
+useColorModeValue,
+VisuallyHidden,
+} from '@chakra-ui/react'
+import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 
-function Footer() {
-
-
-    return (
-        <Box
-            as="footer"
-            bg="white"
-            p={4}
-            position="fixed"
-            left={0}
-            bottom={0}
-            width="100%"
-            textAlign="center"
-            >
-            <hr></hr>
-            A4용지 팀의 Avocado 프로젝트
-            <br/>
-            팀장 : 황시은 &nbsp;&nbsp; 백엔드 마스터 : 권민재 &nbsp;&nbsp;
-            나무꾼 : 정재현 &nbsp;&nbsp; 라이브 마스터 : 정연수 &nbsp;&nbsp;
-            게시판 마스터 : 이원희 &nbsp;&nbsp; 그리고 오승기
-        </Box>
-    );
+const Logo = () => {
+return (
+    <img src={`${process.env.PUBLIC_URL}/푸터 로고.png`} alt="Logo"></img>
+)
 }
 
-export default Footer;
+const SocialButton = ({
+children,
+label,
+href,
+}) => {
+return (
+<chakra.button
+    bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+    rounded={'full'}
+    w={8}
+    h={8}
+    cursor={'pointer'}
+    as={'a'}
+    href={href}
+    display={'inline-flex'}
+    alignItems={'center'}
+    justifyContent={'center'}
+    transition={'background 0.3s ease'}
+    _hover={{
+    bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+    }}>
+    <VisuallyHidden>{label}</VisuallyHidden>
+    {children}
+</chakra.button>
+)
+}
+
+export default function SmallWithLogoLeft() {
+return (
+<Box
+    color={useColorModeValue('gray.700', 'gray.200')}
+    display={'flex'} // 하단고정
+>
+    <Container
+    as={Stack}
+    maxW={'6xl'}
+    py={4}
+    direction={{ base: 'column', md: 'row' }}
+    spacing={4}
+    justify={{ base: 'center', md: 'space-between' }}
+    align={{ base: 'center', md: 'center' }}>
+    <Logo />
+    <Text>© 2023 AVOCADO. All rights reserved</Text>
+    <Stack direction={'row'} spacing={6}>
+        <SocialButton label={'Twitter'} href={'#'}>
+        <FaTwitter />
+        </SocialButton>
+        <SocialButton label={'YouTube'} href={'#'}>
+        <FaYoutube />
+        </SocialButton>
+        <SocialButton label={'Instagram'} href={'#'}>
+        <FaInstagram />
+        </SocialButton>
+    </Stack>
+    </Container>
+</Box>
+)
+}
