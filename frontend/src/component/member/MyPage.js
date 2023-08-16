@@ -1,3 +1,4 @@
+ 
 import React, { useEffect } from "react";
 import api from "../../api";
 import {
@@ -11,16 +12,11 @@ import MyNormalSale from "./myNormalSale";
 import MyLiveBids from "./myLiveBids";
 import MySuccessLiveBids from "./MySuccessLiveBids";
 
-
-
-//import api from '../../../api';
-
 function MyPage() {
 
 
     return (
-        <div>
-            {/* <Header></Header> */}
+        <Box>
             <Grid>
                 <Box h={50}></Box>
                 <Box display="flex" justifyContent="space-between">
@@ -32,35 +28,27 @@ function MyPage() {
                             <Tab>내 판매 물품</Tab>
                         </TabList>
                         <TabPanels>
-                            <TabPanel>
-                                <Box w={1300}></Box>
-                                {/* for문으로 카드 반복 돌릴 예정 */}
-                                <div>
-                                    <div>상시 경매</div>
-                                    <MyNormalBids></MyNormalBids>
-
-
-                                </div>
-                                <div>
-                                    <div>라이브 경매</div>
-                                    <MyLiveBids></MyLiveBids>
-                                </div>
-
+                            <TabPanel w={1300}>
+                                <MyNormalBids />
                             </TabPanel>
-                            <TabPanel>
-                                <Box w={1300}></Box>
-                                <div>
-                                    <div>상시 경매</div>
-                                    <MySuccessNormalBids></MySuccessNormalBids>
-                                </div>
-
-                                <div>
-                                    <div>라이브 경매</div>
-                                    <MySuccessLiveBids></MySuccessLiveBids>
-                                </div>
+                            <TabPanel w={1300}>
+                                
+                                <Tabs variant='soft-rounded' colorScheme='green'>
+                                    <TabList>
+                                        <Tab>상시 경매</Tab>
+                                        <Tab>라이브 경매</Tab>
+                                    </TabList>
+                                    <TabPanels>
+                                        <TabPanel>
+                                            <MySuccessNormalBids />
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <MySuccessLiveBids />
+                                        </TabPanel>
+                                    </TabPanels>
+                                </Tabs>
                             </TabPanel>
-                            <TabPanel>
-                                <Box w={1300}></Box>
+                            <TabPanel w={1300}>
                                 <MyNormalSale></MyNormalSale>
                             </TabPanel>
                         </TabPanels>
@@ -68,8 +56,7 @@ function MyPage() {
                     <Center></Center>
                 </Box>
             </Grid>
-            {/* <Footer></Footer> */}
-        </div>
+        </Box>
     );
 }
 
