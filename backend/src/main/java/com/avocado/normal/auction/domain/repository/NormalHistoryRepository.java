@@ -20,4 +20,5 @@ public interface NormalHistoryRepository extends JpaRepository<NormalHistory, Lo
     //입찰기록에 해당 상품에 member_id 있는지 조회
     Optional<NormalHistory> findByNormalAuction_IdAndMember_Id(Long normalId, Long memberId);
     Optional<List<NormalHistory>> findByNormalAuction_Id(Long id);
+
 }

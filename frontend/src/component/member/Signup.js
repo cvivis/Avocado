@@ -21,17 +21,17 @@ function Signup() {
   const email = useSelector((state) => state.signup.email);
   const password = useSelector((state) => state.signup.password);
   const nickname = useSelector((state) => state.signup.nickname);
-  
+
   useEffect(() => {
     return () => {
       dispatch(resetSignupForm());
     }
   }, [dispatch]);
-  
-  
+
+
   const handleSignup = (e) => {
     e.preventDefault();
-    
+
     // 사용자 입력값을 서버로 전송하는 함수
     const data = {
       email: email,
@@ -90,9 +90,9 @@ function Signup() {
             {/* 비밀번호 입력 인풋 */}
             <Input value={password}
               type="password"
-              onChange={(e) => 
-                dispatch(setPassword(e.target.value))} MyPlaceholder={'비밀번호'}
-              ></Input >
+              onChange={(e) =>
+                dispatch(setPassword(e.target.value))} myplaceholder={'비밀번호'}
+            ></Input >
             {/* <MyPasswordInput MyPlaceholder={'비밀번호 확인'}></MyPasswordInput> */}
             <Button
               onClick={handleSignup}

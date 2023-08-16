@@ -7,7 +7,7 @@ import loginSlice from "./loginSlice";
 import signupSlice from "./signupSlice";
 import consignSlice from "./consignSlice";
 import myNormalBidsSlice from "./myNormalBidsSlice";
-import {persistReducer} from "redux-persist";
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage/session";
 import broadcastListSlice from "./broadcastListSlice";
 import mySuccessNormalbidsSlice from "./mySuccessNormalbidsSlice";
@@ -32,16 +32,17 @@ const  reducers = combineReducers({
     mySuccessLiveBids:mySuccessLiveBidsSlice,
     broadcastId:broadcastIdSlice,
     liveAuctionList:liveAuctionListSlice,
+
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist:["login"]
+  whitelist: ["login"]
 };
 
 
-const persistedReducer = persistReducer(persistConfig,reducers);
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 // {
 //   // search라는 이름으로 searchSlice.js에서 정의한 리듀서 등록
@@ -60,6 +61,7 @@ const persistedReducer = persistReducer(persistConfig,reducers);
 const store = configureStore({
   // 리듀서 등록
   reducer: persistedReducer,
+  // getDefaultMiddleware로 기본 미들웨어를 포함하고 로거 추가
 });
 
 export default store;
