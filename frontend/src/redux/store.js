@@ -16,8 +16,6 @@ import myLiveBidsSlice from "./myLiveBidsSlice";
 import mySuccessLiveBidsSlice from "./mySuccessLiveBidsSlice";
 import broadcastIdSlice from "./broadcastIdSlice";
 import liveAuctionListSlice from "./liveAuctionListSlice";
-import dateSlice from "./timeSlice";
-
 
 const  reducers = combineReducers({
     boardList: boardListSlice,
@@ -34,7 +32,6 @@ const  reducers = combineReducers({
     mySuccessLiveBids:mySuccessLiveBidsSlice,
     broadcastId:broadcastIdSlice,
     liveAuctionList:liveAuctionListSlice,
-    time:timeSlice,
 });
 
 const persistConfig = {
