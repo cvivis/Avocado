@@ -110,7 +110,7 @@ public class ManageController {
         if(adminService.assignLiveAuctionToBroadcast(itemId, broadcastId)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
-    
+
     @PutMapping("/broadcast/on/{broadcastId}")
     public ResponseEntity<?> broadcastOn(@PathVariable Long broadcastId){
         if(bidService.broadcastOnAndOff(broadcastId, true)) return ResponseEntity.ok().build();

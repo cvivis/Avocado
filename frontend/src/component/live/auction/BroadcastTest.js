@@ -132,7 +132,19 @@ const navigate = useNavigate();
     client.current.subscribe("/sub/broadcast/off/" + broadcastId.current, response => {
         const content = JSON.parse(response.body)
         alert("방송 종료")
-        navigate("/broadcastList");
+        const storedRootData = sessionStorage.getItem('persist:root');
+        const parsedRootData = JSON.parse(storedRootData);
+
+        // 'login' 데이터를 파싱합니다.
+        const parsedLoginData = JSON.parse(parsedRootData.login);
+
+        // 해당 객체에서 'role' 값을 가져옵니다.
+        const userRole = parsedLoginData.role;
+        if (userRole === "ROLE_ADMIN" ) {
+            navigate("/adminPage");
+            return;
+        }
+        navigate("/liveAuctionPage");
     });
 
     //경매 온오프

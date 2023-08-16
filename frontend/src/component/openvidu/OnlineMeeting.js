@@ -32,6 +32,10 @@ class OnlineMeeting extends Component {
         }
         
     }
+
+    componentWillUnmount() {
+        this.leaveSession()
+    }
     
     test(d){
         console.log(d);
