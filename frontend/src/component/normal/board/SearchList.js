@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchKeyword } from "../../../redux/searchSlice";
-import { setFilterList } from "../../../redux/boardListSlice";
+import { resetSearchKeyword, setSearchKeyword } from "../../../redux/searchSlice";
+import { loadBoardList, setBoardList, setFilterList } from "../../../redux/boardListSlice";
 import api from '../../../api'
 import {
   Box, Center,
@@ -9,15 +9,28 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons"
 import CategoryList from "./CategoryList";
+import { clearCategory } from "../../../redux/categorySlice";
 
 function MySearchBar() {
   const searchKeyword = useSelector((state) => state.search.searchKeyword);
-  const dispatch = useDispatch();
   const doSelect = useSelector((state) => state.category.doSelect);
   const selectedCategory = useSelector((state) => state.category.selectedCategory);
   const boardList = useSelector((state) => state.boardList.boardList);
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    dispatch(loadBoardList());
+
+    return () => {
+      dispatch(resetSearchKeyword());
+      dispatch(clearCategory());
+    }
+  }, [])
+
 
   const handleSearch = useCallback(() => {
+
     if (!doSelect && searchKeyword === '') {
       dispatch(setFilterList(boardList)); // 처음 리스트로 초기화
     } else {

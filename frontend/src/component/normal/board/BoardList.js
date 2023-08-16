@@ -15,23 +15,23 @@ import MySearchBar from "../../../common/MySearchBar";
 
 
 function BoardList() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const filterList = useSelector((state) => state.boardList.filterList);
 
   // console.log(filterList);
 
-  useEffect(() => {
-    api.get("/normal/list")
-      .then(response => {
-        // console.log(response.data.entries + "이것은 리스폰스 데이터");
-        dispatch(setBoardList(response.data.entries));
-        dispatch(setFilterList(response.data.entries));
-        // console.log(filterList);
-      })
-      .catch(error => {
-        console.error('API 요청 에러:', error);
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   api.get("/normal/list")
+  //     .then(response => {
+  //       // console.log(response.data.entries + "이것은 리스폰스 데이터");
+  //       dispatch(setBoardList(response.data.entries));
+  //       dispatch(setFilterList(response.data.entries));
+  //       // console.log(filterList);
+  //     })
+  //     .catch(error => {
+  //       console.error('API 요청 에러:', error);
+  //     });
+  // }, [dispatch]);
 
   return (
     <Box>

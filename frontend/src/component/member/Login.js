@@ -26,7 +26,7 @@ function LogIn() {
   const password = useSelector((state) => state.login.password);
   const isLogin = useSelector((state) => state.login.isLogin);
   const accessToken = useSelector((state) => state.login.accessToken);
-
+  console.log(accessToken);
   // useEffect(() => {
   //   return () => {
   //     dispatch(resetLoginForm());
@@ -91,6 +91,7 @@ function LogIn() {
                 placeholder='이메일'
               />
             </InputGroup>
+<<<<<<< HEAD
             {/* 비밀번호 인풋 HOTFIX 요함 */}
             <InputGroup size={'lg'}>
               <InputLeftElement pointerEvents='none'>
@@ -102,6 +103,11 @@ function LogIn() {
                 placeholder={'비밀번호'}
               />
             </InputGroup>
+=======
+            <Input placeholder='비밀번호' value={password}
+            type="password"
+              onChange={(e) => dispatch(setPassword(e.target.value))}></Input>
+>>>>>>> 0880b8f7121b9ff5f71ac7a8cfe44ddcc5e03e32
             <Button
               onClick={handleLogin}
               mt={10}

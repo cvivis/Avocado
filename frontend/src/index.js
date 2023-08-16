@@ -16,13 +16,13 @@ const root = ReactDOM.createRoot(rootElement);
 // Redux의 상태를 컴포넌트에 제공하기 위해 Provider 컴포넌트 사용
 root.render(
   <ChakraProvider>
-  <React.StrictMode> 
+    <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <App />
+          <App />
         </PersistGate>
       </Provider>
-  </React.StrictMode>
+    </React.StrictMode>
   </ChakraProvider>,
 );
 

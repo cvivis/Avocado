@@ -58,9 +58,9 @@ function Header() {
                         <Button bg={"white"} fontSize={'3xl'}>
                             <Link to="/member/Consign">물품 입찰 요청</Link>
                         </Button>
-                        <Button bg={"white"} onClick={handleReloadBoardList} fontSize={'3xl'}>
+                        {/* <Button bg={"white"} onClick={handleReloadBoardList}>
                             <Link to="/normal/list"> 상시 경매 리스트 </Link>
-                        </Button>
+                        </Button> */}
                     </ButtonGroup>
                 </HStack>
                 <Spacer />

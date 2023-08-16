@@ -8,7 +8,7 @@ const consignSlice = createSlice({
         name: "",
         content: "",
         hopePrice: 0,
-        Type: "",
+        Type: "NORMAL",
         ItemStatus: "",
     },
     reducers: {

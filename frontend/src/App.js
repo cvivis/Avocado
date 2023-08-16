@@ -61,6 +61,14 @@ function App() {
           {/* <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route> */}
           {/* <Route path="/member/Regist" element={<Regist />}></Route> */}
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
+<<<<<<< HEAD
+=======
+          <Route path="/member/Consign" element={<Consign />}></Route>
+          <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
+          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
+          <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
+          <Route path="/adminPage" element={<AdminPage />}></Route>
+>>>>>>> 0880b8f7121b9ff5f71ac7a8cfe44ddcc5e03e32
         </Routes>
       </div>
     </Router>
