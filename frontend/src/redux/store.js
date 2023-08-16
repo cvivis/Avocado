@@ -14,22 +14,25 @@ import mySuccessNormalbidsSlice from "./mySuccessNormalbidsSlice";
 import myNormalSaleSlice from "./myNormalSaleSlice";
 import myLiveBidsSlice from "./myLiveBidsSlice";
 import mySuccessLiveBidsSlice from "./mySuccessLiveBidsSlice";
+import broadcastIdSlice from "./broadcastIdSlice";
+import liveAuctionListSlice from "./liveAuctionListSlice";
 
+const  reducers = combineReducers({
+    boardList: boardListSlice,
+    search: searchSlice,
+    category: categorySlice,
+    login: loginSlice,
+    signup: signupSlice,
+    requireItem: consignSlice,
+    myNormalBids:myNormalBidsSlice,
+    broadcastList:broadcastListSlice,
+    mySuccessNormalBids:mySuccessNormalbidsSlice,
+    myNormalSale:myNormalSaleSlice,
+    myLiveBids:myLiveBidsSlice,
+    mySuccessLiveBids:mySuccessLiveBidsSlice,
+    broadcastId:broadcastIdSlice,
+    liveAuctionList:liveAuctionListSlice,
 
-
-const reducers = combineReducers({
-  boardList: boardListSlice,
-  search: searchSlice,
-  category: categorySlice,
-  login: loginSlice,
-  signup: signupSlice,
-  requireItem: consignSlice,
-  myNormalBids: myNormalBidsSlice,
-  broadcastList: broadcastListSlice,
-  mySuccessNormalBids: mySuccessNormalbidsSlice,
-  myNormalSale: myNormalSaleSlice,
-  myLiveBids: myLiveBidsSlice,
-  mySuccessLiveBids: mySuccessLiveBidsSlice,
 });
 
 const persistConfig = {

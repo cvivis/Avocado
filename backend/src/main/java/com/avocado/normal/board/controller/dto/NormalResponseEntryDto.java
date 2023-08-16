@@ -21,6 +21,7 @@ public class NormalResponseEntryDto {
     private Date endAt;
 
 
+
     public NormalResponseEntryDto(Long auctionId, Long itemId, String name, String content, Integer hopePrice, Date startAt, Date endAt) {
         this.auctionId = auctionId;
         this.itemId = itemId;

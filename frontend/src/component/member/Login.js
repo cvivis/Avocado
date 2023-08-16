@@ -26,7 +26,7 @@ function LogIn() {
   const password = useSelector((state) => state.login.password);
   const isLogin = useSelector((state) => state.login.isLogin);
   const accessToken = useSelector((state) => state.login.accessToken);
-
+  console.log(accessToken);
   // useEffect(() => {
   //   return () => {
   //     dispatch(resetLoginForm());

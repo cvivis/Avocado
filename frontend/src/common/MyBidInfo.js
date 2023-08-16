@@ -1,13 +1,14 @@
+
 import React, { useCallback } from "react";
 import {
     Box, Divider, HStack, Heading, Flex, Spacer, Button, Text,
 } from '@chakra-ui/react';
 import { TimeIcon } from "@chakra-ui/icons";
 import { right } from "@popperjs/core";
-import { useState, useRef, useEffect } from 'react';
-import * as StompJs from '@stomp/stompjs';
-import * as BeforeNormalBid from '../component/normal/auction/beforeNormalBid';
-import TimeCheck from '../component/normal/auction/timeCheck';
+import { useState, useRef, useEffect } from "react";
+import * as StompJs from "@stomp/stompjs";
+import * as BeforeNormalBid from "../component/normal/auction/beforeNormalBid";
+import TimeCheck from "../component/normal/auction/timeCheck";
 import { useSelector } from "react-redux";
 import { type } from "@testing-library/user-event/dist/type";
 
@@ -78,13 +79,11 @@ function MyBidInfo(props) {
         connect(); // 마운트시 실행
         return () => disconnect(); // 언마운트 시 실행
     }, [connect, props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+const disconnect = () => {
+    client.current.deactivate(); // 활성화된 연결 끊기
+  };
 
 
-
-
-    const disconnect = () => {
-        client.current.deactivate(); // 활성화된 연결 끊기 
-    };
 
     const subscribe = () => {
         // console.log("야 들어왔냐2")

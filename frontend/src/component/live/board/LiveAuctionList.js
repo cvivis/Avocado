@@ -3,17 +3,19 @@ import api from "../../../api";
 import { useDispatch,useSelector } from "react-redux";
 import { setLiveAuctionList } from "../../../redux/liveAuctionListSlice";
 import { useParams } from "react-router-dom";
+import { el } from "date-fns/locale";
 
 
 function LiveAuctionList(){
-    const {id}=useParams();
+    const id=useSelector((state)=>state.broadcastId.broadcastId);
     const dispatch=useDispatch();
     const liveAuctionList = useSelector((state) => state.liveAuctionList.liveAuctionList);
-
+    
     useEffect(()=>{
         api.get(`/live/list/${id}`)
         .then(response=>{
-            dispatch(setLiveAuctionList(response.data.entries));
+            if(response)dispatch(setLiveAuctionList(response.data.entries));
+            
 
         })
         .catch(error=>{
@@ -23,7 +25,7 @@ function LiveAuctionList(){
     },[id]);
     return(
         <div>
-        {liveAuctionList.map((liveauction)=>(
+        {liveAuctionList&&liveAuctionList.map((liveauction)=>(
             <div key = {liveauction.auctionId}>
                 <div>{liveauction.auctionId}</div>
                 <div>{liveauction.name}</div>

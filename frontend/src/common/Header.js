@@ -55,8 +55,9 @@ function Header() {
                             <Link to="/normal/list">상시 경매</Link>
                         </Button>
                         <Button bg={"white"}>
-                            <Link to="/broadcastList">
-                                라이브 경매</Link></Button>
+
+                            <Link to ="/liveauctionpage">
+                            라이브 경매</Link></Button>
                         <Button bg={"white"}>
                             <Link to="/member/Consign">물품 입찰 요청</Link>
                         </Button>
