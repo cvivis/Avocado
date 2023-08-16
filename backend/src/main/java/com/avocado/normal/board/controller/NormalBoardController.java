@@ -39,7 +39,7 @@ public class NormalBoardController {
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> itemDetail(@PathVariable Long id){
-        NormalItemInfoDto itemInfo = normalBoardService.getItemDetail(id);
+        NormalItemDetailResponseDto itemInfo = normalBoardService.getItemRealDetail(id);
         return ResponseEntity.ok().body(itemInfo);
     }
 

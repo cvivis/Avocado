@@ -1,20 +1,31 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    myNormalBids:[],
+    myNormalBids: [],
+    isBidEnd: {},
+    isBidBeforeStart: {}
 };
 
-const myNormalBids = createSlice({
-    name : 'myNormalBids',
+const myNormalBidSlice = createSlice({
+    name: 'myNormalBids',
     initialState,
-    reducers:{
-        setMyNormalBids(state,action){
+    reducers: {
+        setMyNormalBids(state, action) {
             state.myNormalBids = action.payload;
-        }
+        },
+        setIsBidEnd(state, action) {
+            const { id, value } = action.payload;
+            state.isBidEnd[id] = value;
+        },
+        setIsBidBeforeStart(state, action) {
+            const { id, value } = action.payload;
+            state.isBidBeforeStart[id] = value;
+        },
+
 
     },
 });
 
-export const {setMyNormalBids} = myNormalBids.actions;
+export const { setMyNormalBids, setIsBidEnd, setIsBidBeforeStart } = myNormalBidSlice.actions;
 
-export default myNormalBids.reducer;
+export default myNormalBidSlice.reducer;
