@@ -4,6 +4,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { setLiveAuctionList } from "../../../redux/liveAuctionListSlice";
 import { useParams } from "react-router-dom";
 import { el } from "date-fns/locale";
+import { Box, Divider, HStack, Spacer, VStack, Text } from "@chakra-ui/react";
 
 
 function LiveAuctionList(){
@@ -24,16 +25,20 @@ function LiveAuctionList(){
         });
     },[id]);
     return(
-        <div>
-        {liveAuctionList&&liveAuctionList.map((liveauction)=>(
-            <div key = {liveauction.auctionId}>
-                <div>{liveauction.auctionId}</div>
-                <div>{liveauction.name}</div>
-                <div>{liveauction.category}</div>
-                <br/>
-            </div>
-        ))}
-    </div>
+        <VStack w={'600px'} mt={'15px'}>
+            {liveAuctionList&&liveAuctionList.map((liveauction)=>(
+                <>
+                <HStack w={'100%'} key = {liveauction.auctionId}>
+                    <Box w={'20%'} textAlign={'center'}><Text fontSize={'2xl'}>{liveauction.auctionId}번</Text></Box>
+                    <Spacer></Spacer>
+                    <Box w={'40%'} textAlign={'center'}><Text fontSize={'2xl'}>{liveauction.name}</Text></Box>
+                    <Spacer></Spacer>
+                    <Box w={'40%'} textAlign={'right'}><Text fontSize={'2xl'}>{liveauction.category}</Text></Box>
+                </HStack>
+                <Divider></Divider>
+                </>
+            ))}
+        </VStack>
     )
 
 }

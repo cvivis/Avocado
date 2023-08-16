@@ -6,7 +6,6 @@ import {
 } from '@chakra-ui/react';
 import Header from "../../common/Header";
 import Footer from "../../common/Footer";
-import Footer2 from "../../common/Footer-new";
 import ToastEditor from "../../common/ToastEditor";
 import MyRadioBtn from "../../common/MyRadioBtn";
 import Dropzone from "../../common/Dropzone";
@@ -61,7 +60,6 @@ function Consign() {
 
     return (
         <Box>
-            {/* <Header /> */}
             <Container centerContent mt={'15px'}>
                 {/* 이미지/썸네일/제목/내용/희망가격/즉구가/경매유형 */}
                 <Heading size={'3xl'} color={'green'}>물품 입찰 요청서</Heading>
@@ -106,8 +104,6 @@ function Consign() {
                     </Center>
                 </FormControl>
             </Container>
-            {/* <Footer /> */}
-            <Footer2></Footer2>
         </Box>
     );
 }

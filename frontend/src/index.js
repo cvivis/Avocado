@@ -9,6 +9,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 
+import './Fonts/font.css';
+
 export const persistor = persistStore(store);
 
 const rootElement = document.getElementById('root');
