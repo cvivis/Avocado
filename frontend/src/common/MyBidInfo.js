@@ -47,7 +47,7 @@ function MyBidInfo(props) {
             setTimeout(() => {
                 setButtonDisabled(false);
                 setProgressWidth(0); // 프로그레스 바 리셋
-            }, 3000);
+            }, 1000);
         }
         publish();
     }
@@ -55,7 +55,7 @@ function MyBidInfo(props) {
     /*stomp 관련 */
     const client = useRef({});
     const connect = useCallback(() => {
-        client.current = new StompJs.Client({
+        client.current = new StompJs.Client({   
             brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
             onConnect: () => {
                 console.log("연겨여여여여얼")
