@@ -12,10 +12,10 @@ COPY . .
 RUN ./gradlew clean build
 
 # 호스트에서 빌드된 JAR 파일을 이미지에 복사합니다.
-COPY build/libs/ /app
+# COPY build/libs/ /app
 
 # 애플리케이션을 실행합니다.
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "avocado-0.0.1-SNAPSHOT.jar"]
 
 
 
