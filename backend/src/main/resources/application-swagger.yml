@@ -1,0 +1,14 @@
+spring:
+  config:
+    activate:
+      on-profile: dev, local
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: coconut-api.html # url/coconut-api.html
+    tags-sorter: alpha # 알파벳 순 태그 정렬
+    operations-sorter: alpha # 알파벳 순 태그 정렬
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  model-and-view-allowed: true # ModelAndView 허용

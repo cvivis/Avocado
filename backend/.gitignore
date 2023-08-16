@@ -35,10 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### docker ###
-*.env
-env.*
-
-### SSL ###
-keystore.*

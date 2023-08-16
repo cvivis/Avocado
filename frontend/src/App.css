@@ -1,10 +1,3 @@
-@font-face {
-  font-family: 'Nanum Square';
-  src: url("./Fonts/NanumSquareB.ttf") format("truetype")
-  url("./Fonts/NanumSquareB.woff2") format('woff2'),
-  url("./Fonts/NanumSquareB.woff") format('woff');
-}
-
 .App {
   text-align: center;
 }
