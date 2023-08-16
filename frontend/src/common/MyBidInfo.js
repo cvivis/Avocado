@@ -56,7 +56,7 @@ function MyBidInfo(props) {
     const client = useRef({});
     const connect = useCallback(() => {
         client.current = new StompJs.Client({
-            brokerURL: 'ws://localhost:8080/ws/chat',
+            brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
             onConnect: () => {
                 console.log("연겨여여여여얼")
                 // Do something, all subscribes must be done is this callback

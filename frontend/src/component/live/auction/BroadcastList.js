@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { setBroadcastId } from "../../../redux/broadcastIdSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import MyVideo from "../../../common/MyVideo";
+import BroadcastTest from "./BroadcastTest";
 import { Box, Button, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Text } from "@chakra-ui/react";
 
 
@@ -13,7 +15,8 @@ function BroadcastList(date) {
   const id = useSelector((state)=> state.broadcastId.broadcastId);
   const navigate = useNavigate();
   const participate = (broadcast) => { // 방송 경로
-    navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.id}});
+    // <BroadcastTest useId={broadcast.broadcastId}></BroadcastTest>
+    navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.broadcastId}});
   };
   const dispatch = useDispatch();
   const dateForm = "YYYY-MM-DD";

@@ -24,7 +24,7 @@ export default class UserVideoComponent extends Component {
         return (
             <div className="streamcomponent" onClick={this.handleVideoClicked}>
                 <OpenViduVideoComponent streamManager={this.props.streamManager} />
-                <div><p>{this.getNicknameTag()}</p></div>
+                {/* <div><p>{this.getNicknameTag()}</p></div> */}
             </div>
         )
     }

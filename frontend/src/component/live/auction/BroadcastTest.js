@@ -14,6 +14,7 @@ import { useLocation } from 'react-router-dom';
 import * as StompJs from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 
 function BroadcastTest() {
 
@@ -37,7 +38,7 @@ const navigate = useNavigate();
     console.log(location.state.broadcastId)
     broadcastId.current = location.state.broadcastId;
     api.get(`/live/list/${broadcastId.current}/info`)
-        .then(response => {
+    .then(response => {
         const list = response.data.entries
         console.log(list)
         if(list) {
@@ -50,6 +51,8 @@ const navigate = useNavigate();
         });
         
     }, []);
+
+    console.log(broadcastId + " 브로드캐스트 아이디 큐렌트")
 
     // const [myColor, setMyColor] = useState(''); //경매리스트
 
@@ -107,7 +110,7 @@ const navigate = useNavigate();
     
     const connect = () =>{
     client.current = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/live-auction',
+        brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
         onConnect:() =>{
             console.log('소켓 연결 성공')
             subcribe();
@@ -371,8 +374,8 @@ const navigate = useNavigate();
             h={'99vh'}
             w={'199vh'}
         >
-            <GridItem >
-                <MyVideo />
+            <GridItem>
+                <MyVideo useId = {broadcastId.current}/>
             </GridItem>
             <GridItem area={'chat'}>
                 <Flex flexDirection={'column'} h={'100%'}>
