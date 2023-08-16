@@ -22,6 +22,8 @@ services:
     build: ./backend
     ports:
       - "8080:8080"
+    volumes:
+      - ./backend:/app
 
   # redis:
   #   image: redis:latest
