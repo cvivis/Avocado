@@ -119,6 +119,14 @@ function MyBidInfo(props) {
 
     // 마감시간 여부 state로 관리하고 timeCheck에서 받아오기
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setProgressWidth((prevWidth) => Math.max(0, prevWidth - 1));
+        }, 30); // 매 30ms마다 프로그레스 바를 조금씩 줄이도록 설정
+
+        return () => clearInterval(interval);
+    }, []);
+
     function BidButton() {
 
         if (!isBidEnd) {
@@ -148,25 +156,35 @@ function MyBidInfo(props) {
                     <div>
                         <Button
                             onClick={handleBid}
+                            
                             size={'lg'} mt={'20px'}
                             bg={'green'} color={'whiteAlpha.900'}
                             _hover={{ bg: 'green.300' }}
                             w={'300px'}
-                            // disabled={isButtonDisabled}
-                            // style={{
-                            //     opacity: isButtonDisabled ? 0.5 : 1,
-                            //     pointerEvents: isButtonDisabled ? 'none' : 'auto',
-                            // }}
+                            disabled={isButtonDisabled}
+                            style={{
+                                opacity: isButtonDisabled ? 0.5 : 1,
+                                pointerEvents: isButtonDisabled ? 'none' : 'auto',
+                            }}
                         >
                             <Text>
                                 입찰하기
                             </Text>
                             <Text textAlign={'right'}>
-                            {bidInfo.myPrice!==bidInfo.nowPrice
-                            ? BeforeNormalBid.setBidPlus(bidInfo.myPrice) + bidInfo.myPrice
-                            : bidInfo.myPrice} 원
+                            {
+                            BeforeNormalBid.setBidPlus(bidInfo.myPrice) + bidInfo.myPrice
+                            } 원
                             </Text>
                         </Button>
+                        <div
+                            className="progress-bar"
+                            style={{
+                                width: progressWidth + '%',
+                                height: '20px',
+                                backgroundColor: 'green',
+                                transition: 'width 0.3s ease-in-out', // 부드러운 애니메이션 효과
+                            }}
+                        />
                     </div>
                 )
             } else {
