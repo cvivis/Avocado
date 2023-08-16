@@ -110,7 +110,7 @@ const navigate = useNavigate();
     
     const connect = () =>{
     client.current = new StompJs.Client({
-        brokerURL: 'ws://localhost:8080/ws/live-auction',
+        brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
         onConnect:() =>{
             console.log('소켓 연결 성공')
             subcribe();
