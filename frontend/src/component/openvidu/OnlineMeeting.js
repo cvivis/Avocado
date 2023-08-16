@@ -81,17 +81,17 @@ class OnlineMeeting extends Component {
                             videoSource: undefined, // The source of video. If undefined default webcam
                             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                            resolution: '320x320', // The resolution of your video
+                            resolution: '720x720', // The resolution of your video
                             frameRate: 30, // The frame rate of your video
                             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                             mirror: false, // Whether to mirror your local video or not
                         });
 
                         // --- 6) Publish your stream ---
-                        // if (userRole !== "ROLE_ADMIN") {
-                        //     console.log('You do not have ADMIN permissions to perform this action.');
-                        //     return;
-                        // }
+                        if (userRole !== "ROLE_ADMIN") {
+                            console.log('You do not have ADMIN permissions to perform this action.');
+                            return;
+                        }
 
                         mySession.publish(publisher);
                         // Set the main video in the page to display our webcam and store our Publisher
@@ -113,7 +113,7 @@ class OnlineMeeting extends Component {
     
     async createToken(sessionId) {
 	console.log(API_SERVER_URL)
-        const response = await axios.post(API_SERVER_URL + 'connections/' + sessionId, {}, {
+        const response = await axios.post(API_SERVER_URL + 'connection/' + sessionId, {}, {
             headers: { 'Content-Type': 'application/json', },
         });
         return response.data; // The token

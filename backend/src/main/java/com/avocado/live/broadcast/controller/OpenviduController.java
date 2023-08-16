@@ -42,7 +42,7 @@ public class OpenviduController {
         return new ResponseEntity<>(broadcastId, HttpStatus.OK);
     }
 
-    @PostMapping("/connections/{broadcastId}")
+    @PostMapping("/connection/{broadcastId}")
     public ResponseEntity<String> createConnection(@PathVariable("broadcastId") Long broadcastId)
             throws OpenViduJavaClientException, OpenViduHttpException {
         String broadcastSessionId = broadcastService.getBroadcastSessionId(broadcastId);

@@ -48,6 +48,8 @@ public class Broadcast {
     public Broadcast(String sessionId) {
         this.sessionId = sessionId;
         this.status = true;
+        this.title = "";
+        this.introduce = "";
     }
 
     protected Broadcast() {}

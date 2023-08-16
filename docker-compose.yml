@@ -1,14 +1,14 @@
 version: '3'
 services:
-  db:
-    image: mysql:8
-    container_name: avocado_db
-    restart: always
-    ports:
-      - "3306:3306"
-    env_file: ./backend/docker-backend.env
-    volumes:
-      - mysql_data:/var/lib/mysqla
+  # db:
+  #   image: mysql:8
+  #   container_name: avocado_db
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   env_file: ./backend/docker-backend.env
+  #   volumes:
+  #     - mysql_data:/var/lib/mysqla
 
   frontend:
     build: ./frontend
@@ -18,10 +18,10 @@ services:
       - ./frontend:/app
       - /app/node_modules
 
-  redis:
-    image: redis:latest
-    ports:
-      - "8379:6379"
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "8379:6379"
         
 
         #  nginx:
