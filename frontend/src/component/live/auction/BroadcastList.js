@@ -65,7 +65,7 @@ function BroadcastList(date) {
                       {/* <Td>{i+1}</Td> */}
                       <Td><Text fontSize={'2xl'}>{broadcast.title}</Text></Td>
                       <Td><Text fontSize={'2xl'}>{dayjs(broadcast.startAt).format(liveForm)}</Text></Td>
-                      <Td><Button fontSize={'2xl'} bg={'red'} disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</Button></Td>
+                      <Td><Button fontSize={'2xl'} bg={'red'} isDisabled={broadcast.status === false ? true : false} onClick={() => participate(broadcast)}>방송참여</Button></Td>
                       <Td><Button fontSize={'2xl'} bg={'green.300'} onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId)); console.log(broadcast)}}>상세 보기</Button></Td>
                   </Tr>
               ))}

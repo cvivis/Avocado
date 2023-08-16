@@ -144,6 +144,7 @@ const navigate = useNavigate();
             navigate("/adminPage");
             return;
         }
+
         navigate("/liveAuctionPage");
     });
 
@@ -321,18 +322,18 @@ const navigate = useNavigate();
             return (
                 <GridItem area={'bid'}>
                     <Flex flexDirection={'column'} h={'100%'}>
-                        <Button w={'full'} h={'45%'} mt={'5px'}>
+                        <Button w={'full'} h={'45%'} mt={'5px'} isDisabled={currentAuction.status === 1 ? false : true}>
                             <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice+1000} 원</Text>
                         </Button>
                         <Spacer />
-                        <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'}>
-                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange}/>
+                        <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'} isDisabled={currentAuction.status === 1 ? false : true}>
+                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange} />
                             <InputRightAddon
                                 h={'100%'}
                                 fontSize={'3xl'}
-                                disabled={currentAuction.status === 1 ? false : true} onClick={() => bid(currentAuction)}
+                                onClick={() => bid(currentAuction)}
                                 children={
-                                    <Text as={'b'}>원 자율 입찰</Text>
+                                    <Text as={'b'} isDisabled={currentAuction.status === 1 ? false : true}>원 자율 입찰</Text>
                                 }>
                             </InputRightAddon>
                         </InputGroup>
