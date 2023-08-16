@@ -52,7 +52,7 @@ function Header() {
                             <Link to="/normal/list">상시 경매</Link>
                         </Button>
                         <Button bg={"white"} fontSize={'3xl'}>
-                            <Link to ="/broadcastList">
+                            <Link to ="/liveAuctionPage">
                             라이브 경매</Link>
                         </Button>
                         <Button bg={"white"} fontSize={'3xl'}>

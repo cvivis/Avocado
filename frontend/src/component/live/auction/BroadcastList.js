@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setBroadcastId } from "../../../redux/broadcastIdSlice";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import { Box, Button, Table, TableContainer, Tbody, Td, Th, Thead, Tr, Text } from "@chakra-ui/react";
 
 
 function BroadcastList(date) {
@@ -41,33 +42,35 @@ function BroadcastList(date) {
     //   });
   }, [datejs]);
   return (
-    <div className="container">
-        <div className="row">
-            <table>
-                <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>방송명</th>
-                    <th>시작시간</th>
-                    <th>방송참여</th>
-                    <th>상세보기</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {broadcastList.map((broadcast , i) => ( 
-                      console.log(broadcast.startAt),
-                        <tr key={broadcast.id}>
-                            <td>{i+1}</td>
-                            <td>{broadcast.title}</td>
-                            <td>{dayjs(broadcast.startAt).format(liveForm)}</td>
-                            <td><button disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</button></td>
-                            <td><button onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId)); console.log(broadcast)}}>상세 보기</button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <Box className="container">
+      <Box className="row">
+        <TableContainer>
+          <Table>
+            {/* <Thead>
+              <Tr>
+                <Th>번호</Th>
+                <Th>방송명</Th>
+                <Th>시작시간</Th>
+                <Th>방송참여</Th>
+                <Th>상세보기</Th>
+              </Tr>
+            </Thead> */}
+            <Tbody>
+              {broadcastList.map((broadcast , i) => ( 
+                console.log(broadcast.startAt),
+                  <Tr key={broadcast.id}>
+                      {/* <Td>{i+1}</Td> */}
+                      <Td><Text fontSize={'2xl'}>{broadcast.title}</Text></Td>
+                      <Td><Text fontSize={'2xl'}>{dayjs(broadcast.startAt).format(liveForm)}</Text></Td>
+                      <Td><Button fontSize={'2xl'} bg={'red'} disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</Button></Td>
+                      <Td><Button fontSize={'2xl'} bg={'green.300'} onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId)); console.log(broadcast)}}>상세 보기</Button></Td>
+                  </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 }
 

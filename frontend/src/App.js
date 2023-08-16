@@ -29,6 +29,9 @@ import AdminPage from './component/admin/admin'
 import LiveAuctionPage from './component/live/board/LiveAuctionPage';
 import MainLayout from './common/MainLayout';
 
+// 폰트
+import './Fonts/font.css';
+
 function App() {
   // const nowPrice = 10000;
   // const nowBidName = "홍길동";
@@ -45,7 +48,7 @@ function App() {
             <Route path="/normal/detail/:id" element={<Detail />}></Route>
             <Route path="/normal/list/sort-category" element={<CategoryList />}></Route>
             <Route path="/member/myPage" element={<MyPage />}></Route>
-            <Route path="/broadcastList" element={<BroadcastList />}></Route>
+            {/* <Route path="/broadcastList" element={<BroadcastList />}></Route> */}
             <Route path="/broadcast" element={<Broadcast />}></Route>
             <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
             <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
@@ -61,14 +64,11 @@ function App() {
           {/* <Route path="/normal/auctionPage/NormalBidPage" element={<NormalBidPage />}></Route> */}
           {/* <Route path="/member/Regist" element={<Regist />}></Route> */}
           {/* <Route path="/normal/auctionPage/NormalDetailPage" element={<NormalDetailPage />}></Route> */}
-<<<<<<< HEAD
-=======
           <Route path="/member/Consign" element={<Consign />}></Route>
           <Route path="/broadcastTest" element={<BroadcastTest />}></Route>
-          <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route>
+          {/* <Route path="/live/list" element={<BroadcastList></BroadcastList>}></Route> */}
           <Route path="/liveAuctionpage" element={<LiveAuctionPage />}></Route>
           <Route path="/adminPage" element={<AdminPage />}></Route>
->>>>>>> 0880b8f7121b9ff5f71ac7a8cfe44ddcc5e03e32
         </Routes>
       </div>
     </Router>

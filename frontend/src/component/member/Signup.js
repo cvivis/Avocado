@@ -88,25 +88,16 @@ function Signup() {
               />
             </InputGroup>
             {/* 비밀번호 입력 인풋 */}
-<<<<<<< HEAD
             <InputGroup size='lg'>
               <InputLeftElement pointerEvents='none'>
                 <LockIcon color='gray.300' />
               </InputLeftElement>
               <Input value={password}
                 type="password"
-                onChange={(e) => 
-                  dispatch(setPassword(e.target.value))} // MyPlaceholder={'비밀번호'}
-                  placeholder={'비밀번호'}
-              / >
+                onChange={(e) =>
+                  dispatch(setPassword(e.target.value))} placeholder={'비밀번호'}
+              />
             </InputGroup>
-=======
-            <Input value={password}
-              type="password"
-              onChange={(e) =>
-                dispatch(setPassword(e.target.value))} myplaceholder={'비밀번호'}
-            ></Input >
->>>>>>> 0880b8f7121b9ff5f71ac7a8cfe44ddcc5e03e32
             {/* <MyPasswordInput MyPlaceholder={'비밀번호 확인'}></MyPasswordInput> */}
             <Button
               onClick={handleSignup}
