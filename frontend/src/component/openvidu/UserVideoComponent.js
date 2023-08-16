@@ -1,5 +1,6 @@
 import OpenViduVideoComponent from './OpenViduVideoComponent'
 import React, { Component } from 'react';
+import { Box } from '@chakra-ui/react';
 
 export default class UserVideoComponent extends Component {
     constructor(props) {
@@ -22,10 +23,10 @@ export default class UserVideoComponent extends Component {
 
     render() {
         return (
-            <div className="streamcomponent" onClick={this.handleVideoClicked} >
+            <Box className="streamcomponent" onClick={this.handleVideoClicked}>
                 <OpenViduVideoComponent streamManager={this.props.streamManager} />
                 {/* <div><p>{this.getNicknameTag()}</p></div> */}
-            </div>
+            </Box>
         )
     }
 }

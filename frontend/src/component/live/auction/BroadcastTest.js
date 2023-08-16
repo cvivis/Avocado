@@ -1,14 +1,14 @@
 import React from "react";
 import {
     Badge,
-    Box, Button, Center, Divider, Flex, Grid, GridItem, 
+    Box, Button, Center, Divider, Flex, Grid, GridItem,
     HStack, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, AlertDialogCloseButton,
     Heading, Input, InputGroup, InputRightAddon, useDisclosure, Spacer, Text, VStack,
 } from "@chakra-ui/react";
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 import MyVideo from "../../../common/MyVideo";
 // 기존
-import { useState , useRef, useEffect} from 'react';
+import { useState, useRef, useEffect } from 'react';
 import api from '../../../api';
 import { useLocation } from 'react-router-dom';
 import * as StompJs from '@stomp/stompjs';
@@ -19,38 +19,38 @@ import Openvidu from "../../openvidu/OnlineMeeting"
 
 function BroadcastTest() {
 
-const [auctionList, setAuctionList] = useState([]); //경매리스트
-const [currentAuction, setCurrentAuction] = useState({}); //선택한 경매 
-const location = useLocation();
-const broadcastId = useRef(0); //현재참여중인 방송id 
-const client  = useRef({}); //websocket client
-const userinfo = useSelector((state) => state.login.email);
-const bidPrice = useRef(0); //입찰가격 input
-const [bidResponse, setBidResponse] = useState({}); //ws으로 받은 입찰응답
-const [chatHistory, setChatHistory] = useState([]); //전체채팅기록
-const currentChat = useRef(""); //채팅메세지 input
-const [chatResponse, setChatResponse] = useState({}); //ws으로 받은 채팅응답
-const [auctionOnAndOff, setAuctionOnAndOff] = useState({});
-const isLogin = useSelector((state) => state.login.isLogin);
-const member = useSelector((state) => state.login.member);
-const navigate = useNavigate();
+    const [auctionList, setAuctionList] = useState([]); //경매리스트
+    const [currentAuction, setCurrentAuction] = useState({}); //선택한 경매 
+    const location = useLocation();
+    const broadcastId = useRef(0); //현재참여중인 방송id 
+    const client = useRef({}); //websocket client
+    const userinfo = useSelector((state) => state.login.email);
+    const bidPrice = useRef(0); //입찰가격 input
+    const [bidResponse, setBidResponse] = useState({}); //ws으로 받은 입찰응답
+    const [chatHistory, setChatHistory] = useState([]); //전체채팅기록
+    const currentChat = useRef(""); //채팅메세지 input
+    const [chatResponse, setChatResponse] = useState({}); //ws으로 받은 채팅응답
+    const [auctionOnAndOff, setAuctionOnAndOff] = useState({});
+    const isLogin = useSelector((state) => state.login.isLogin);
+    const member = useSelector((state) => state.login.member);
+    const navigate = useNavigate();
 
     useEffect(() => {
-    console.log(location.state.broadcastId)
-    broadcastId.current = location.state.broadcastId;
-    api.get(`/live/list/${broadcastId.current}/info`)
-    .then(response => {
-        const list = response.data.entries
-        console.log(list)
-        if(list) {
-            setAuctionList(list)
-            setCurrentAuction(list[0])
-        }
-        })
-        .catch(error => {
-        console.error('API 요청 에러:', error);
-        });
-        
+        console.log(location.state.broadcastId)
+        broadcastId.current = location.state.broadcastId;
+        api.get(`/live/list/${broadcastId.current}/info`)
+            .then(response => {
+                const list = response.data.entries
+                console.log(list)
+                if (list) {
+                    setAuctionList(list)
+                    setCurrentAuction(list[0])
+                }
+            })
+            .catch(error => {
+                console.error('API 요청 에러:', error);
+            });
+
     }, []);
 
     console.log(broadcastId + " 브로드캐스트 아이디 큐렌트")
@@ -58,114 +58,114 @@ const navigate = useNavigate();
     // const [myColor, setMyColor] = useState(''); //경매리스트
 
     useEffect(() => {
-    connect(); // 마운트시 실행
-    // function getRandomColor(){
-    //     return '#'+Math.floor(Math.random()*16777215).toString(16);
-    // }
-    // setMyColor(getRandomColor);
-    return () => disconnect(); // 언마운트 시 실행
-    },[]);
+        connect(); // 마운트시 실행
+        // function getRandomColor(){
+        //     return '#'+Math.floor(Math.random()*16777215).toString(16);
+        // }
+        // setMyColor(getRandomColor);
+        return () => disconnect(); // 언마운트 시 실행
+    }, []);
 
 
     useEffect(() => {
-    if(bidResponse.status) {
-        const tempAuction = currentAuction
-        tempAuction.currentMemberEmail = bidResponse.bidMemberEmail
-        tempAuction.highestPrice = bidResponse.bid_price
-        setCurrentAuction(tempAuction)
-        setBidResponse({});
-    }
+        if (bidResponse.status) {
+            const tempAuction = currentAuction
+            tempAuction.currentMemberEmail = bidResponse.bidMemberEmail
+            tempAuction.highestPrice = bidResponse.bid_price
+            setCurrentAuction(tempAuction)
+            setBidResponse({});
+        }
     }, [bidResponse]);
 
     useEffect(() => {
-    setChatHistory((prev) => [...prev, chatResponse])
+        setChatHistory((prev) => [...prev, chatResponse])
     }, [chatResponse]);
 
     useEffect(() => {
-    console.log(auctionOnAndOff)
-    if(auctionOnAndOff.onAndOff === 1) {
-        setChatResponse({sender : "SYSTEM", message : `${auctionOnAndOff.title} 경매가 시작되었습니다`})
+        console.log(auctionOnAndOff)
+        if (auctionOnAndOff.onAndOff === 1) {
+            setChatResponse({ sender: "SYSTEM", message: `${auctionOnAndOff.title} 경매가 시작되었습니다` })
 
-        const tempAuctionList = auctionList;
-        const findIndex = tempAuctionList.findIndex(element => element.auctionId === auctionOnAndOff.auctionId)
-        tempAuctionList[findIndex].status = 1
-        setAuctionList(tempAuctionList)
+            const tempAuctionList = auctionList;
+            const findIndex = tempAuctionList.findIndex(element => element.auctionId === auctionOnAndOff.auctionId)
+            tempAuctionList[findIndex].status = 1
+            setAuctionList(tempAuctionList)
 
-        setAuctionOnAndOff({})
-    }
-    else if(auctionOnAndOff.onAndOff === 2) {
-        setChatResponse({sender : "SYSTEM", message : `${auctionOnAndOff.title} 경매가 종료되었습니다`})
+            setAuctionOnAndOff({})
+        }
+        else if (auctionOnAndOff.onAndOff === 2) {
+            setChatResponse({ sender: "SYSTEM", message: `${auctionOnAndOff.title} 경매가 종료되었습니다` })
 
-        const tempAuctionList = auctionList;
-        const findIndex = tempAuctionList.findIndex(element => element.auctionId === auctionOnAndOff.auctionId)
-        tempAuctionList[findIndex].status = 2
-        setAuctionList(tempAuctionList)
+            const tempAuctionList = auctionList;
+            const findIndex = tempAuctionList.findIndex(element => element.auctionId === auctionOnAndOff.auctionId)
+            tempAuctionList[findIndex].status = 2
+            setAuctionList(tempAuctionList)
 
-        setAuctionOnAndOff({})
-    }
+            setAuctionOnAndOff({})
+        }
     }, [auctionOnAndOff]);
 
     const disconnect = () => {
         client.current.deactivate(); // 활성화된 연결 끊기 
     };
-    
-    const connect = () =>{
-    client.current = new StompJs.Client({
-        // brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
-        brokerURL: 'ws://localhost:8080/ws/live-auction',
-        onConnect:() =>{
-            console.log('소켓 연결 성공')
-            subcribe();
-        },
-    });
-    client.current.activate();
+
+    const connect = () => {
+        client.current = new StompJs.Client({
+            // brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
+            brokerURL: 'ws://localhost:8080/ws/live-auction',
+            onConnect: () => {
+                console.log('소켓 연결 성공')
+                subcribe();
+            },
+        });
+        client.current.activate();
     }
 
     const subcribe = () => {
-    //입찰
-    client.current.subscribe("/sub/auction/bid/" + broadcastId.current, response => {
-        const content = JSON.parse(response.body)
-        setBidResponse(content)
-    });
+        //입찰
+        client.current.subscribe("/sub/auction/bid/" + broadcastId.current, response => {
+            const content = JSON.parse(response.body)
+            setBidResponse(content)
+        });
 
-    //방송 종료
-    client.current.subscribe("/sub/broadcast/off/" + broadcastId.current, response => {
-        const content = JSON.parse(response.body)
-        alert("방송 종료")
-        navigate("/broadcastList");
-    });
+        //방송 종료
+        client.current.subscribe("/sub/broadcast/off/" + broadcastId.current, response => {
+            const content = JSON.parse(response.body)
+            alert("방송 종료")
+            navigate("/broadcastList");
+        });
 
-    //경매 온오프
-    client.current.subscribe("/sub/auction/status/" + broadcastId.current, response => {
-        const content = JSON.parse(response.body)
-        setAuctionOnAndOff(content)
-    });
+        //경매 온오프
+        client.current.subscribe("/sub/auction/status/" + broadcastId.current, response => {
+            const content = JSON.parse(response.body)
+            setAuctionOnAndOff(content)
+        });
 
-    //채팅
-    client.current.subscribe("/sub/chat/" + broadcastId.current, response => {
-        const content = JSON.parse(response.body)
-        setChatResponse(content)
-    });
+        //채팅
+        client.current.subscribe("/sub/chat/" + broadcastId.current, response => {
+            const content = JSON.parse(response.body)
+            setChatResponse(content)
+        });
     }
 
     function status(auction) {
-    const auctionStatus = auction.status;
-    let toString;
-    let badgeColor;
-    if(auctionStatus === 0) {
-        toString = "경매 전"
-        badgeColor = "gray";
-    } else if(auctionStatus === 1) {
-        toString ="진행 중"
-        badgeColor = "green";
-    } else {
-        toString = "종료"
-        badgeColor = "red";
-    }
+        const auctionStatus = auction.status;
+        let toString;
+        let badgeColor;
+        if (auctionStatus === 0) {
+            toString = "경매 전"
+            badgeColor = "gray";
+        } else if (auctionStatus === 1) {
+            toString = "진행 중"
+            badgeColor = "green";
+        } else {
+            toString = "종료"
+            badgeColor = "red";
+        }
 
-    return (
-        <Badge fontSize={'2xl'} colorScheme={badgeColor}>{toString}</Badge>
-    )
+        return (
+            <Badge fontSize={'2xl'} colorScheme={badgeColor}>{toString}</Badge>
+        )
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -206,30 +206,30 @@ const navigate = useNavigate();
         )
     }
 
-    const bid = (currentAuction) =>  {
+    const bid = (currentAuction) => {
         const price = bidPrice.current;
-        if(price > currentAuction.startPrice && price > currentAuction.highestPrice) {
-            client.current.publish({ destination: "/pub/auction/bid", body: JSON.stringify({auctionId : currentAuction.auctionId, bid_price : price, bidMemberEmail : userinfo, broadcastId : broadcastId.current}) });
+        if (price > currentAuction.startPrice && price > currentAuction.highestPrice) {
+            client.current.publish({ destination: "/pub/auction/bid", body: JSON.stringify({ auctionId: currentAuction.auctionId, bid_price: price, bidMemberEmail: userinfo, broadcastId: broadcastId.current }) });
         }
         else {
             MyAlert();
-            onOpen();  
+            onOpen();
         }
     }
 
     const bidChange = (e) => {
-    bidPrice.current = e.target.value;
+        bidPrice.current = e.target.value;
     };
 
     const chatChange = (e) => {
-    currentChat.current = e.target.value;
+        currentChat.current = e.target.value;
     }
 
     const chatInput = useRef();
 
     const sendChat = (e) => {
-        if(currentChat.current !== "") {
-            client.current.publish({ destination: "/pub/live/chat", body: JSON.stringify({broadcastId : broadcastId.current, sender : userinfo, message : currentChat.current})});
+        if (currentChat.current !== "") {
+            client.current.publish({ destination: "/pub/live/chat", body: JSON.stringify({ broadcastId: broadcastId.current, sender: userinfo, message: currentChat.current }) });
             currentChat.current = ""
             chatInput.current.value = ""
         }
@@ -237,32 +237,32 @@ const navigate = useNavigate();
 
     const handleOnKeyPress = e => {
         if (e.key === 'Enter') {
-          sendChat(); // Enter 입력이 되면 클릭 이벤트 실행
+            sendChat(); // Enter 입력이 되면 클릭 이벤트 실행
         }
     };
-      // 인풋에 적용할 Enter 키 입력 함수
+    // 인풋에 적용할 Enter 키 입력 함수
 
     const chatFocus = useRef();
 
     useEffect(() => {
-        chatFocus.current.scrollIntoView({behavior:'smooth'});
-    },[chatHistory])
+        chatFocus.current.scrollIntoView({ behavior: 'smooth' });
+    }, [chatHistory])
 
     const displayChat = (chats) => {
         let result = [];
-        for(let i of chats) {
-            if(i.sender) result.push(
-            <Box>
-                <HStack>
-                    <Box w={'15%'}>
-                        <Text fontSize={'lg'}>{i.sender}</Text>
-                    </Box>
-                    <Spacer />
-                    <Box w='83%'>
-                        <Text fontSize={'lg'}>{i.message}</Text>
-                    </Box>
-                </HStack>
-            </Box>
+        for (let i of chats) {
+            if (i.sender) result.push(
+                <Box>
+                    <HStack>
+                        <Box w={'15%'}>
+                            <Text fontSize={'lg'}>{i.sender}</Text>
+                        </Box>
+                        <Spacer />
+                        <Box w='83%'>
+                            <Text fontSize={'lg'}>{i.message}</Text>
+                        </Box>
+                    </HStack>
+                </Box>
             )
         }
         return result;
@@ -270,24 +270,24 @@ const navigate = useNavigate();
 
     //임시 어드민 기능 : 경매 시작
     const start = () => {
-    client.current.publish({ destination: "/pub/auction/status", body: JSON.stringify({broadcastId : broadcastId.current, auctionId : currentAuction.auctionId, onAndOff : 1})});
+        client.current.publish({ destination: "/pub/auction/status", body: JSON.stringify({ broadcastId: broadcastId.current, auctionId: currentAuction.auctionId, onAndOff: 1 }) });
     }
 
     //임시 어드민 기능 : 경매 종료
     const stop = () => {
-    client.current.publish({ destination: "/pub/auction/status", body: JSON.stringify({broadcastId : broadcastId.current, auctionId : currentAuction.auctionId, onAndOff : 2})});
+        client.current.publish({ destination: "/pub/auction/status", body: JSON.stringify({ broadcastId: broadcastId.current, auctionId: currentAuction.auctionId, onAndOff: 2 }) });
     }
 
     //임시 어드민 기능 : 방송 종료
     const broadcastOff = () => {
-    client.current.publish({ destination: "/pub//broadcast/off/"+ broadcastId.current});
+        client.current.publish({ destination: "/pub//broadcast/off/" + broadcastId.current });
     }
 
     // 우측 하단 컴포넌트
     function ControlBox() {
 
         // 현재 로그인 된 계정이 관리지인지 일반사용자인지 받아와야 함
-        const role = useSelector((state)=>state.login.role);
+        const role = useSelector((state) => state.login.role);
         console.log(role);
 
         if (role === 'ROLE_ADMIN') {
@@ -310,11 +310,11 @@ const navigate = useNavigate();
                 <GridItem area={'bid'}>
                     <Flex flexDirection={'column'} h={'100%'}>
                         <Button w={'full'} h={'45%'} mt={'5px'}>
-                            <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice+1000} 원</Text>
+                            <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice + 1000} 원</Text>
                         </Button>
                         <Spacer />
                         <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'}>
-                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange}/>
+                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange} />
                             <InputRightAddon
                                 h={'100%'}
                                 fontSize={'3xl'}
@@ -352,7 +352,7 @@ const navigate = useNavigate();
                 </GridItem>
             );
         }
-        
+
     }
 
     function CurrentItem(props) {
@@ -366,29 +366,29 @@ const navigate = useNavigate();
     }
 
 
-    return(
-        <Grid 
+    return (
+        <Grid
             templateAreas={`"bc bc chat"
                             "list detail bid"`}
-            gridTemplateRows={'74vh 24vh'} // 세로
+            gridTemplateRows={'65% 35%'} // 세로
             gridTemplateColumns={'400px auto 450px'} // 가로
             gap={'1'}
-            h={'99vh'}
-            w={'199vh'}
+            h={'100%'}
+            w={'100%'}
         >
-            <GridItem area={'bc'}>
-                <Openvidu useId = {broadcastId.current} />
+            <GridItem area={'bc'} w={'100%'}>
+                <Openvidu useId={broadcastId.current} />
                 {/* <MyVideo useId = {broadcastId.current}/> */}
             </GridItem>
             <GridItem area={'chat'}>
                 <Flex flexDirection={'column'} h={'100%'}>
                     <Box>
-                    <Center>
-                        <Heading mt={'5px'}>생방송 채팅</Heading>
-                    </Center>
+                        <Center>
+                            <Heading mt={'5px'}>생방송 채팅</Heading>
+                        </Center>
                     </Box>
-                    <Divider color={'green'} border={'1px'}/>
-                    <Flex flexDirection={'column'} flexGrow={1} overflow={'auto'} sx={{ msOverflowStyle:'none', '::-webkit-scrollbar':{display:'none'}}}>
+                    <Divider color={'green'} border={'1px'} />
+                    <Flex flexDirection={'column'} flexGrow={1} overflow={'auto'} sx={{ msOverflowStyle: 'none', '::-webkit-scrollbar': { display: 'none' } }}>
                         <Box w={'full'} h={'full'}>
                             {displayChat(chatHistory)}
                         </Box>
@@ -403,13 +403,13 @@ const navigate = useNavigate();
                     </Box>
                 </Flex>
             </GridItem>
-            <GridItem area={'list'} overflow={'auto'} sx={{ msOverflowStyle:'none', '::-webkit-scrollbar':{display:'none'}}}>
-                <Flex direction={'column'}>
-                {/* border={'1px solid black'} */}
-                    {auctionList.map((auction , i) => (
-                        <HStack key={i} onClick={() => setCurrentAuction(()=> auction)} mb={'2px'}> 
+            <GridItem area={'list'} overflow={'auto'} sx={{ msOverflowStyle: 'none', '::-webkit-scrollbar': { display: 'none' } }}>
+                <Flex direction={'column'} style={{ height: '100%' }}>
+                    {/* border={'1px solid black'} */}
+                    {auctionList.map((auction, i) => (
+                        <HStack key={i} onClick={() => setCurrentAuction(() => auction)} mb={'2px'}>
                             <Text fontSize={'lg'} as={'b'}>
-                                <CurrentItem item={auction} />{auction.itemName} 
+                                <CurrentItem item={auction} />{auction.itemName}
                             </Text>
                             <Spacer />
                             <Box w={'30%'}>
@@ -419,9 +419,9 @@ const navigate = useNavigate();
                     ))}
                 </Flex>
             </GridItem>
-            <GridItem area={'detail'}>
-                <Flex flexDirection={'column'} h={'100%'}>
-                    <Box h={'25%'}>
+            <GridItem area={'detail'} style={{ height: '100%' }}>
+                <Flex flexDirection={'column'}>
+                    <Box style={{ height: '25%' }}>
                         <HStack>
                             <Heading size={'2xl'}>
                                 {currentAuction.itemName}
@@ -432,7 +432,7 @@ const navigate = useNavigate();
                             </Box>
                         </HStack>
                     </Box>
-                    <Box h={'75%'} mt={'20px'}>
+                    <Box style={{ height: '75%' }} mt={'20px'}>
                         <Flex>
                             <Center w={'30%'}>
                                 <VStack>

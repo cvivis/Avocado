@@ -1,3 +1,4 @@
+import { Box } from '@chakra-ui/react';
 import React, { Component } from 'react';
 
 export default class OpenViduVideoComponent extends Component {
@@ -14,8 +15,8 @@ export default class OpenViduVideoComponent extends Component {
     }
 
     render() {
-        return(
-            <video autoPlay={true} ref={this.videoRef} style={{}} />
+        return (
+            <video autoPlay={true} ref={this.videoRef} style={{ width: '1000px' }} />
         )
     }
 }
