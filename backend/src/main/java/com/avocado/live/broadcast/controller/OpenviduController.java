@@ -34,12 +34,12 @@ public class OpenviduController {
     }
 
     @PostMapping("/init")
-    public ResponseEntity<String> initializeSession(@RequestBody BroadcastCreateDto broadcastCreateDto)
+    public ResponseEntity<Long> initializeSession(@RequestBody BroadcastCreateDto broadcastCreateDto)
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(null).build();
         Session session = openvidu.createSession(properties);
-        broadcastService.save(session.getSessionId(), broadcastCreateDto);
-        return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+        Long broadcastId = broadcastService.save(session.getSessionId(), broadcastCreateDto);
+        return new ResponseEntity<>(broadcastId, HttpStatus.OK);
     }
 
     @PostMapping("/connection/{broadcastId}")

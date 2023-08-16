@@ -3,11 +3,14 @@ import api from "../../../api";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import { setBroadcastList } from "../../../redux/broadcastListSlice";
+import dayjs from "dayjs";
+
 
 function BroadcastList(){
     const dispatch = useDispatch();
     const broadcastList=useSelector((state)=>state.broadcastList.broadcastList);
-
+    const dateForm = "YYYY-MM-DD HH:mm:ss";
+    
     useEffect(()=>{
         api.get("/live/list")
         .then(response=>{
