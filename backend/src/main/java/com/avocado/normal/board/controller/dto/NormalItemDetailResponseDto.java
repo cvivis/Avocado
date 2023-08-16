@@ -17,7 +17,7 @@ public class NormalItemDetailResponseDto {
 //    private TopBidMemberResponse topBidMember;
     private Date startAt;
     private Date endAt;
-    private Integer successPrice;
+    private Integer successPrice; //history거래내역이 있으면 최고가
 
     public NormalItemDetailResponseDto(Long auctionId, Long itemId, String name, String content,
                                        Integer hopePrice, Date startAt, Date endAt, Integer successPrice) {

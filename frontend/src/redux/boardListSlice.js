@@ -15,17 +15,24 @@ const boardListSlice = createSlice({
     },
     setBoardList(state, action) {
       state.boardList = action.payload;
+    },
+    setBoardAndFilterList(state, action) {
+      state.boardList = action.payload;
+      state.filterList = action.payload;
     }
+
   },
 });
 
-export const { setFilterList, setBoardList } = boardListSlice.actions;
+export const { setFilterList, setBoardList, setBoardAndFilterList } = boardListSlice.actions;
 
 // 비동기 액션을 처리하는 thunk
 export const loadBoardList = () => async (dispatch) => {
+  console.log("디스패치");
   try {
     const response = await api.get("/normal/list");
-    dispatch(setFilterList(response.data.entries));
+    const entries = response.data.entries;
+    dispatch(setBoardAndFilterList(entries));
   } catch (error) {
     console.error('API 요청 에러:', error);
   }
