@@ -52,7 +52,6 @@ public class JwtTokenProvider implements InitializingBean {
                 .setExpiration(new Date(now + accessTokenExpirationTime))
                 .setSubject("access-token")
                 .claim(emailClaim,email)
-                .claim("authority",authorities)
                 .setIssuedAt(new Date(now))
                 .signWith(signingKey, SignatureAlgorithm.HS512)
                 .compact();
