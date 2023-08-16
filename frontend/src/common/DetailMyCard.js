@@ -57,16 +57,24 @@ function MyCard(props) {
 
         if(startDiff>0) {
             return(
-            <Text>
-                시작전</Text>
+                <Box  size={'lg'} mt={'20px'} bg={'orange.300'} color={'white'} w={'70px'} textAlign={'center'}
+                >
+                시작전
+            </Box>
                 )
         }else if(diff <=0){
             return(
-            <Text>마감</Text>
+                <Box  size={'lg'} mt={'20px'} bg={'blackAlpha.800'} color={'white'} w={'50px'} textAlign={'center'}
+                >
+                마감
+            </Box>
             )
         }else{
             return(
-            <Text>진행중</Text>
+                <Box  size={'lg'} mt={'20px'} bg={'green.500'} color={'white'} w={'70px'} textAlign={'center'}
+                >
+                진행중
+            </Box>
             )
         }
 

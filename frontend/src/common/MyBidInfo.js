@@ -22,6 +22,10 @@ function MyBidInfo(props) {
         myPrice: 0
     })
 
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const [progressWidth, setProgressWidth] = useState(0);
+
+
     const id = props.id;
 
     // const mPrice = props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.price);
@@ -31,10 +35,19 @@ function MyBidInfo(props) {
 
 
 
-    
+
 
     //입찰버튼
     function handleBid() {
+        if (!isButtonDisabled) {
+            setButtonDisabled(true);
+            setProgressWidth(100); // 프로그레스 바 시작
+
+            setTimeout(() => {
+                setButtonDisabled(false);
+                setProgressWidth(0); // 프로그레스 바 리셋
+            }, 3000);
+        }
         publish();
     }
 
@@ -44,8 +57,9 @@ function MyBidInfo(props) {
         client.current = new StompJs.Client({
             brokerURL: 'ws://localhost:8080/ws/chat',
             onConnect: () => {
+                console.log("연겨여여여여얼")
                 // Do something, all subscribes must be done is this callback
-                console.log("연결 SUB");
+                console.log("연결 SUB22");
                 subscribe();
             },
         });
@@ -54,15 +68,16 @@ function MyBidInfo(props) {
 
     useEffect(() => {
         const nowP = props.boardDetail.hopePrice;
-        const mPrice = props.boardDetail.hopePrice + BeforeNormalBid.setBidPlus(props.boardDetail.hopePrice);
+        const mPrice = props.boardDetail.successPrice !=null ? (props.boardDetail.successPrice):(props.boardDetail.hopePrice);
+
         setBidInfo({
             nowPrice: nowP,
             myPrice: mPrice
         });
-;
+        ;
         connect(); // 마운트시 실행
         return () => disconnect(); // 언마운트 시 실행
-    }, [connect,props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+    }, [connect, props.boardDetail.auctionId, props.boardDetail.hopePrice]);
 
 
 
@@ -72,29 +87,30 @@ function MyBidInfo(props) {
     };
 
     const subscribe = () => {
-        console.log("야 들어왔냐")
-        console.log(id + "옥션아이디2")
+        // console.log("야 들어왔냐2")
+        // console.log(id + "옥션아이디2")
         // console.log(bidInfo.nowPrice);
         client.current.subscribe('/sub/normal/' + id, (res) => { // server에게 메세지 받으면
-            console.log("들어왔당.")
+            // console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
             setBidInfo((prevState) => {
                 console.log("호가: " + BeforeNormalBid.setBidPlus(jsonBody.price));
-                return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price + BeforeNormalBid.setBidPlus(jsonBody.price), nowBidName: jsonBody.email }
+                return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price , nowBidName: jsonBody.email }
             });
         })
     };
-    
-    
+
+
     const publish = () => {
         // console.log("in Pub" + bidInfo.myPrice);
         console.log("옥션 아이디 " + id);
         // console.log(client.current + "클라이언트얍1");
-        
+        const newPrice = bidInfo.myPrice +BeforeNormalBid.setBidPlus(bidInfo.myPrice);
+
         client.current.publish({
             destination: '/pub/normal/' + id,
-            body: JSON.stringify({ id: id, price: bidInfo.myPrice, email: email, itemId: props.boardDetail.itemId }),
+            body: JSON.stringify({ id: id, price: newPrice, email: email, itemId: props.boardDetail.itemId }),
             skipContentLengthHeader: true,
         });
     }
@@ -105,7 +121,7 @@ function MyBidInfo(props) {
 
     function BidButton() {
 
-        if(!isBidEnd) {
+        if (!isBidEnd) {
             return (
                 <Button size={'lg'} mt={'20px'} bg={'black'} color={'white'} w={'300px'}
                     isDisabled={!isBidEnd}
@@ -127,28 +143,36 @@ function MyBidInfo(props) {
                 </Button>
             )
         } else {
-            if(!isBidBeforeStart) {
+            if (!isBidBeforeStart) {
                 return (
-                    <Button 
-                        onClick={handleBid} 
-                        size={'lg'} mt={'20px'} 
-                        bg={'green'} color={'whiteAlpha.900'} 
-                        _hover={{ bg: 'green.300' }} 
-                        w={'300px'}
-                    >
-                        <Text>
-                        입찰하기
-                        </Text>
-                        <Text textAlign={'right'}>
-                        
-                         {BeforeNormalBid.setBidUnit(bidInfo.myPrice)} 원
-                         </Text>             
-                            </Button>
+                    <div>
+                        <Button
+                            onClick={handleBid}
+                            size={'lg'} mt={'20px'}
+                            bg={'green'} color={'whiteAlpha.900'}
+                            _hover={{ bg: 'green.300' }}
+                            w={'300px'}
+                            // disabled={isButtonDisabled}
+                            // style={{
+                            //     opacity: isButtonDisabled ? 0.5 : 1,
+                            //     pointerEvents: isButtonDisabled ? 'none' : 'auto',
+                            // }}
+                        >
+                            <Text>
+                                입찰하기
+                            </Text>
+                            <Text textAlign={'right'}>
+                            {bidInfo.myPrice!==bidInfo.nowPrice
+                            ? BeforeNormalBid.setBidPlus(bidInfo.myPrice) + bidInfo.myPrice
+                            : bidInfo.myPrice} 원
+                            </Text>
+                        </Button>
+                    </div>
                 )
             } else {
                 return (
-                    <Button  size={'lg'} mt={'20px'} bg={'black'} color={'white'} w={'300px'}
-                        onClick={handleBid} 
+                    <Button size={'lg'} mt={'20px'} bg={'black'} color={'white'} w={'300px'}
+                        onClick={handleBid}
                         isDisabled={isBidBeforeStart}
                         _hover={{
                             bg: 'blue'
@@ -162,7 +186,7 @@ function MyBidInfo(props) {
                             cursor: 'not-allowed',
                             opacity: 1
                         }}>
-                    
+
                         시작전
                     </Button>
                 )
@@ -191,7 +215,10 @@ function MyBidInfo(props) {
                 </Heading>
                 <Spacer />
                 <Heading size={'lg'} textAlign={'right'}>
-                    {BeforeNormalBid.setBidUnit(bidInfo.nowPrice)}원
+                    
+                    {bidInfo.myPrice}원
+                    
+                    
                 </Heading>
             </HStack>
 
