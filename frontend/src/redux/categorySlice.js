@@ -18,10 +18,14 @@ const categorySlice = createSlice({
     },
     setDoSelect: (state, action) => {
       state.doSelect = action.payload;
+    },
+    clearCategory: (state) => {
+      state.doSelect = false;
+      state.selectedCategory = '';
     }
   },
 });
 
-export const { setSelectedCategory, setDoSelect } = categorySlice.actions;
+export const { setSelectedCategory, setDoSelect, clearCategory } = categorySlice.actions;
 
 export default categorySlice.reducer;

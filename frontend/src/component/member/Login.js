@@ -26,7 +26,7 @@ function LogIn() {
   const password = useSelector((state) => state.login.password);
   const isLogin = useSelector((state) => state.login.isLogin);
   const accessToken = useSelector((state) => state.login.accessToken);
-
+  console.log(accessToken);
   // useEffect(() => {
   //   return () => {
   //     dispatch(resetLoginForm());
@@ -91,7 +91,7 @@ function LogIn() {
                 placeholder='이메일'
               />
             </InputGroup>
-            <Input MyPlaceholder={'비밀번호'} value={password}
+            <Input placeholder='비밀번호' value={password}
             type="password"
               onChange={(e) => dispatch(setPassword(e.target.value))}></Input>
             <Button

@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import UserVideoComponent from './UserVideoComponent';
 
-const API_SERVER_URL = "https://i9a407.p.ssafy.io:8080/broadcast/";
+const API_SERVER_URL = "http://localhost:8080/broadcast/";
 
 class OnlineMeeting extends Component {
 
@@ -81,7 +81,7 @@ class OnlineMeeting extends Component {
                             videoSource: undefined, // The source of video. If undefined default webcam
                             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                            resolution: '640x480', // The resolution of your video
+                            resolution: '720x720', // The resolution of your video
                             frameRate: 30, // The frame rate of your video
                             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                             mirror: false, // Whether to mirror your local video or not
