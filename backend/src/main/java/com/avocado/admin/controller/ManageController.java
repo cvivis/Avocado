@@ -9,6 +9,7 @@ import com.avocado.admin.controller.dto.normal.NormalItemAssignRequest;
 import com.avocado.admin.service.AdminService;
 import com.avocado.admin.service.ConsignManageService;
 import com.avocado.admin.service.NormalManageService;
+import com.avocado.live.auction.service.BidService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,8 @@ public class ManageController {
     private final ConsignManageService consignManageService;
     private final NormalManageService normalManageService;
     private final AdminService adminService;
+
+    private final BidService bidService;
 
     //요청온 물품 리스트 보기
     @GetMapping("/consign")
@@ -107,5 +110,10 @@ public class ManageController {
         if(adminService.assignLiveAuctionToBroadcast(itemId, broadcastId)) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
     }
-
+    
+    @PutMapping("/broadcast/on/{broadcastId}")
+    public ResponseEntity<?> broadcastOn(@PathVariable Long broadcastId){
+        if(bidService.broadcastOnAndOff(broadcastId, true)) return ResponseEntity.ok().build();
+        return ResponseEntity.badRequest().build();
+    }
 }

@@ -15,6 +15,7 @@ import * as StompJs from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
+import Openvidu from "../../openvidu/OnlineMeeting"
 
 function BroadcastTest() {
 
@@ -110,7 +111,8 @@ const navigate = useNavigate();
     
     const connect = () =>{
     client.current = new StompJs.Client({
-        brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
+        // brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
+        brokerURL: 'ws://localhost:8080/ws/live-auction',
         onConnect:() =>{
             console.log('소켓 연결 성공')
             subcribe();
@@ -374,8 +376,9 @@ const navigate = useNavigate();
             h={'99vh'}
             w={'199vh'}
         >
-            <GridItem>
-                <MyVideo useId = {broadcastId.current}/>
+            <GridItem area={'bc'}>
+                <Openvidu useId = {broadcastId.current} />
+                {/* <MyVideo useId = {broadcastId.current}/> */}
             </GridItem>
             <GridItem area={'chat'}>
                 <Flex flexDirection={'column'} h={'100%'}>
