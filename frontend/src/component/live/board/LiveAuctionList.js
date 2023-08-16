@@ -3,6 +3,7 @@ import api from "../../../api";
 import { useDispatch,useSelector } from "react-redux";
 import { setLiveAuctionList } from "../../../redux/liveAuctionListSlice";
 import { useParams } from "react-router-dom";
+import { el } from "date-fns/locale";
 
 
 function LiveAuctionList(){
@@ -13,7 +14,8 @@ function LiveAuctionList(){
     useEffect(()=>{
         api.get(`/live/list/${id}`)
         .then(response=>{
-            dispatch(setLiveAuctionList(response.data.entries));
+            if(response)dispatch(setLiveAuctionList(response.data.entries));
+            
 
         })
         .catch(error=>{

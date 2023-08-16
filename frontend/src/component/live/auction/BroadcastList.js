@@ -4,9 +4,10 @@ import api from '../../../api';
 import { useNavigate } from "react-router-dom";
 import { setBroadcastId } from "../../../redux/broadcastIdSlice";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 
-function BroadcastList() {
+function BroadcastList(date) {
   const [broadcastList,setBroadcastList] = useState([]);
   const id = useSelector((state)=> state.broadcastId.broadcastId);
   const navigate = useNavigate();
@@ -14,16 +15,31 @@ function BroadcastList() {
     navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.id}});
   };
   const dispatch = useDispatch();
-
+  const dateForm = "YYYY-MM-DD";
+  const liveForm= "YYYY-MM-DD HH:mm";
+  const datejs = dayjs(date.value).format(dateForm);
+  console.log(datejs);
+  // const loadBroadcasts = (e) => {
+  // }
   useEffect(() => {
-    api.get("/live/list")
-      .then(response => {
-        if(response.data.entries) setBroadcastList(response.data.entries)
-      })
-      .catch(error => {
-        console.error('API 요청 에러:', error);
-      });
-  }, []);
+    api.get(`manage/items/broadcast/` +datejs).then(response => {
+      console.log(response)
+
+      if(response.data) setBroadcastList(response.data)
+      else{
+        setBroadcastList([]);
+        dispatch(setBroadcastId(0));
+      
+    }
+    });
+    // api.get("/live/list")
+    //   .then(response => {
+    //     if(response.data.entries) setBroadcastList(response.data.entries)
+    //   })
+    //   .catch(error => {
+    //     console.error('API 요청 에러:', error);
+    //   });
+  }, [datejs]);
   return (
     <div className="container">
         <div className="row">
@@ -43,9 +59,9 @@ function BroadcastList() {
                         <tr key={broadcast.id}>
                             <td>{i+1}</td>
                             <td>{broadcast.title}</td>
-                            <td>{broadcast.startAt}</td>
+                            <td>{dayjs(broadcast.startAt).format(liveForm)}</td>
                             <td><button disabled={broadcast.status == false ? false : true} onClick={() => participate(broadcast)}>방송참여</button></td>
-                            <td><button onClick={() => {dispatch(setBroadcastId(broadcast.id))}}>상세 보기</button></td>
+                            <td><button onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId)); console.log(broadcast)}}>상세 보기</button></td>
                         </tr>
                     ))}
                 </tbody>

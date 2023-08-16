@@ -10,7 +10,7 @@ import { getMonth, getDate } from "date-fns";
 import BroadcastList from "../auction/BroadcastList";
 import LiveAuctionList from "./LiveAuctionList";
 import { useSelector,useDispatch } from "react-redux";
-
+import dayjs from "dayjs";
 
 function LiveAuctionPage() {
     const id = useSelector((state)=>state.broadcastId.broadcastId);
@@ -19,6 +19,9 @@ function LiveAuctionPage() {
     console.log(startDate);
     const now = new Date();
     const max = new Date(Date.parse(now)+30*1000*60*60*24); // 한달 리미트
+    const dateForm = "YYYY-MM-DD HH:mm:ss";
+    
+
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
         <Button
@@ -42,7 +45,7 @@ function LiveAuctionPage() {
         else{
             return (
                 <>
-                    <Text as={'b'} fontSize={'xl'}>{id}번 방송 경매 물품 목록</Text>
+                    <Text as={'b'} fontSize={'xl'}>방송 경매 물품 목록</Text>
                 </>
             )
         }
@@ -68,13 +71,14 @@ function LiveAuctionPage() {
                             minDate={new Date()} // minDate 이전 날짜 선택 불가
                             maxDate={max} // maxDate 이후 날짜 선택 불가
                             selected={startDate}
-                            onChange={(date) => {setStartDate(date); }}
+                            onChange={(date) => {setStartDate(date);  }}
+
                             customInput={<ExampleCustomInput />}
                             showPopperArrow={false}
                         />
                     </Center>
                     <Center>
-                        <BroadcastList></BroadcastList>
+                        <BroadcastList value={dayjs(startDate).format(dateForm)} ></BroadcastList>
 
                     </Center>
                 </Card>
