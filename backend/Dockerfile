@@ -9,13 +9,13 @@ WORKDIR /app
 COPY . .
 
 # Gradle을 사용하여 애플리케이션을 빌드합니다.
-RUN ./gradlew build
+RUN ./gradlew clean build
 
 # 호스트에서 빌드된 JAR 파일을 이미지에 복사합니다.
-COPY build/libs/*.jar avocado-0.0.1-SNAPSHOT
+COPY build/libs/*.jar /app/app.jar
 
 # 애플리케이션을 실행합니다.
-CMD ["java", "-jar", "avocado-0.0.1-SNAPSHOT"]
+CMD ["java", "-jar", "app.jar"]
 
 
 
