@@ -15,7 +15,7 @@ RUN ./gradlew clean build
 # COPY build/libs/ /app
 
 # 애플리케이션을 실행합니다.
-CMD ["java", "-jar", "avocado-0.0.1-SNAPSHOT.jar"]
+CMD ["sudo","java", "-jar", "avocado-0.0.1-SNAPSHOT.jar"]
 
 
 
