@@ -30,8 +30,8 @@ public class NormalAuctionService {
     private final MemberRepository memberRepository;
 
 
-    public NormalBidResponseDto topBidInfo(Long itemId){
-        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(itemId).orElse(null);
+    public NormalBidResponseDto topBidInfo(Long auctionId){
+        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(auctionId).orElse(null);
         log.info("topBid : "+topBid);
         NormalBidResponseDto normalBidResponseDto = NormalBidResponseDto.builder()
                 .id(topBid.getId())
@@ -90,7 +90,7 @@ public class NormalAuctionService {
             normalHistoryRepository.saveAndFlush(normalHistory);
         }
         //최고 입찰가
-        NormalBidResponseDto topBid = topBidInfo(normalBidRequestDto.getItemId());
+        NormalBidResponseDto topBid = topBidInfo(normalBidRequestDto.getId());
 
 //        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(normalBidRequestDto.getItemId()).orElse(null);
 //        log.info("topBid : "+topBid);
