@@ -181,7 +181,7 @@ const disconnect = () => {
                                 width: progressWidth + '%',
                                 height: '20px',
                                 backgroundColor: 'green',
-                                transition: 'width 0.3s ease-in-out', // 부드러운 애니메이션 효과
+                                transition: 'width 0.1s ease-in-out', // 부드러운 애니메이션 효과
                             }}
                         />
                     </div>

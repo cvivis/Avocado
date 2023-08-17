@@ -49,7 +49,7 @@ function Detail() {
               </HStack>
             </Box>
             <Box>
-              <GridItem area={'contentSection'} w={'1208px'}>
+              <GridItem area={'contentSection'} w={'1208px'} fontSize={'36px'}>
                 <Container centerContent>
                   {boardDetail.content}
                 </Container>
