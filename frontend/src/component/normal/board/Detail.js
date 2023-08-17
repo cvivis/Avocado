@@ -37,8 +37,8 @@ function Detail() {
             <Box>
               <HStack>
                 <GridItem area={'imageSection'} w={'600px'} h={'600px'}>
-
-                  <MyCarousel height={'600px'} weight={'600px'} />
+                  <img src={boardDetail.url} style={{height:'600px', width:'600px'}}></img>
+                  {/* <MyCarousel height={'600px'} weight={'600px'} /> */}
 
                 </GridItem>
                 <GridItem area={'titleSection'} w={'600px'} h={'600px'}>

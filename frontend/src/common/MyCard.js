@@ -6,25 +6,57 @@ import {
 import { Link } from "react-router-dom";
 
 function MyCard(props) {
-
+    function status(itemStatus) {
+        let desc = "";
+        if(itemStatus === "CONSIGN") desc = "물품 요청 대기 중"
+        else if(itemStatus === "APPROVE") desc = "물품 배정 대기 중"
+        else if(itemStatus === "ASSIGN") desc = "경매 확정"
+        else if(itemStatus === "REJECT") desc = "물품 반려"
+        else if(itemStatus === "SUCCESS") desc = "낙찰된 상품"
+        else if(itemStatus === "FAIL") desc = "유찰된 상품"
+        return (
+            desc
+        )
+    }
     return (
         
         <Box w={300}>
-        <Card align='center'>
-            <CardBody>
-            <Image 
-                objectFit='cover'
-                src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                alt='Chakra UI'
-            />
-            <Heading size='md'>{props.props.name}</Heading>
-            </CardBody>
-            <CardFooter>
-                <Text>
-                    {props.props.type}
-                </Text>
-            </CardFooter>
-        </Card>
+            <Card align='center'>
+                <CardBody>
+                    <Image 
+                        objectFit='cover'
+                        src= {props.props.url}
+                        alt='Chakra UI'
+                    />
+                    <Heading size='md'>{props.props.name}({props.props.type})</Heading>
+                    
+                   
+                    {props.props.currentBid ? 
+                        <Text>
+                            현재최고가 : {props.props.currentBid}원
+                        </Text>
+                    : null}
+
+                    {props.props.myBid ? 
+                        <Text>
+                            내입찰가 : {props.props.myBid}원
+                        </Text>
+                    : null}
+
+                    {props.props.successBidPrice ? 
+                        <Text>
+                            낙찰가 : {props.props.successBidPrice}원
+                        </Text>
+                    : null}
+                   
+                    <Text>
+                        {status(props.props.status)}
+                    </Text>
+                </CardBody>
+                {/* <CardFooter>
+                    
+                </CardFooter> */}
+            </Card>
         </Box>
     )
 }

@@ -17,7 +17,7 @@ public interface NormalBoardRepository extends JpaRepository<Item, Long> {
     // save는 추후에
 
     // 전체 리스트 반환
-    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(a.id,i.id, i.name, i.content, i.hopePrice, a.startAt, a.endAt) " +
+    @Query("SELECT NEW com.avocado.normal.board.controller.dto.NormalResponseEntryDto(a.id,i.id, i.name, i.content, i.hopePrice, a.startAt, a.endAt, i.thumbnail) " +
             "FROM item i " +
             "JOIN normalAuction a ON i.id = a.item.id ")
     List<NormalResponseEntryDto> findAllItemList();

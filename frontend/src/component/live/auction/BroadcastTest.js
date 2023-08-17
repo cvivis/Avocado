@@ -322,8 +322,8 @@ const navigate = useNavigate();
             return (
                 <GridItem area={'bid'}>
                     <Flex flexDirection={'column'} h={'100%'}>
-                        <Button w={'full'} h={'45%'} mt={'5px'} isDisabled={currentAuction.status === 1 ? false : true}>
-                            <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice+1000} 원</Text>
+                        <Button w={'full'} h={'45%'} mt={'5px'} isDisabled>
+                            <Text fontSize={'3xl'}>시작가/현재최고가 확인</Text>
                         </Button>
                         <Spacer />
                         <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'} isDisabled={currentAuction.status === 1 ? false : true}>

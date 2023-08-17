@@ -28,6 +28,8 @@ public interface LiveAuctionRepository extends JpaRepository <LiveAuction, Long>
 
     Optional<List<LiveAuction>> findByBroadcast_Id(Long broadcastId);
 
+    Optional<List<LiveAuction>> findByMember_Id(Long memberId);
+
 
 
 

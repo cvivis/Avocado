@@ -40,7 +40,7 @@ function MyPage() {
                                     </TabList>
                                     <TabPanels>
                                         <TabPanel>
-                                            <MySuccessNormalBids />
+                                            {/* <MySuccessNormalBids /> */}
                                         </TabPanel>
                                         <TabPanel>
                                             <MySuccessLiveBids />
