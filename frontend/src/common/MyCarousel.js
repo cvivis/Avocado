@@ -43,8 +43,7 @@ const side = useBreakpointValue({ base: '30%', md: '40px' })
 // This can be static or loaded from a server
 const cards = [
 {
-    title: 'Design Projects 1',
-    text: "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
+    
     image:
     'https://i.ibb.co/k6M8qL4/Getty-Images-1252857379.jpg',
 },
