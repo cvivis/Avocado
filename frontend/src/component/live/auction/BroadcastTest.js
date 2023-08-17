@@ -15,6 +15,7 @@ import * as StompJs from '@stomp/stompjs';
 import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
+import Openvidu from "../../openvidu/OnlineMeeting"
 
 function BroadcastTest() {
 
@@ -111,6 +112,7 @@ const navigate = useNavigate();
     const connect = () =>{
     client.current = new StompJs.Client({
         brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
+        // brokerURL: 'ws://localhost:8080/ws/live-auction',
         onConnect:() =>{
             console.log('소켓 연결 성공')
             subcribe();
@@ -130,7 +132,20 @@ const navigate = useNavigate();
     client.current.subscribe("/sub/broadcast/off/" + broadcastId.current, response => {
         const content = JSON.parse(response.body)
         alert("방송 종료")
-        navigate("/broadcastList");
+        const storedRootData = sessionStorage.getItem('persist:root');
+        const parsedRootData = JSON.parse(storedRootData);
+
+        // 'login' 데이터를 파싱합니다.
+        const parsedLoginData = JSON.parse(parsedRootData.login);
+
+        // 해당 객체에서 'role' 값을 가져옵니다.
+        const userRole = parsedLoginData.role;
+        if (userRole === "ROLE_ADMIN" ) {
+            navigate("/adminPage");
+            return;
+        }
+
+        navigate("/liveAuctionPage");
     });
 
     //경매 온오프
@@ -307,18 +322,18 @@ const navigate = useNavigate();
             return (
                 <GridItem area={'bid'}>
                     <Flex flexDirection={'column'} h={'100%'}>
-                        <Button w={'full'} h={'45%'} mt={'5px'}>
+                        <Button w={'full'} h={'45%'} mt={'5px'} isDisabled={currentAuction.status === 1 ? false : true}>
                             <Text fontSize={'3xl'}>입찰하기 {currentAuction.highestPrice+1000} 원</Text>
                         </Button>
                         <Spacer />
-                        <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'}>
-                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange}/>
+                        <InputGroup w={'full'} h={'45%'} mb={'5px'} cursor={'pointer'} isDisabled={currentAuction.status === 1 ? false : true}>
+                            <Input h={'100%'} textAlign={'center'} fontSize={'4xl'} variant='flushed' type="number" onChange={bidChange} />
                             <InputRightAddon
                                 h={'100%'}
                                 fontSize={'3xl'}
-                                disabled={currentAuction.status === 1 ? false : true} onClick={() => bid(currentAuction)}
+                                onClick={() => bid(currentAuction)}
                                 children={
-                                    <Text as={'b'}>원 자율 입찰</Text>
+                                    <Text as={'b'} isDisabled={currentAuction.status === 1 ? false : true}>원 자율 입찰</Text>
                                 }>
                             </InputRightAddon>
                         </InputGroup>
@@ -374,8 +389,9 @@ const navigate = useNavigate();
             h={'99vh'}
             w={'199vh'}
         >
-            <GridItem>
-                <MyVideo useId = {broadcastId.current}/>
+            <GridItem area={'bc'}>
+                <Openvidu useId = {broadcastId.current} />
+                {/* <MyVideo useId = {broadcastId.current}/> */}
             </GridItem>
             <GridItem area={'chat'}>
                 <Flex flexDirection={'column'} h={'100%'}>
