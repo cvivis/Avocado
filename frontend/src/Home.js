@@ -8,7 +8,7 @@ function Home() {
   return (
     <Box>
       <Center>
-        <MyCarousel height={1000} weight={900} />
+        <MyCarousel height={700} weight={600} />
       </Center>
     </Box>
   );
