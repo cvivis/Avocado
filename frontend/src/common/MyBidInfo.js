@@ -49,36 +49,47 @@ function MyBidInfo(props) {
         publish();
     }
 
-    /*stomp 관련 */
-    const client = useRef({});
-    const connect = useCallback(() => {
-        client.current = new StompJs.Client({   
-            brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
-            onConnect: () => {
-                console.log("연겨여여여여얼")
-                // Do something, all subscribes must be done is this callback
-                console.log("연결 SUB22");
-                subscribe();
-            },
-        });
-        client.current.activate();
-    }, []);
-
     useEffect(() => {
         const nowP = props.boardDetail.hopePrice;
         const mPrice = props.boardDetail.successPrice !=null ? (props.boardDetail.successPrice):(props.boardDetail.hopePrice);
+        console.log("nowP"+nowP);
 
         setBidInfo({
             nowPrice: nowP,
             myPrice: mPrice
         });
         ;
-        connect(); // 마운트시 실행
-        return () => disconnect(); // 언마운트 시 실행
+        // if(props.boardDetail.auctionId != undefined){
+            console.log("aaaaa"+props.boardDetail.auctionId);
+            connect(); // 마운트시 실행
+            console.log("asdf"+props.boardDetail.auctionId);
+            return () => disconnect(); // 언마운트 시 실행
+        // }
     }, [props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+
 const disconnect = () => {
     client.current.deactivate(); // 활성화된 연결 끊기
   };
+
+    /*stomp 관련 */
+    const client = useRef({});
+    const connect = useCallback(() => {
+        client.current = new StompJs.Client({   
+            brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
+            // brokerURL: 'ws://localhost:8080/ws/normal-auction',
+            onConnect: () => {
+                console.log("연겨여여여여얼")
+                // Do something, all subscribes must be done is this callback
+                console.log("연결 SUB22");
+                console.log(props.boardDetail.auctionId);
+                    subscribe();
+
+            },
+        });
+        client.current.activate();
+    }, [props.boardDetail.auctionId]);
+
+   
 
 
 
