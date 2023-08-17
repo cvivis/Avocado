@@ -70,7 +70,7 @@ public class NormalAuctionService {
         Member nowMember = memberRepository.findByEmail(normalBidRequestDto.getEmail()).orElse(null);
         log.info(" sdf {}",nowMember);
         // 해당 경매에 입찰 기록있는 유저인지 조회
-        Optional<NormalHistory> userHistory = normalHistoryRepository.findByNormalAuction_IdAndMember_Id(normalBidRequestDto.getItemId(), nowMember.getId());
+        Optional<NormalHistory> userHistory = normalHistoryRepository.findByNormalAuction_IdAndMember_Id(normalBidRequestDto.getId(), nowMember.getId());
         log.info("dfsdf {} ",userHistory);
         if(userHistory.isPresent()){ // 있으면 업데이트
             log.info("들어오나ㅏㅏㅏㅏㅏ");
