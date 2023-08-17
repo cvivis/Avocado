@@ -47,11 +47,10 @@ public class ItemController {
 
     // 마이페이지 - 나의 위탁 물품 리스트 가져오기
     @GetMapping("/my-sale")
-    public MySaleResponseDto mySales(@RequestHeader("Authorization") String requestAccessToken) {
+    public ResponseEntity<?> mySales(@RequestHeader("Authorization") String requestAccessToken) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
-
-        return itemService.getMySales(memberId);
+        return ResponseEntity.ok().body(itemService.getMySales(memberId));
     }
 
 
@@ -105,7 +104,6 @@ public class ItemController {
         Long memberId = memberService.getMember(email).getId();
 
         return itemService.getMyLiveSuccessBids(memberId);
-        //return null;
     }
 
 }
