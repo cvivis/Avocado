@@ -2,14 +2,13 @@ package com.avocado.Item.controller.dto;
 
 import com.avocado.Item.domain.entity.Category;
 import com.avocado.Item.domain.entity.Type;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MySuccessBidEntries {
 
     private Long itemId;
@@ -17,6 +16,8 @@ public class MySuccessBidEntries {
     private Type type;
     private Category category;
     private Integer successBidPrice;
+
+    private String url;
 
     public MySuccessBidEntries(Long itemId, String name, Type type, Category category, Integer successBidPrice) {
         this.itemId = itemId;

@@ -8,6 +8,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @ToString
+@AllArgsConstructor
 public class NormalItemDetailResponseDto {
     private Long auctionId;
     private Long itemId;
@@ -18,7 +19,7 @@ public class NormalItemDetailResponseDto {
     private Date startAt;
     private Date endAt;
     private Integer successPrice; //history거래내역이 있으면 최고가
-
+    private String url;
     public NormalItemDetailResponseDto(Long auctionId, Long itemId, String name, String content,
                                        Integer hopePrice, Date startAt, Date endAt, Integer successPrice) {
         this.auctionId=auctionId;

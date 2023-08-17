@@ -4,7 +4,7 @@ const consignSlice = createSlice({
     name: 'requireItem',
     initialState: {
         memberId: 0,
-        thumbnail: "",
+        thumbnail: [],
         name: "",
         content: "",
         hopePrice: 0,

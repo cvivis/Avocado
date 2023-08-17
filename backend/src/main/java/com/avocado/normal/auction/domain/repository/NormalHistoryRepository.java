@@ -21,4 +21,7 @@ public interface NormalHistoryRepository extends JpaRepository<NormalHistory, Lo
     Optional<NormalHistory> findByNormalAuction_IdAndMember_Id(Long normalId, Long memberId);
     Optional<List<NormalHistory>> findByNormalAuction_Id(Long id);
 
+    Optional<List<NormalHistory>> findByMember_Id(Long memberId);
+
+    Optional<NormalHistory> findTopByNormalAuction_IdOrderByBidPriceDesc(Long normalAuctionId);
 }
