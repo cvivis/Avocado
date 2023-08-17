@@ -27,6 +27,7 @@ function MyNormalSale(){
         <div>
             <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
             {myNormalSale&&myNormalSale.map((mysale) => (
+                console.log(mysale),
                 <div key={mysale.itemId}>
                     <MyCard props= {mysale}></MyCard>
                 </div>

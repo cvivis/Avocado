@@ -111,8 +111,8 @@ const navigate = useNavigate();
     
     const connect = () =>{
     client.current = new StompJs.Client({
-        brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
-        // brokerURL: 'ws://localhost:8080/ws/live-auction',
+        // brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
+        brokerURL: 'ws://localhost:8080/ws/live-auction',
         onConnect:() =>{
             console.log('소켓 연결 성공')
             subcribe();
@@ -389,7 +389,7 @@ const navigate = useNavigate();
             h={'99vh'}
             w={'199vh'}
         >
-            <GridItem area={'bc'}>
+            <GridItem area={'bc'} bg={'black'}>
                 <Openvidu useId = {broadcastId.current} />
                 {/* <MyVideo useId = {broadcastId.current}/> */}
             </GridItem>

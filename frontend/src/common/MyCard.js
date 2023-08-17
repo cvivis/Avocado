@@ -18,14 +18,11 @@ function MyCard(props) {
                 alt='Chakra UI'
             />
             <Heading size='md'>{props.props.name}</Heading>
-            <Text>{props.props.category}</Text>
             </CardBody>
             <CardFooter>
-                <Button colorScheme="green" >
-                    <Link to="/normal/auctionPage/NormalDetailPage">
-                        상세보기(임시)
-                    </Link>
-                </Button>
+                <Text>
+                    {props.props.type}
+                </Text>
             </CardFooter>
         </Card>
         </Box>
