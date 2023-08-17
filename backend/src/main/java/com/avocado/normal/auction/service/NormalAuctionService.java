@@ -54,6 +54,8 @@ public class NormalAuctionService {
         LocalDateTime bidNow = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         NormalAuction nowNormal = normalAuctionRepository.findById(normalBidRequestDto.getId()).orElse(null);
+        log.info("bidNow: " + bidNow);
+        log.info("nowNoraml: " + nowNormal.toString());
         log.info("bidNow : {} , auctionTime : {} ", bidNow , nowNormal.getEndAt().toLocalDateTime());
         if(bidNow.isAfter(nowNormal.getEndAt().toLocalDateTime())){
             return NormalBidResponseDto.builder()
