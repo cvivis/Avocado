@@ -75,7 +75,7 @@ function MyBidInfo(props) {
         ;
         connect(); // 마운트시 실행
         return () => disconnect(); // 언마운트 시 실행
-    }, [connect, props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+    }, [props.boardDetail.auctionId, props.boardDetail.hopePrice]);
 const disconnect = () => {
     client.current.deactivate(); // 활성화된 연결 끊기
   };
