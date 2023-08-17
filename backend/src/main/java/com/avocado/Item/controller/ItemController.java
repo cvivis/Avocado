@@ -6,11 +6,14 @@ import com.avocado.Item.service.ItemService;
 import com.avocado.member.domain.entity.Member;
 import com.avocado.member.service.AuthService;
 import com.avocado.member.service.MemberService;
+import com.avocado.test.TestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -22,18 +25,25 @@ public class ItemController {
     private final ItemService itemService;
     private final MemberService memberService;
     private final AuthService authService;
+    private final TestService testService;
 
     // 위탁 요청 물품 등록
-    @PostMapping("/consign")
-    public ResponseEntity<Void> save(@RequestHeader("Authorization") String requestAccessToken, @RequestBody @Valid ConsignRequestDto consignRequestDto) {
+    @PostMapping(path = "/consign", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> save(
+            @RequestHeader("Authorization") String requestAccessToken,
+            @RequestPart(value = "dto") ConsignRequestDto consignRequestDto,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Member member = memberService.getMember(email);
+        String url = testService.create(consignRequestDto.getName(), file);
+        consignRequestDto.setThumbnail(url);
         if (itemService.saveItem(consignRequestDto, member)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok().body(url);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    };
+    }
+
 
     // 마이페이지 - 나의 위탁 물품 리스트 가져오기
     @GetMapping("/my-sale")
