@@ -94,7 +94,7 @@ Karma - Git Commit Msg
 
 # 💛 프로젝트 구조
 
-![2](/uploads/ddb5f59712f99ad52e6277e095185b66/2.png)
+![2](docs/AvocadoArchithec)
 
 # 🤎 유스케이스 다이어그램
 
@@ -102,7 +102,7 @@ Karma - Git Commit Msg
 
 # 🖤 DB ERD
 
-![아보카도_ERD](/uploads/0ae88b7ead9f0fa28fccf20ef7b67054/아보카도_ERD.png)
+![아보카도_ERD](AvocadoArchitecture.png)
 
 # 🤍 Front
 
