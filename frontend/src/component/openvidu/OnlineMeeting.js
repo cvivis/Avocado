@@ -32,6 +32,10 @@ class OnlineMeeting extends Component {
         }
         
     }
+
+    componentWillUnmount() {
+        this.leaveSession()
+    }
     
     test(d){
         console.log(d);
@@ -48,16 +52,36 @@ class OnlineMeeting extends Component {
                 // --- 3) Specify the actions when events take place in the session ---
                 // On every new Stream received...
                 mySession.on('streamCreated', (event) => {
+
+                    const storedRootData = sessionStorage.getItem('persist:root');
+                    const parsedRootData = JSON.parse(storedRootData);
+
+                    // 'login' 데이터를 파싱합니다.
+                    const parsedLoginData = JSON.parse(parsedRootData.login);
+
+                    // 해당 객체에서 'role' 값을 가져옵니다.
+                    const userRole = parsedLoginData.role;
+                    if (userRole === "ROLE_ADMIN" ) {
+                        console.log('You do not have ADMIN permissions to perform this action.');
+                        return;
+                    }
+
+                    if (this.state.subscribers.length >= 1 ) {
+                        console.log(this.state.subscribers.length)
+                        console.log(this.state.subscribers)
+                        return;
+                    }
                     // Subscribe to the Stream to receive it. Second parameter is undefined
                     // so OpenVidu doesn't create an HTML video by its own
                     var subscriber = mySession.subscribe(event.stream, undefined);
-
+                  
                     //We use an auxiliar array to push the new stream
                     var subscribers = this.state.subscribers;
                     subscribers.push(subscriber);
 
                     // Update the state with the new subscribers
                     this.setState({
+                        mainStreamManager: subscribers[0],
                         subscribers: subscribers,
                     });
                 });
@@ -94,7 +118,7 @@ class OnlineMeeting extends Component {
                             videoSource: undefined, // The source of video. If undefined default webcam
                             publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
                             publishVideo: true, // Whether you want to start publishing with your video enabled or not
-                            resolution: '720x1440', // The resolution of your video
+                            resolution: '1440x960', // The resolution of your video
                             frameRate: 30, // The frame rate of your video
                             insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
                             mirror: false, // Whether to mirror your local video or not
@@ -171,76 +195,17 @@ class OnlineMeeting extends Component {
 
     render() {
         return(
-            <div className = "container">
-                {
-                this.state.session === undefined ? (
-                    <div id="join">
-                        <form className="form-group" onSubmit={this.joinSession}>
-                            {/* <p>
-                                <label>Participant: </label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    id="userName"
-                                    value={this.myUserName}
-                                    onChange={this.handleChangeUserName}
-                                    required
-                                />
-                            </p> */}
-                            {/* <p>
-                                <label> Session: </label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    id="sessionId"
-                                    value={this.myUserName}
-                                    onChange={this.handleChangeSessionId}
-                                    required
-                                />
-                            </p> */}
-                            <p className="text-center">
-                                <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                            </p>
-                        </form>
-                    </div>
-                ) : null}
-
+            <div >
                 {this.state.session !== undefined ? (
                     <div id="session">
-                        {/* <div id="session-header">
-                            <input
-                                className="btn btn-large btn-danger"
-                                type="button"
-                                id="buttonLeaveSession"
-                                onClick={this.leaveSession}
-                                value="Leave session"
-                            /> */}
-                        {/* </div> */}
-
-                        <div id="video-container" className="col-md-6">
-                            
-                        {this.state.mainStreamManager !== undefined ? (
-                            <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
-
-                            </div>
-                        ) : null}
-                        <div id="video-container" className="col-md-6">
-                            {this.state.publisher !== undefined ? (
-                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                                    <UserVideoComponent
-                                        streamManager={this.state.publisher} />
+                        <div id="video-container">
+                            {this.state.mainStreamManager !== undefined ? (
+                                <div id="main-video">
+                                    <UserVideoComponent streamManager={this.state.mainStreamManager} />
                                 </div>
-                            ) : null}
-                            {this.state.subscribers.map((sub, i) => (
-                                <div key={sub.id} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                                    <span>{sub.id}</span>
-                                    <UserVideoComponent streamManager={sub} />
-                                </div>
-                            ))}
+                            ) : null}                      
                         </div>
-			            </div>
-                   </div>
+			        </div>
                 ) : null}
             </div>
         )
