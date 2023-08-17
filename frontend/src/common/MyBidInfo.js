@@ -35,9 +35,6 @@ function MyBidInfo(props) {
     // const currentDateTime = new Date();
 
 
-
-
-
     //입찰버튼
     function handleBid() {
         if (!isButtonDisabled) {
@@ -47,42 +44,52 @@ function MyBidInfo(props) {
             setTimeout(() => {
                 setButtonDisabled(false);
                 setProgressWidth(0); // 프로그레스 바 리셋
-            }, 1000);
+            }, 3000);
         }
         publish();
     }
 
-    /*stomp 관련 */
-    const client = useRef({});
-    const connect = useCallback(() => {
-        client.current = new StompJs.Client({   
-            // brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
-            brokerURL: 'ws://localhost:8080/ws/normal-auction',
-            onConnect: () => {
-                console.log("연겨여여여여얼")
-                // Do something, all subscribes must be done is this callback
-                console.log("연결 SUB22");
-                subscribe();
-            },
-        });
-        client.current.activate();
-    }, []);
-
     useEffect(() => {
         const nowP = props.boardDetail.hopePrice;
         const mPrice = props.boardDetail.successPrice !=null ? (props.boardDetail.successPrice):(props.boardDetail.hopePrice);
+        console.log("nowP"+nowP);
 
         setBidInfo({
             nowPrice: nowP,
             myPrice: mPrice
         });
         ;
-        connect(); // 마운트시 실행
-        return () => disconnect(); // 언마운트 시 실행
-    }, [connect, props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+        // if(props.boardDetail.auctionId != undefined){
+            console.log("aaaaa"+props.boardDetail.auctionId);
+            connect(); // 마운트시 실행
+            console.log("asdf"+props.boardDetail.auctionId);
+            return () => disconnect(); // 언마운트 시 실행
+        // }
+    }, [props.boardDetail.auctionId, props.boardDetail.hopePrice]);
+
 const disconnect = () => {
     client.current.deactivate(); // 활성화된 연결 끊기
   };
+
+    /*stomp 관련 */
+    const client = useRef({});
+    const connect = useCallback(() => {
+        client.current = new StompJs.Client({   
+            brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
+            // brokerURL: 'ws://localhost:8080/ws/normal-auction',
+            onConnect: () => {
+                console.log("연겨여여여여얼")
+                // Do something, all subscribes must be done is this callback
+                console.log("연결 SUB22");
+                console.log(props.boardDetail.auctionId);
+                    subscribe();
+
+            },
+        });
+        client.current.activate();
+    }, [props.boardDetail.auctionId]);
+
+   
 
 
 
@@ -90,8 +97,9 @@ const disconnect = () => {
         // console.log("야 들어왔냐2")
         // console.log(id + "옥션아이디2")
         // console.log(bidInfo.nowPrice);
-        client.current.subscribe('/sub/normal/' + id, (res) => { // server에게 메세지 받으면
-            // console.log("들어왔당.")
+        console.log("id: "+props.boardDetail.auctionId);
+        client.current.subscribe('/sub/normal/' + props.boardDetail.auctionId, (res) => { // server에게 메세지 받으면
+            console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
             setBidInfo((prevState) => {
@@ -104,13 +112,14 @@ const disconnect = () => {
 
     const publish = () => {
         // console.log("in Pub" + bidInfo.myPrice);
-        console.log("옥션 아이디 " + id);
+        console.log("옥션 아이디 " + props.boardDetail.auctionId);
         // console.log(client.current + "클라이언트얍1");
         const newPrice = bidInfo.myPrice +BeforeNormalBid.setBidPlus(bidInfo.myPrice);
 
         client.current.publish({
-            destination: '/pub/normal/' + id,
-            body: JSON.stringify({ id: id, price: newPrice, email: email, itemId: props.boardDetail.itemId }),
+            // destination: '/pub/normal/' + id,
+            destination: '/pub/normal/' + props.boardDetail.auctionId,
+            body: JSON.stringify({ id: props.boardDetail.auctionId, price: newPrice, email: email, itemId: props.boardDetail.itemId }),
             skipContentLengthHeader: true,
         });
     }

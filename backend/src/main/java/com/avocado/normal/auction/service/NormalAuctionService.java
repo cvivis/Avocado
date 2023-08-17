@@ -30,8 +30,8 @@ public class NormalAuctionService {
     private final MemberRepository memberRepository;
 
 
-    public NormalBidResponseDto topBidInfo(Long itemId){
-        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(itemId).orElse(null);
+    public NormalBidResponseDto topBidInfo(Long auctionId){
+        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(auctionId).orElse(null);
         log.info("topBid : "+topBid);
         NormalBidResponseDto normalBidResponseDto = NormalBidResponseDto.builder()
                 .id(topBid.getId())
@@ -70,7 +70,7 @@ public class NormalAuctionService {
         Member nowMember = memberRepository.findByEmail(normalBidRequestDto.getEmail()).orElse(null);
         log.info(" sdf {}",nowMember);
         // 해당 경매에 입찰 기록있는 유저인지 조회
-        Optional<NormalHistory> userHistory = normalHistoryRepository.findByNormalAuction_IdAndMember_Id(normalBidRequestDto.getItemId(), nowMember.getId());
+        Optional<NormalHistory> userHistory = normalHistoryRepository.findByNormalAuction_IdAndMember_Id(normalBidRequestDto.getId(), nowMember.getId());
         log.info("dfsdf {} ",userHistory);
         if(userHistory.isPresent()){ // 있으면 업데이트
             log.info("들어오나ㅏㅏㅏㅏㅏ");
@@ -90,7 +90,7 @@ public class NormalAuctionService {
             normalHistoryRepository.saveAndFlush(normalHistory);
         }
         //최고 입찰가
-        NormalBidResponseDto topBid = topBidInfo(normalBidRequestDto.getItemId());
+        NormalBidResponseDto topBid = topBidInfo(normalBidRequestDto.getId());
 
 //        NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(normalBidRequestDto.getItemId()).orElse(null);
 //        log.info("topBid : "+topBid);
