@@ -101,7 +101,7 @@ const disconnect = () => {
 
     const publish = () => {
         // console.log("in Pub" + bidInfo.myPrice);
-        console.log("옥션 아이디 " + id);
+        console.log("옥션 아이디 " + props.boardDetail.auctionId);
         // console.log(client.current + "클라이언트얍1");
         const newPrice = bidInfo.myPrice +BeforeNormalBid.setBidPlus(bidInfo.myPrice);
 
