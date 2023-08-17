@@ -35,9 +35,6 @@ function MyBidInfo(props) {
     // const currentDateTime = new Date();
 
 
-
-
-
     //입찰버튼
     function handleBid() {
         if (!isButtonDisabled) {
@@ -89,8 +86,8 @@ const disconnect = () => {
         // console.log("야 들어왔냐2")
         // console.log(id + "옥션아이디2")
         // console.log(bidInfo.nowPrice);
-        console.log("id"+id);
-        client.current.subscribe('/sub/normal/' + id, (res) => { // server에게 메세지 받으면
+        console.log("id: "+props.boardDetail.auctionId);
+        client.current.subscribe('/sub/normal/' + props.boardDetail.auctionId, (res) => { // server에게 메세지 받으면
             console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
             console.log(jsonBody);
@@ -109,8 +106,9 @@ const disconnect = () => {
         const newPrice = bidInfo.myPrice +BeforeNormalBid.setBidPlus(bidInfo.myPrice);
 
         client.current.publish({
-            destination: '/pub/normal/' + id,
-            body: JSON.stringify({ id: id, price: newPrice, email: email, itemId: props.boardDetail.itemId }),
+            // destination: '/pub/normal/' + id,
+            destination: '/pub/normal/' + props.boardDetail.auctionId,
+            body: JSON.stringify({ id: props.boardDetail.auctionId, price: newPrice, email: email, itemId: props.boardDetail.itemId }),
             skipContentLengthHeader: true,
         });
     }
