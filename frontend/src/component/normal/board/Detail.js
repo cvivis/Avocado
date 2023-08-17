@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 function Detail() {
   const { id } = useParams();
-  const [boardDetail, setboardDetail] = useState({});
+  const [boardDetail, setboardDetail] = useState('');
 
   useEffect(() => {
     // API 호출
@@ -21,7 +21,7 @@ function Detail() {
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
-      console.log("board: "+boardDetail.auctionId);
+      // console.log("board: "+boardDetail.auctionId);
   }, [id]);
 
 
