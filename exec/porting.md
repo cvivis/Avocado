@@ -1,18 +1,43 @@
 
-# 세팅 환경
+# 1. 세팅 환경
 
 - Java 11
 - Docker 24.0.5
 - Node Js 18.0.5
 - mysql 8.0.5
 
-# 포트 설정
+# 2. 포트 설정
 
 - openvidu :4443
 - react :3000
 - springboot :8080
 
-# 세부 세팅설정 및 설치
+# 3. 필요 외부서비스 데이터 
+- 하단의 데이터 필요 
+## openvidu
+
+- 비밀번호는 자유
+- (1) 명령어 및 properties 설정 참조
+- openvidu URL : {연결}
+- openvidu secret : (1)에서 설정한 비밀번호
+
+## SSL 인증
+
+- 도메인 주소로 SSL 발급
+- keystore.p12 파일 저장 후 
+
+## S3
+
+- access 토큰
+- secret 토큰
+
+## MySQL
+- 프로젝트 디비 이름
+- mysql 비밀번호
+- 유저 이름
+- 루트 비밀번호
+
+# 4. 세부 세팅설정 및 설치
 
 ## 로컬 세팅
 - openvidu
@@ -145,7 +170,7 @@ npm start
 sudo java -jar build/libs/avocado-0.0.1-SNAPSHOT
 ```
 
-### nginx.conf
+### (참조)nginx.conf 개발 당시
 
 ```bash
 events {
@@ -224,11 +249,9 @@ server {
 }
 ```
 
-# 2. 프로젝트에서 사용하는 외부 서비스를 정보 정리 한 문서
-- openvidu
-- ssl
 
-# 3. Mysql dump 파일
+
+# 5. Mysql dump 파일
 
 - 테스트 데이터 및 이벤트 핸들러 설정 및 등록하는 sql 데이터 
 - admin계정 아이디 admin , 비밀번호 admin
@@ -237,7 +260,7 @@ server {
 
 [avocado-dump.sql](exec/avocado-dump.sql)
 
-# 4. 시연 시나리오 
+# 6. 시연 시나리오 
 ## - 회원가입
 ![회원가입](docs/register.png)
 ## - 로그인
