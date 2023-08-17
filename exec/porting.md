@@ -224,16 +224,42 @@ server {
 }
 ```
 
-### 2. 프로젝트에서 사용하는 외부 서비스를 정보 정리 한 문서
+# 2. 프로젝트에서 사용하는 외부 서비스를 정보 정리 한 문서
+- openvidu
+- ssl
 
-### 3. Mysql dump 파일
+# 3. Mysql dump 파일
 
-- 테스트 데이터 및 이벤트 핸들러 설정 및 등록
+- 테스트 데이터 및 이벤트 핸들러 설정 및 등록하는 sql 데이터 
+- admin계정 아이디 admin , 비밀번호 admin
+- test계정 아이디 test, 비밀번호 test
+- 1 계정 아이디 1, 비밀번호 1
 
-[avocado_aws-2023_08_14_14_42_40-dump.sql](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f8c59913-f528-41ab-8030-a5f9b26956db/avocado_aws-2023_08_14_14_42_40-dump.sql)
+[avocado-dump.sql](exec/avocado-dump.sql)
 
-### 4. 시연 시나리오
+# 4. 시연 시나리오 
+## - 회원가입
+![회원가입](docs/register.png)
+## - 로그인
+![로그인](docs/login.png)
+## - 상품 요청 게시판 
+![상품요청게시판](docs/consign.png)
+## - 상시 경매 게시판
+![상시경매게시판]()
+## - 상시 경매 상세 페이지 & 입찰
+![상시경매상세페이지]()
+## - 라이브 경매 편성
+![라이브 편성](docs/liveList.png)
+## - 라이브 경매 디테일
+![라이브 편성 디테일](docs/liveDetail.png)
+## - 라이브 경매 사용자 입찰
+![라이브 경매 입찰](docs/liveAuctionUser.png)
+## - 라이브 경매 어드민 
+![라이브 경매 어드민](docs/adminAuctionAdmin.png)
+## - 마이페이지
+![마이페이지](docs/mypage.png)
+## - 어드민 상시 관리
+![관리자상시페이지](docs/adminNormal.png)
+## - 어드민 상시 관리
+![관리자라이브페이지](docs/adminLive.png)
 
-캡쳐 
-
-시연 시나리오에 따른 화면 별 실행 별 상세 설명
