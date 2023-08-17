@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 function Detail() {
   const { id } = useParams();
-  const [boardDetail, setboardDetail] = useState('');
+  const [boardDetail, setboardDetail] = useState({});
 
   useEffect(() => {
     // API 호출
