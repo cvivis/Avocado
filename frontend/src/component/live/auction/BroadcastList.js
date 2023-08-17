@@ -22,12 +22,12 @@ function BroadcastList(date) {
   const dateForm = "YYYY-MM-DD";
   const liveForm= "YYYY-MM-DD HH:mm";
   const datejs = dayjs(date.value).format(dateForm);
-  console.log(datejs);
+  // console.log(datejs);
   // const loadBroadcasts = (e) => {
   // }
   useEffect(() => {
     api.get(`manage/items/broadcast/` +datejs).then(response => {
-      console.log(response)
+      // console.log(response)
 
       if(response.data) setBroadcastList(response.data)
       else{
@@ -60,13 +60,13 @@ function BroadcastList(date) {
             </Thead> */}
             <Tbody>
               {broadcastList.map((broadcast , i) => ( 
-                console.log(broadcast.startAt),
+                // console.log(broadcast.startAt),
                   <Tr key={broadcast.id}>
                       {/* <Td>{i+1}</Td> */}
                       <Td><Text fontSize={'2xl'}>{broadcast.title}</Text></Td>
                       <Td><Text fontSize={'2xl'}>{dayjs(broadcast.startAt).format(liveForm)}</Text></Td>
                       <Td><Button fontSize={'2xl'} bg={'red'} isDisabled={broadcast.status === false ? true : false} onClick={() => participate(broadcast)}>방송참여</Button></Td>
-                      <Td><Button fontSize={'2xl'} bg={'green.300'} onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId)); console.log(broadcast)}}>상세 보기</Button></Td>
+                      <Td><Button fontSize={'2xl'} bg={'green.300'} onClick={() => {dispatch(setBroadcastId(broadcast.broadcastId));}}>상세 보기</Button></Td>
                   </Tr>
               ))}
             </Tbody>

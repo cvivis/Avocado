@@ -16,7 +16,7 @@ function LiveAuctionPage() {
     const id = useSelector((state)=>state.broadcastId.broadcastId);
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(new Date());
-    console.log(startDate);
+    // console.log(startDate);
     const now = new Date();
     const max = new Date(Date.parse(now)+30*1000*60*60*24); // 한달 리미트
     const dateForm = "YYYY-MM-DD HH:mm:ss";

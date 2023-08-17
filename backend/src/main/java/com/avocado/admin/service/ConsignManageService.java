@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ConsignManageService {
 
     private final ItemRepository itemRepository;
@@ -48,14 +47,12 @@ public class ConsignManageService {
                 .hopePrice(findItem.getHopePrice())
                 .auctionType(findItem.getType())
                 .build();
-        log.info(response.toString());
         return response;
     }
 
     // 요청 상태 승인으로 바꾸고 카테고리를 설정한다.
     @Transactional
     public ConsignConfirmResponse consignApprove(ConsignConfirmRequest consignConfirmRequest){
-        log.info("consign: {} " , consignConfirmRequest.toString());
         Item findItem = itemRepository.findById(consignConfirmRequest.getId()).orElse(null);
         findItem.setCategory(consignConfirmRequest.getCategory());
         findItem.setItemStatus(ItemStatus.APPROVE);

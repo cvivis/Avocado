@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-@Slf4j
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

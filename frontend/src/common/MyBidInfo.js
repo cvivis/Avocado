@@ -53,7 +53,7 @@ function MyBidInfo(props) {
     useEffect(() => {
         const nowP = props.boardDetail.hopePrice;
         const mPrice = props.boardDetail.successPrice !=null ? (props.boardDetail.successPrice):(props.boardDetail.hopePrice);
-        console.log("nowP"+nowP);
+        // console.log("nowP"+nowP);
 
         setBidInfo({
             nowPrice: nowP,
@@ -61,9 +61,9 @@ function MyBidInfo(props) {
         });
         ;
         // if(props.boardDetail.auctionId != undefined){
-            console.log("aaaaa"+props.boardDetail.auctionId);
+            // console.log("aaaaa"+props.boardDetail.auctionId);
             connect(); // 마운트시 실행
-            console.log("asdf"+props.boardDetail.auctionId);
+            // console.log("asdf"+props.boardDetail.auctionId);
             return () => disconnect(); // 언마운트 시 실행
         // }
     }, [props.boardDetail.auctionId, props.boardDetail.hopePrice]);
@@ -79,10 +79,10 @@ const disconnect = () => {
             brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/normal-auction',
             // brokerURL: 'ws://localhost:8080/ws/normal-auction',
             onConnect: () => {
-                console.log("연겨여여여여얼")
+                // console.log("연겨여여여여얼")
                 // Do something, all subscribes must be done is this callback
-                console.log("연결 SUB22");
-                console.log(props.boardDetail.auctionId);
+                // console.log("연결 SUB22");
+                // console.log(props.boardDetail.auctionId);
                     subscribe();
 
             },
@@ -98,11 +98,11 @@ const disconnect = () => {
         // console.log("야 들어왔냐2")
         // console.log(id + "옥션아이디2")
         // console.log(bidInfo.nowPrice);
-        console.log("id: "+props.boardDetail.auctionId);
+        // console.log("id: "+props.boardDetail.auctionId);
         client.current.subscribe('/sub/normal/' + props.boardDetail.auctionId, (res) => { // server에게 메세지 받으면
-            console.log("들어왔당.")
+            // console.log("들어왔당.")
             const jsonBody = JSON.parse(res.body);
-            console.log(jsonBody);
+            // console.log(jsonBody);
             setBidInfo((prevState) => {
                 console.log("호가: " + BeforeNormalBid.setBidPlus(jsonBody.price));
                 return { ...prevState, nowPrice: jsonBody.price, myPrice: jsonBody.price , nowBidName: jsonBody.email }
@@ -113,7 +113,7 @@ const disconnect = () => {
 
     const publish = () => {
         // console.log("in Pub" + bidInfo.myPrice);
-        console.log("옥션 아이디 " + props.boardDetail.auctionId);
+        // console.log("옥션 아이디 " + props.boardDetail.auctionId);
         // console.log(client.current + "클라이언트얍1");
         const newPrice = bidInfo.myPrice +BeforeNormalBid.setBidPlus(bidInfo.myPrice);
 

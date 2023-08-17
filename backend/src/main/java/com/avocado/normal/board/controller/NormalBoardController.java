@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/normal")
 @RequiredArgsConstructor
-@Slf4j
 @CrossOrigin(origins = "http://localhost:3000")
 public class NormalBoardController {
     private final NormalBoardService normalBoardService;
@@ -26,14 +25,12 @@ public class NormalBoardController {
     @GetMapping("/list")
     public ResponseEntity<?> itemList() {
         NormalResponseDto itemlist = normalBoardService.getList();
-        log.info("{}", normalBoardService.getList());
         return ResponseEntity.ok().body(itemlist);
     }
 
     @GetMapping("/list/search/{keyword}")
     public ResponseEntity<?> searchItemList(@PathVariable String keyword) {
         NormalResponseDto itemlist = normalBoardService.getSearchList(keyword);
-        log.info("{}", normalBoardService.getSearchList(keyword));
         return ResponseEntity.ok().body(itemlist);
     }
 

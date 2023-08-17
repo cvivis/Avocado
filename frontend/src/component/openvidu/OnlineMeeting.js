@@ -38,9 +38,6 @@ class OnlineMeeting extends Component {
         this.leaveSession()
     }
     
-    test(d){
-        console.log(d);
-    }
     joinSession() {
         
         this.OV = new OpenVidu();
@@ -63,13 +60,13 @@ class OnlineMeeting extends Component {
                     // 해당 객체에서 'role' 값을 가져옵니다.
                     const userRole = parsedLoginData.role;
                     if (userRole === "ROLE_ADMIN" ) {
-                        console.log('You do not have ADMIN permissions to perform this action.');
+                        // console.log('You do not have ADMIN permissions to perform this action.');
                         return;
                     }
 
                     if (this.state.subscribers.length >= 1 ) {
-                        console.log(this.state.subscribers.length)
-                        console.log(this.state.subscribers)
+                        // console.log(this.state.subscribers.length)
+                        // console.log(this.state.subscribers)
                         return;
                     }
                     // Subscribe to the Stream to receive it. Second parameter is undefined
@@ -127,7 +124,7 @@ class OnlineMeeting extends Component {
 
                         // --- 6) Publish your stream ---
                         if (userRole !== "ROLE_ADMIN") {
-                            console.log('You do not have ADMIN permissions to perform this action.');
+                            // console.log('You do not have ADMIN permissions to perform this action.');
                             return;
                         }
 
@@ -138,7 +135,7 @@ class OnlineMeeting extends Component {
                         });
                     })
                     .catch((error) => {
-                        console.log('There was an error connecting to the session:', error.code, error.message);
+                        // console.log('There was an error connecting to the session:', error.code, error.message);
                     });
                 });
             }
@@ -150,8 +147,8 @@ class OnlineMeeting extends Component {
     }
     
     async createToken() {
-	console.log(API_SERVER_URL)
-    console.log(this.props.useId + "유저아이디")
+	// console.log(API_SERVER_URL)
+    // console.log(this.props.useId + "유저아이디")
     const uid = this.props.useId;
         if(uid!=0){
 

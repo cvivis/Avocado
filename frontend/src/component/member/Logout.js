@@ -12,9 +12,9 @@ function Logout() {
     const stateIsLogin = useSelector((state) => state.login.isLogin);
     const isLogin = useRef(stateIsLogin);
     const dispatch = useDispatch();
-    console.log(isLogin);
-    console.log(accessToken);
-    console.log(typeof (accessToken));
+    // console.log(isLogin);
+    // console.log(accessToken);
+    // console.log(typeof (accessToken));
 
     const navigate = useNavigate();
     const purge = async ()=>{
@@ -27,7 +27,7 @@ function Logout() {
         
         // 쿠키에서 토큰 제거
         // document.cookie = `token=; path=/; max-age=0`;
-        console.log("로그아웃 되었습니다.");
+        // console.log("로그아웃 되었습니다.");
         purge();
         alert("로그아웃 되었습니다.")
         dispatch(setIsLogin(false));

@@ -136,9 +136,9 @@ function Admin() {
     else {
       api.post("/broadcast/init", broadcastInfo).then( response => {
         if(response.status === 200) {
-          console.log(response.status)
+          // console.log(response.status)
         }
-        else console.log(response.status)
+        // else console.log(response.status)
       })
       setBroadcastInfo({title: "", introduce: "", startAt:""})
     }
@@ -149,7 +149,7 @@ function Admin() {
   const dateForm = "YYYY-MM-DDtHH:mm:ss";
 
   const loadBroadcasts = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     api.get(`manage/items/broadcast/` + e.target.value).then(response => {
       if(response.data) setCurrentBroadcastList(response.data)
       else  setCurrentBroadcastList([])
@@ -174,7 +174,7 @@ function Admin() {
   const broadcastStart = (broadcast) => {
     api.put(`/manage/items/broadcast/on/`+broadcast.broadcastId)
       .then(response => {
-        console.log(response.status)
+        // console.log(response.status)
         navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.broadcastId}});
       })
       .catch(error => {
@@ -226,10 +226,10 @@ function Admin() {
   }, [consignItems, currentBroadcast]);
 
   const assignAuctionToBroadcast = (item) => {
-    console.log(item)
-    console.log(currentBroadcast)
+    // console.log(item)
+    // console.log(currentBroadcast)
     api.post(`/manage/items/live/assign/${item.itemId}/${currentBroadcast.broadcastId}`).then(response =>{
-      console.log(response.status)
+      // console.log(response.status)
       if(response.status === 200) {
         const tempItemlist = [];
         approvedLiveAuctionList.forEach(element => {

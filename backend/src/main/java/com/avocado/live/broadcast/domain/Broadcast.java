@@ -17,7 +17,6 @@ import java.util.Date;
 @Setter
 @Builder
 @AllArgsConstructor
-@ToString
 public class Broadcast {
 
     @Id

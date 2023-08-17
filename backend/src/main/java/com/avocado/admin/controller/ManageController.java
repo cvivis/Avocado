@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/manage/items")
 @CrossOrigin(origins = "http://localhost:3000")
-@Slf4j
 public class ManageController {
 
     private final ConsignManageService consignManageService;
@@ -88,7 +87,6 @@ public class ManageController {
     //방송 편성 조회하기
     @GetMapping("/broadcast/{date}")
     public ResponseEntity<?> findBroadcastByDate(@PathVariable String date) {
-        log.info("[ManageController findBroadcastsByDate] date : {}",date);
         List<BroadcastResponseDto> broadcastList = adminService.findByDate(date);
         if(CollectionUtils.isEmpty(broadcastList)) return ResponseEntity.ok().build();
         return ResponseEntity.ok().body(broadcastList);

@@ -5,7 +5,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
 public class SignInRequestDto {
     private String email;
     private String password;

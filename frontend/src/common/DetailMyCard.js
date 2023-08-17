@@ -22,8 +22,8 @@ function MyCard(props) {
     const isBidBeforeStart = useSelector((state)=>state.myNormalBids.isBidBeforeStart[item.itemId]);
     const isBidEnd = useSelector((state)=>state.myNormalBids.isBidEnd[item.itemId]);
 
-    console.log(isBidEnd+"엔드")
-    console.log(isBidBeforeStart+"비포스타트")
+    // console.log(isBidEnd+"엔드")
+    // console.log(isBidBeforeStart+"비포스타트")
     // useEffect(()=>{
 
     // })

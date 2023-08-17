@@ -16,7 +16,7 @@ function MyNormalSale(){
     useEffect(()=>{
         api.get('items/my-sale',{headers:{Authorization: accessToken}})
         .then(response=>{
-            console.log(response.data.entries);
+            // console.log(response.data.entries);
             dispatch(setMyNormalSale(response.data.entries));
         })
         .catch(error=>{
@@ -27,7 +27,7 @@ function MyNormalSale(){
         <div>
             <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>
             {myNormalSale&&myNormalSale.map((mysale) => (
-                console.log(mysale),
+                // console.log(mysale),
                 <div key={mysale.itemId}>
                     <MyCard props= {mysale}></MyCard>
                 </div>

@@ -7,7 +7,6 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @Builder
-@ToString
 @AllArgsConstructor
 public class NormalItemDetailResponseDto {
     private Long auctionId;

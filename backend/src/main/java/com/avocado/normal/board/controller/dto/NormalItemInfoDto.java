@@ -10,7 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class NormalItemInfoDto {
     private Long auctionId;
     private Long itemId;

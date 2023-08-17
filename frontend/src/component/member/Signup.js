@@ -38,7 +38,7 @@ function Signup() {
       password: password,
       nickname: nickname,
     };
-    console.log(data);
+    // console.log(data);
 
     api.post('/member/signup', data)
       .then(response => {

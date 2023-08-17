@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
-@Slf4j
 public class ItemController {
     private final ItemService itemService;
     private final MemberService memberService;
@@ -71,7 +70,6 @@ public class ItemController {
     // 마이페이지 - 나의 입찰 상품 리스트 가져오기 (상시만)
     @GetMapping("/my-bid")
     public MyBidResponseDto myBids(@RequestHeader("Authorization") String requestAccessToken) {
-        log.info("[itemcontroller mybids] accesstoken : {}",requestAccessToken);
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 
@@ -81,7 +79,6 @@ public class ItemController {
     //마이페이지 - 나의 라이브 입찰 상품 리스트 가져오기
     @GetMapping("/my-livebid")
     public MyBidResponseDto myLiveBids(@RequestHeader("Authorization") String requestAccessToken) {
-        log.info("[itemcontroller mybids] accesstoken : {}",requestAccessToken);
         String email = authService.getPrincipal(authService.resolveToken(requestAccessToken));
         Long memberId = memberService.getMember(email).getId();
 

@@ -21,7 +21,6 @@ import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class NormalAuctionService {
 
 
@@ -32,7 +31,6 @@ public class NormalAuctionService {
 
     public NormalBidResponseDto topBidInfo(Long auctionId){
         NormalHistory topBid = normalHistoryRepository.findFirstByNormalAuction_IdOrderByBidPriceDescCreatedAtAsc(auctionId).orElse(null);
-        log.info("topBid : "+topBid);
         NormalBidResponseDto normalBidResponseDto = NormalBidResponseDto.builder()
                 .id(topBid.getId())
 //                .lastBidAt(topBid.getCreatedAt().toLocalDateTime())
@@ -53,11 +51,7 @@ public class NormalAuctionService {
         //입찰시간
         LocalDateTime bidNow = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
-        log.info("노멀 리퀘스트 : "+normalBidRequestDto);
         NormalAuction nowNormal = normalAuctionRepository.findById(normalBidRequestDto.getId()).orElse(null);
-        log.info("bidNow: " + bidNow);
-        log.info("nowNoraml: " + nowNormal.toString());
-        log.info("bidNow : {} , auctionTime : {} ", bidNow , nowNormal.getEndAt().toLocalDateTime());
         if(bidNow.isAfter(nowNormal.getEndAt().toLocalDateTime())){
             return NormalBidResponseDto.builder()
                     .id(0L)
@@ -68,12 +62,11 @@ public class NormalAuctionService {
         }
 
         Member nowMember = memberRepository.findByEmail(normalBidRequestDto.getEmail()).orElse(null);
-        log.info(" sdf {}",nowMember);
+
         // 해당 경매에 입찰 기록있는 유저인지 조회
         Optional<NormalHistory> userHistory = normalHistoryRepository.findByNormalAuction_IdAndMember_Id(normalBidRequestDto.getId(), nowMember.getId());
-        log.info("dfsdf {} ",userHistory);
+
         if(userHistory.isPresent()){ // 있으면 업데이트
-            log.info("들어오나ㅏㅏㅏㅏㅏ");
             userHistory.ifPresent(history->{
                history.setBidPrice(normalBidRequestDto.getPrice());
                normalHistoryRepository.saveAndFlush(history);
@@ -86,7 +79,7 @@ public class NormalAuctionService {
                     .member(nowMember)
                     .build();
 
-            log.info("asdfasdfa {}",normalHistory);
+
             normalHistoryRepository.saveAndFlush(normalHistory);
         }
         //최고 입찰가

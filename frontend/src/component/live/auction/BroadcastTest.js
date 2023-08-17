@@ -36,12 +36,12 @@ const member = useSelector((state) => state.login.member);
 const navigate = useNavigate();
 
     useEffect(() => {
-    console.log(location.state.broadcastId)
+    // console.log(location.state.broadcastId)
     broadcastId.current = location.state.broadcastId;
     api.get(`/live/list/${broadcastId.current}/info`)
     .then(response => {
         const list = response.data.entries
-        console.log(list)
+        // console.log(list)
         if(list) {
             setAuctionList(list)
             setCurrentAuction(list[0])
@@ -53,7 +53,7 @@ const navigate = useNavigate();
         
     }, []);
 
-    console.log(broadcastId + " 브로드캐스트 아이디 큐렌트")
+    // console.log(broadcastId + " 브로드캐스트 아이디 큐렌트")
 
     // const [myColor, setMyColor] = useState(''); //경매리스트
 
@@ -82,7 +82,7 @@ const navigate = useNavigate();
     }, [chatResponse]);
 
     useEffect(() => {
-    console.log(auctionOnAndOff)
+    // console.log(auctionOnAndOff)
     if(auctionOnAndOff.onAndOff === 1) {
         setChatResponse({sender : "SYSTEM", message : `${auctionOnAndOff.title} 경매가 시작되었습니다`})
 
@@ -112,9 +112,9 @@ const navigate = useNavigate();
     const connect = () =>{
     client.current = new StompJs.Client({
         brokerURL: 'wss://i9a407.p.ssafy.io:8080/ws/live-auction',
-        //brokerURL: 'ws://localhost:8080/ws/live-auction',
+        // brokerURL: 'ws://localhost:8080/ws/live-auction',
         onConnect:() =>{
-            console.log('소켓 연결 성공')
+            // console.log('소켓 연결 성공')
             subcribe();
         },
     });
@@ -301,7 +301,7 @@ const navigate = useNavigate();
 
         // 현재 로그인 된 계정이 관리지인지 일반사용자인지 받아와야 함
         const role = useSelector((state)=>state.login.role);
-        console.log(role);
+        // console.log(role);
 
         if (role === 'ROLE_ADMIN') {
             return (

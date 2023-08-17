@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class AdminService {
     private final BroadcastRepository broadcastRepository;
     private final ItemRepository itemRepository;

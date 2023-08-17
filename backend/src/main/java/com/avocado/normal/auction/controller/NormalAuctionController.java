@@ -24,7 +24,6 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@Slf4j
 public class NormalAuctionController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final NormalAuctionService normalAuctionService;
@@ -32,17 +31,12 @@ public class NormalAuctionController {
 
     @MessageMapping("/chat")
     public void sendMessage(NormalBidRequestDto messageDto, SimpMessageHeaderAccessor accessor) {
-        log.info(messageDto.toString());
         simpMessagingTemplate.convertAndSend("/sub/chat", messageDto);
     }
 
     @MessageMapping("/normal/{id}")
     public void normalBid(@DestinationVariable("id") Long id, NormalBidRequestDto normalBidRequest) {
-        log.info(normalBidRequest.toString());
-        log.info("야아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ");
-
         NormalBidResponseDto topBid = normalAuctionService.doBid(normalBidRequest);
-        log.info("topBid {}" , topBid);
         simpMessagingTemplate.convertAndSend("/sub/normal/" + id, topBid);
     }
 
@@ -99,7 +93,6 @@ public class NormalAuctionController {
     //TODO : 채팅 기능 -> openvidu or websocket 아직 미정
     @MessageMapping("/live/chat")
     public void chat(ChatDto chatDto) {
-        log.info("[StompController chat] chatDto: {}", chatDto.getBroadcastId());
         simpMessagingTemplate.convertAndSend("/sub/chat/"+chatDto.getBroadcastId(),chatDto);
     }
 }

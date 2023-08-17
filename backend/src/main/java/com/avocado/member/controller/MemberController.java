@@ -17,7 +17,6 @@ import javax.validation.Valid;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
-@Slf4j
 public class MemberController {
     private final AuthService authService;
     private final MemberService memberService;
@@ -56,7 +55,6 @@ public class MemberController {
 
     @GetMapping("/auth/test")
     public ResponseEntity<?> test() {
-        log.info("[MemberController test] success");
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
     @PostMapping("/auth/validate")

@@ -34,12 +34,12 @@ const member = useSelector((state) => state.login.member);
 const navigate = useNavigate();
 
     useEffect(() => {
-    console.log(location.state.broadcastId)
+    // console.log(location.state.broadcastId)
     broadcastId.current = location.state.broadcastId;
     api.get(`/live/list/${broadcastId.current}/info`)
         .then(response => {
         const list = response.data.entries
-        console.log(list)
+        // console.log(list)
         if(list) {
             setAuctionList(list)
             setCurrentAuction(list[0])
@@ -71,7 +71,7 @@ const navigate = useNavigate();
     }, [chatResponse]);
 
     useEffect(() => {
-    console.log(auctionOnAndOff)
+    // console.log(auctionOnAndOff)
     if(auctionOnAndOff.onAndOff === 1) {
         setChatResponse({sender : "SYSTEM", message : `${auctionOnAndOff.title} 경매가 시작되었습니다`})
 
@@ -102,7 +102,7 @@ const navigate = useNavigate();
     client.current = new StompJs.Client({
         brokerURL: 'ws://localhost:8080/live-auction',
         onConnect:() =>{
-            console.log('소켓 연결 성공')
+            // console.log('소켓 연결 성공')
             subcribe();
         },
     });

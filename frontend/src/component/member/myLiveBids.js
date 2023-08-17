@@ -23,7 +23,7 @@ function MyLiveBids(){
             console.error('API 요청 에러: ',error);
         });
     },[]);
-    console.log(myLiveBids);
+    // console.log(myLiveBids);
     return (
         <div>
         <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>

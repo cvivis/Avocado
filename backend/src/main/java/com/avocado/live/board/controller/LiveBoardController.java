@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/live")
 @RequiredArgsConstructor
-@Slf4j
 //@CrossOrigin(origins = "http://localhost:3000")
 public class LiveBoardController {
 
@@ -35,7 +34,6 @@ public class LiveBoardController {
     @GetMapping("/list/{broadcast_id}")
     public ResponseEntity<?> searchLiveAuctionList(@PathVariable Long broadcast_id){
         LiveAuctionResponseDto liveAuctionList = liveBoardService.getLiveAuctions(broadcast_id);
-        System.out.println(liveAuctionList.toString());
         return ResponseEntity.ok().body(liveAuctionList);
     }
 

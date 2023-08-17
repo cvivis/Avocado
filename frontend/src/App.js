@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 // import logo from './logo.svg';
 // import './App.css';
 import Home from './Home';
@@ -31,10 +31,14 @@ import MainLayout from './common/MainLayout';
 
 // 폰트
 import './Fonts/font.css';
+import { toBeDisabled } from '@testing-library/jest-dom/matchers';
 
 function App() {
   // const nowPrice = 10000;
   // const nowBidName = "홍길동";
+  console.warn = console.error = () => {};
+// or IIFE
+(() => { console.warn = console.error = () => {}} )();
 
   return (
 

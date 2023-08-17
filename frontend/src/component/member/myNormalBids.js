@@ -25,7 +25,7 @@ function MyNormalBids() {
 
             });
     }, []);
-    console.log(myNormalBids);
+    // console.log(myNormalBids);
     return (
         <div>
             <Grid gap={6} spacing={4} templateColumns='repeat(4, minmax(200px, 1fr))'>

@@ -3,11 +3,6 @@ package com.avocado.admin.controller.dto.consign;
 
 import com.avocado.Item.domain.entity.Type;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-
-@Slf4j
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
