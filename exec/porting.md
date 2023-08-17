@@ -1,1 +1,239 @@
 
+# 세팅 환경
+
+- Java 11
+- Docker 24.0.5
+- Node Js 18.0.5
+- mysql 8.0.5
+
+# 포트 설정
+
+- openvidu :4443
+- react :3000
+- springboot :8080
+
+# 세부 세팅설정 및 설치
+
+## 로컬 세팅
+- openvidu
+    - 로컬 환경 실행시 docker-compose.yml, openvidu,redis부분 주석해제이후 실행
+- redis 
+- mysql (3) 하단 참조
+    - mysql 세팅용 docker-backend.env파일, backend경로에 생성해야함.  - (3) 하단 참조
+
+### 로컬 설치 코드 수정 사항
+- application.yml -> active : db로 수정
+- 다운로드 이후 프로젝트 루트에 존재하는 docker-compose 파일 실행
+- 개발 당시 nginx 프록시 서버를 사용중이었기에 단순 클라이언트 서버의 연결로 확인할거면 `frontEnd경로에 존재하는 setProxy 파일의 주석 해제`
+- nginx 프록시 서버 사용하지 않을 경우 frontend axios 경로에 `/api 지우기`
+- 모든 요청은 https → http로 수정 필요
+- 모든 요청의 주소 [i9a407.p.ssafy.io](http://i9a407.p.ssafy.io) → localhost로 수정
+
+
+## 원격 서버 세팅 
+
+### properties 파일
+- /backend/src/main/resources/properties/env.properties 파일 생성
+
+```bash
+properties.datasource.username = 디비 유저 이름
+properties.datasource.password = 디비 비밀번호
+
+properties.openvidu.url = https://i9a407.p.ssafy.io:8443/
+properties.openvidu.secret = 하단 (1)의 비밀번호 
+
+properties.jwt.secret = jwt시크릿 키
+
+properties.ssl.key = classpath:keystore.p12 (ssl 인증서)
+properties.ssl.type = ssl 타입
+properties.ssl.password = ssl 비밀번호
+
+properties.s3.access = s3 access 토큰
+properties.s3.secret = s3 secret 토큰
+```
+
+- openvidu - docker image pull (1)참조,
+     - docker-compose.yml -> openvidu 해당 부분 주석
+     - 주석처리된 redis , mysql은 세팅이 안되어있다면 주석해제 이후 처음에만 실행.
+- ssl 인증서 필요 -> /backend/src/main/resources/properties에 keystore.p12파일 저장
+- redis - (2) 하단 참조
+- mysql  - (2)(3) 하단 참조
+    - mysql 세팅용 docker-backend.env파일, /backend경로에 생성해야함.  - (3) 하단 참조
+
+
+
+
+### (1) openvidu 이미지 받아오기(외부 서버사용시)
+
+- 비밀번호는 자유
+
+```bash
+docker run -p 4443:4443 --rm -e OPENVIDU_SECRET={비밀번호| openvidu/openvidu-dev:2.28.04
+```
+
+### (2) docker-compose (root directory에 존재)
+
+```bash
+version: '3'
+services:
+  # db:
+  #   image: mysql:8
+  #   container_name: avocado_db
+  #   restart: always
+  #   ports:
+  #     - "3306:3306"
+  #   env_file: ./backend/docker-backend.env
+  #   volumes:
+  #     - mysql_data:/var/lib/mysqla
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - "8379:6379"
+
+  # 로컬 테스트 때 주석 해제 
+  #   openvidu:
+  #     image: openvidu/openvidu-dev:2.28.0
+  #     container_name: avocado_openvidu
+  #     ports:
+  #       - "4443:4443"
+  #     environment:
+  #       - OPENVIDU_SECRET=ssafy
+
+volumes:
+  mysql_data:
+```
+
+### (3)docker-backend.env
+
+```bash
+MYSQL_DATABASE=디비 이름
+MYSQL_PASSWORD=mysql 비밀번호
+MYSQL_USER=mysql 유저 이름
+MYSQL_ROOT_PASSWORD=루트 비밀번호
+```
+
+
+### 원격 front 이미지 올리기
+
+```bash
+docker compose down
+docker compose build
+docker compose up -d;
+```
+### 로컬 FrontEnd 수동 빌드 배포 
+- 사용라이브러리 버전문제로 인한 --force 사용
+
+```bash
+-> frontend 파일 이동 후
+npm i --force
+npm start
+```
+### 로컬 , 원격 공통 BackEnd 빌드 배포
+
+```bash
+-> backend 파일 이동 후 
+./gradlew clean build
+sudo java -jar build/libs/avocado-0.0.1-SNAPSHOT
+```
+
+### nginx.conf
+
+```bash
+events {
+    worker_connections 1024;   # 연결 수
+}
+
+http {
+
+    upstream app-server-3000 {
+        server localhost:3000;
+    }
+
+    upstream back-server-8080 {
+        server localhost:8080;
+    }
+    upstream websocket-server {
+        server i9a407.p.ssafy.io:8080;
+    }
+
+    upstream app-server-8443 {
+        server localhost:8443;
+    }
+
+    upstream jenkins-server-9090 {
+        server localhost:9090;
+    }
+
+    # React 웹 페이지 서버 설정
+server {
+
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        listen 443 ssl;
+        listen [::]:443 ssl;
+
+        server_name i9a407.p.ssafy.io;
+
+        ssl_certificate /etc/letsencrypt/live/i9a407.p.ssafy.io/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/i9a407.p.ssafy.io/privkey.pem;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        location / {
+            proxy_pass http://app-server-3000;
+            proxy_read_timeout 300s;
+            proxy_connect_timeout 75s;
+        }
+        location /api {
+         rewrite ^/api(.*)$ $1 break;
+           proxy_pass  https://back-server-8080;
+          # proxy_set_header Host $host:$server_port;
+        }
+        location /ws/ {
+                proxy_http_version 1.1;
+                proxy_pass http://websocket-server;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection "upgrade";
+        }
+    }
+
+    server {
+        listen 9091;
+        location / {
+            proxy_set_header Host $host:$server_port;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_pass http://jenkins-server-9090$request_uri;
+            proxy_read_timeout  94;
+        }
+   }
+
+}
+```
+
+### 2. 프로젝트에서 사용하는 외부 서비스를 정보 정리 한 문서
+
+### 3. Mysql dump 파일
+
+- 테스트 데이터 및 이벤트 핸들러 설정 및 등록
+
+[avocado_aws-2023_08_14_14_42_40-dump.sql](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f8c59913-f528-41ab-8030-a5f9b26956db/avocado_aws-2023_08_14_14_42_40-dump.sql)
+
+### 4. 시연 시나리오
+
+캡쳐 
+
+시연 시나리오에 따른 화면 별 실행 별 상세 설명
