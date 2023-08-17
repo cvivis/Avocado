@@ -22,6 +22,7 @@ function MyBidInfo(props) {
         nowPrice: props.boardDetail.hopePrice,
         myPrice: 0
     })
+    const isLogin = useSelector((state)=>state.login.isLogin);
 
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [progressWidth, setProgressWidth] = useState(0);
@@ -163,9 +164,10 @@ const disconnect = () => {
             if (!isBidBeforeStart) {
                 return (
                     <div>
+                        {isLogin ?
                         <Button
                             onClick={handleBid}
-                            
+
                             size={'lg'} mt={'20px'}
                             bg={'green'} color={'whiteAlpha.900'}
                             _hover={{ bg: 'green.300' }}
@@ -180,11 +182,13 @@ const disconnect = () => {
                                 입찰하기
                             </Text>
                             <Text textAlign={'right'}>
-                            {
-                            BeforeNormalBid.setBidPlus(bidInfo.myPrice) + bidInfo.myPrice
-                            } 원
+                                {
+                                    BeforeNormalBid.setBidPlus(bidInfo.myPrice) + bidInfo.myPrice
+                                } 원
                             </Text>
                         </Button>
+                        : null
+                        } 
                         <div
                             className="progress-bar"
                             style={{
