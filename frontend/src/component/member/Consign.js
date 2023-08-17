@@ -34,10 +34,11 @@ function Consign() {
         const content = editorRef.current.getInstance().getMarkdown();
         dispatch(setRequireItem({ content }));
 
-        
+        const formData = new FormData()
+
         const Data = {
             email: email,
-            thumbnail: requireItem.thumbnail,
+            // thumbnail: requireItem.thumbnail,
             name: requireItem.name,
             content: requireItem.content,
             hopePrice: requireItem.hopePrice,
@@ -45,16 +46,24 @@ function Consign() {
             itemStatus: requireItem.itemStatus,
         };
 
+        formData.append(
+            'dto',
+            new Blob([JSON.stringify(Data)], {
+              type: 'application/json'
+            })
+        )
+        
+        formData.append('file',requireItem.thumbnail[0] )
+
         // 서버에 POST 요청을 보내 물품 입찰 요청을 처리
-        api.post('/items/consign', Data, { headers: { Authorization: accessToken } })
+        api.post('/items/consign', formData, { headers: { Authorization: accessToken, 'Content-Type': `multipart/form-data` } })
             .then(response => {
-                // 응답을 처리하는 로직
-                alert(`물품 입찰 요청 성공.`);
+                alert("물품요청성공!")
                 navigate('/');
             })
             .catch(error => {
-                console.error('물품 입찰 요청 실패:', error.response.data);
-            });
+                alert("물품요청실패!")
+            });            
     }
 
 

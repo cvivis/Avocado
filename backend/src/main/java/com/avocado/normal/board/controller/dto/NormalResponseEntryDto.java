@@ -5,12 +5,10 @@ import lombok.*;
 import java.util.Date;
 
 @Getter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
-
-
 public class NormalResponseEntryDto {
     private Long auctionId;
     private Long itemId;
@@ -19,7 +17,7 @@ public class NormalResponseEntryDto {
     private Integer hopePrice;
     private Date startAt;
     private Date endAt;
-
+    private String url;
 
 
     public NormalResponseEntryDto(Long auctionId, Long itemId, String name, String content, Integer hopePrice, Date startAt, Date endAt) {

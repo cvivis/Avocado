@@ -18,12 +18,12 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
     // 상품ID, 이름, 상태, 타입만 가져옴
-    @Query("SELECT NEW com.avocado.Item.controller.dto.MySaleResponseEntries" +
-            "(i.id, i.name, i.itemStatus, i.type) " +
-            "FROM item i " +
-            "Where i.member.id = :memberId ")
+//    @Query("SELECT NEW com.avocado.Item.controller.dto.MySaleResponseEntries" +
+//            "(i.id, i.name, i.itemStatus, i.type) " +
+//            "FROM item i " +
+//            "Where i.member.id = :memberId ")
     //"WHERE i.member.id = :memberId")
-    List<MySaleResponseEntries> findItemsByMemberId(@Param("memberId") Long memberId);
+    Optional<List<Item>> findByMember_Id(Long memberId);
 
     //상시 경매 입찰 내역
     @Query("SELECT NEW com.avocado.Item.controller.dto.MyBidResponseEntries" +

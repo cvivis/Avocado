@@ -82,7 +82,8 @@ public class NormalBoardService {
                 .hopePrice(normalAuction.getItem().getHopePrice())
                 .successPrice(price)
                 .startAt(normalAuction.getStartAt())
-                .endAt(normalAuction.getEndAt()).build();
+                .endAt(normalAuction.getEndAt())
+                .url(normalAuction.getItem().getThumbnail()).build();
 
     }
 

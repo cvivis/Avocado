@@ -11,10 +11,10 @@ public class TestService {
     private final S3Uploader s3Uploader;
 
     @Transactional
-    public void create(String name, MultipartFile file) {
+    public String create(String name, MultipartFile file) {
         String url = "";
         if(file != null)  url = s3Uploader.uploadFileToS3(file, "static/test");
-
+        return url;
     }
 }
 
