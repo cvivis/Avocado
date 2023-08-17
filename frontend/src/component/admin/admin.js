@@ -152,6 +152,7 @@ function Admin() {
     console.log(e.target.value);
     api.get(`manage/items/broadcast/` + e.target.value).then(response => {
       if(response.data) setCurrentBroadcastList(response.data)
+      else  setCurrentBroadcastList([])
     })
   }
 
@@ -163,7 +164,7 @@ function Admin() {
   }
 
   const broadcastOnOff= (broadcast) => {
-    const status = "OFF"
+    let status = "OFF"
     if(broadcast.status) status = "ON"
     return (
       status
@@ -171,8 +172,15 @@ function Admin() {
   }
 
   const broadcastStart = (broadcast) => {
-    console.log(broadcast)
-    navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.broadcastId}});
+    api.put(`/manage/items/broadcast/on/`+broadcast.broadcastId)
+      .then(response => {
+        console.log(response.status)
+        navigate("/broadcastTest" ,{state : {"broadcastId" : broadcast.broadcastId}});
+      })
+      .catch(error => {
+        console.error('API 요청 에러:', error);
+      });
+    
     //방송화면 이동하면 끄읏
   }
 
