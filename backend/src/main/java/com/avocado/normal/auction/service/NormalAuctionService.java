@@ -53,6 +53,7 @@ public class NormalAuctionService {
         //입찰시간
         LocalDateTime bidNow = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
+        log.info("노멀 리퀘스트 : "+normalBidRequestDto);
         NormalAuction nowNormal = normalAuctionRepository.findById(normalBidRequestDto.getId()).orElse(null);
         log.info("bidNow: " + bidNow);
         log.info("nowNoraml: " + nowNormal.toString());
