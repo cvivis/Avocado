@@ -42,7 +42,7 @@ function Detail() {
                 </GridItem>
                 <GridItem area={'titleSection'} w={'600px'} h={'600px'}>
                   <Container centerContent>
-                    <MyBidInfo boardDetail={boardDetail} id={id}
+                    <MyBidInfo boardDetail={boardDetail} id={boardDetail.autionId}
                     />
                   </Container>
                 </GridItem>
