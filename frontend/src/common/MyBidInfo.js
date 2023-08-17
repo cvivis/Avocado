@@ -47,7 +47,7 @@ function MyBidInfo(props) {
             setTimeout(() => {
                 setButtonDisabled(false);
                 setProgressWidth(0); // 프로그레스 바 리셋
-            }, 1000);
+            }, 3000);
         }
         publish();
     }

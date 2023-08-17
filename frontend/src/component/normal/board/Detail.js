@@ -21,6 +21,7 @@ function Detail() {
       .catch(error => {
         console.error('API 요청 에러:', error);
       });
+      console.log("board: "+boardDetail.auctionId);
   }, [id]);
 
 
