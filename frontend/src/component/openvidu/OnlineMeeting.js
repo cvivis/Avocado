@@ -3,8 +3,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import UserVideoComponent from './UserVideoComponent';
 
-const API_SERVER_URL = "http://localhost:8080/broadcast/";
-// const API_SERVER_URL = "https://i9a407.p.ssafy.io:8080/broadcast/";
+// const API_SERVER_URL = "http://localhost:8080/broadcast/";
+const API_SERVER_URL = "https://i9a407.p.ssafy.io:8080/broadcast/";
 
 class OnlineMeeting extends Component {
 
