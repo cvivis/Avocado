@@ -252,10 +252,10 @@ server {
 ![라이브 편성](docs/liveList.png)
 ## - 라이브 경매 디테일
 ![라이브 편성 디테일](docs/liveDetail.png)
-## - 라이브 경매 사용자 입찰
+## - 라이브 경매 사용자 시점
 ![라이브 경매 입찰](docs/liveAuctionUser.png)
-## - 라이브 경매 어드민 
-![라이브 경매 어드민](docs/adminAuctionAdmin.png)
+## - 라이브 경매 어드민 시점 
+![라이브 경매 어드민](docs/liveAuctionAdmin.png)
 ## - 마이페이지
 ![마이페이지](docs/mypage.png)
 ## - 어드민 상시 관리
