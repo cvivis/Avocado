@@ -1,7 +1,7 @@
 import React from "react";
 import {
     Menu, MenuButton, MenuList, MenuGroup, MenuItem, MenuDivider,
-    Button, Avatar,
+    Button, Avatar, AvatarBadge,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Logout from "../component/member/Logout"
@@ -14,7 +14,20 @@ function ProfileBtn() {
     const role = useSelector((state) => state.login.role);
     return (
         <Menu>
-            <MenuButton as={Avatar} colorScheme='green'></MenuButton>
+            {isLogin ? (
+                <>
+                    <MenuButton>
+                        <Avatar>
+                        <AvatarBadge boxSize='1.25em' bg='green.500' />
+                        </Avatar>
+                    </MenuButton>
+                </>
+                )
+                    : (
+                        <>
+                            <MenuButton as={Avatar} colorScheme='green'></MenuButton>
+                        </>
+                    )}
             <MenuList>
                 {isLogin ? (
                     <>
@@ -42,22 +55,6 @@ function ProfileBtn() {
                             </Link>
                         </>
                     )}
-
-                {/* <MenuGroup title='Profile'> */}
-
-                {/* <Link to="/member/logout">
-                    <MenuItem>
-
-
-                        Log Out
-                    </MenuItem>
-                    </Link> */}
-                {/* </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title='Help'>
-            <MenuItem>Docs</MenuItem>
-            <MenuItem>FAQ</MenuItem>
-            </MenuGroup> */}
             </MenuList>
         </Menu>
     )
