@@ -24,7 +24,7 @@
 ## SSL 인증
 
 - 도메인 주소로 SSL 발급
-- keystore.p12 파일 저장 후 
+- keystore.p12 파일을 백엔드 프로젝트 디렉토리에 및 openvidu의 cert 디렉토리에 저장
 
 ## S3
 
@@ -35,7 +35,7 @@
 - 프로젝트 디비 이름
 - mysql 비밀번호
 - 유저 이름
-- 루트 비밀번호
+- 유저 비밀번호
 
 # 4. 세부 세팅설정 및 설치
 
@@ -268,9 +268,9 @@ server {
 ## - 상품 요청 게시판 
 ![상품요청게시판](docs/consign.png)
 ## - 상시 경매 게시판
-![상시경매게시판]()
+![sangsi](/uploads/1c370aee6b4584469691debab359a82f/sangsi.PNG)
 ## - 상시 경매 상세 페이지 & 입찰
-![상시경매상세페이지]()
+![hammer](/uploads/a77bab8d68f187d29202b42d6cc42582/hammer.PNG)
 ## - 라이브 경매 편성
 ![라이브 편성](docs/liveList.png)
 ## - 라이브 경매 디테일
