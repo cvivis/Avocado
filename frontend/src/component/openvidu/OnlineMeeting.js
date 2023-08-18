@@ -28,7 +28,6 @@ class OnlineMeeting extends Component {
     }
     componentDidMount(){
         if(this.state.session === undefined) {
-            this.test(this.props.useId);
             this.joinSession()
         }
         
