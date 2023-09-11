@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="/main.css" rel="stylesheet">
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+</head>
+<body>
+    <div id="main-content" class="container">
+        <div class="row">
+            <h2>관리자 페이지</h2>
+            <h3>방송관리</h3>
+            <div id="broadcast">
+                <!-- 방송 목록 -->
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function(){
+        const broadcastlist = document.querySelector("#broadcast");
+        fetch("http://localhost:8080/admin/broadcasts")
+            .then((response) => response.json())
+            .then((data)=> {
+                data.forEach(element => {
+                    const broadcast = document.createElement('div');
+                    const info = document.createTextNode(element.id + '. ' +element.title+" \n");
+                    const start_btn = document.createElement('button')
+                    start_btn.className='btn btn-default'
+                    start_btn.innerText = "방송 시작"
+                    start_btn.type = "submit"
+                    start_btn.id = "start" + element.id
+                    start_btn.setAttribute("onclick", "start(this.id)")
+                    broadcast.appendChild(info)
+                    broadcast.appendChild(start_btn)
+                    broadcastlist.appendChild(broadcast);
+                });
+            })
+        }
+
+        function start(broadcastId) {
+            const id = broadcastId.slice(-1);
+            fetch("http://localhost:8080/admin/broadcast/status/on/"+id, {method: "PUT"})
+            .then((response) => {
+                localStorage.setItem("current-room-id",id)
+                window.location.href = "./admin_live.html"
+            })
+        }   
+    </script>
+</body>
+</html>
+

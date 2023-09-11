@@ -1,22 +1,5 @@
-#default 공통설정
-spring:
-  jpa:
-    show-sql: false
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
-        default_fetch_size: ${chunkSize:100}
-        jdbc.batch_size: ${chunkSize:100}
-
 --- # test 설정
 spring:
-  config:
-    activate:
-      on-profile: "test"
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/avocado?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -24,28 +7,35 @@ spring:
     password: ssafy
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
     show-sql: true
     hibernate:
-      format_sql: true
-      ddl-auto: create
-
+      ddl-auto: validate
+      properties:
+        hibernate:
+          format_sql: true
+          default_fetch_size: ${chunkSize:100}
+          jdbc.batch_size: ${chunkSize:100}
   redis:
     host: localhost
     port: 6379
+
+OPENVIDU_URL: http://localhost:4443/
+OPENVIDU_SECRET: ssafy
 
 jwt:
   secret: secretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkeysecretkey
   refresh-token-expiration-ms: 86400000 # 1000 * 60 * 60 * 24 1일
   access-token-expiration-ms: 3600000 # 1000 * 60 * 60 1시간
 
---- # dev 설정
-spring:
-  config:
-    activate:
-      on-profile: "dev"
-
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
+cloud:
+  aws:
+    s3:
+      bucket: imagetest12
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key: ${properties.s3.access}
+      secret-key: ${properties.s3.secret}

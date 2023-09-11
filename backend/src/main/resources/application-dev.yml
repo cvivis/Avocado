@@ -1,0 +1,51 @@
+--- # test 설정
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/avocado?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${properties.datasource.username}
+    password: ${properties.datasource.password}
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          format_sql: true
+          default_fetch_size: ${chunkSize:100}
+          jdbc.batch_size: ${chunkSize:100}
+  redis:
+    host: localhost
+    port: 8379
+
+OPENVIDU_URL: ${properties.openvidu.url}
+OPENVIDU_SECRET: ${properties.openvidu.secret}
+
+jwt:
+  secret: ${properties.jwt.secret}
+  refresh-token-expiration-ms: 86400000 # 1000 * 60 * 60 * 24 1일
+  access-token-expiration-ms: 3600000 # 1000 * 60 * 60 1시간
+
+server:
+  ssl:
+    key-store: ${properties.ssl.key}
+    key-store-type: ${properties.ssl.type}
+    key-store-password: ${properties.ssl.password}
+
+cloud:
+  aws:
+    s3:
+      bucket: imagetest12
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+    credentials:
+      access-key: ${properties.s3.access}
+      secret-key: ${properties.s3.secret}
