@@ -6,7 +6,7 @@
 <p>팀 명 : A4용지</p>
 <p>프로젝트 명 : AVOCADO</p>
 <p>팀원 : 황시은, 정연수, 오승기, 이원희, 정재현, 권민재</p>
-<p>배포 링크 : ---------------</p>
+<p>배포 링크 : [아보카도 경매](https://i9a407.p.ssafy.io)</p>
 
 <p><strong>아</strong>무거나</p>
 
@@ -48,44 +48,17 @@
 ### Frontend
 
 <div>
-    <img src="https://img.shields.io/badge/HTML5-white?style=for-the-badge&logo=html5&logoColor=red" alt="">
-    <img src="https://img.shields.io/badge/CSS3-white?style=for-the-badge&logo=css3&logoColor=blue" alt="">
-    <img src="https://img.shields.io/badge/JS-white?style=for-the-badge&logo=javascript&logoColor=yellow" alt="">
-    <img src="https://img.shields.io/badge/React-white?style=for-the-badge&logo=react&logoColor=green" alt="">
+  <img src="https://img.shields.io/badge/React-0088CC?style=for-the-badge&logo=react&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white&color=white alt="">
 </div>
 
-### Authorization
-
-<div>
-    <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" alt="">
-    <img src="https://img.shields.io/badge/jwt-black?style=for-the-badge&logo=&logoColor=white" alt="">
-</div>
-
-### CI/CD
+### CI/CD & infra
 
 <div>
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" alt="">
-</div>
-
-### Infra
-
-<div>
   <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" alt="">
-  <img src="https://img.shields.io/badge/Nginx-white?style=for-the-badge&logo=nginx&logoColor=green" alt="">
-</div>
-
-### Tool
-
-<div>
-  <img src="https://img.shields.io/badge/intellij-blue?style=for-the-badge&logo=&logoColor=" alt="">
-  <img src="https://img.shields.io/badge/Gradle-white?style=for-the-badge&logo=Gradle&logoColor=navy" alt="">
-</div>
-
-### Collaboration
-
-<div>
-  <img src="https://img.shields.io/badge/Notion-FFFFFF?style=for-the-badge&logo=Notion&logoColor=black" alt="">
-  <img src="https://img.shields.io/badge/Matter Most-white?style=for-the-badge&logo=mattermost&logoColor=navy" alt="">
+  <img src="https://img.shields.io/badge/%20Nginx-009639?style=for-the-badge&logo=react&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="">
 </div>
 
 # 💚 코드 컨벤션 & Git flow
@@ -116,24 +89,25 @@
 
 ## 2. 브랜치 관리
 
-다음 사이트 내용 기반으로 토의
+## 1. 브랜치 관리
+Git-Flow 브랜치 전략에 따라 기능별로 브랜치를 나누어 작업하고 있고 모든 브랜치에 대해 pull request를 통한 리뷰 완료 후 Merge를 하고 있습니다.
+![1](/uploads/210aa8c397441e20d6cd77a97a8449b4/1.png)
 
-[Karma - Git Commit Msg](http://karma-runner.github.io/0.10/dev/git-commit-msg.html)
+✅ master : 제품으로 출시될 수 있는 브랜치
 
-[우린 Git-flow를 사용하고 있어요 | 우아한형제들 기술블로그](https://techblog.woowahan.com/2553/)
+✅ develop : 다음 출시 버전을 개발하는 브랜치. feature에서 리뷰완료한 브랜치를 Merge
 
-### MASTER
+✅ feature : 기능을 개발하는 브랜치
 
-- 메인 브랜치. develop에서 일정 작업이 끝나면 pr
+✅ hotfix : 출시 버전에서 발생한 버그를 수정하는 브랜치
 
-### DEVELOP
+참고 문헌
+- [우아한 형제들 기술블로그 "우린 Git-flow를 사용하고 있어요"](https://woowabros.github.io/experience/2017/10/30/baemin-mobile-git-branch-strategy.html)
+- [README 참고](https://github.com/f-lab-edu/event-recommender-festa)
 
-- 각 피쳐들이 병합되는 중심지
-- 백엔드: develop-backend
-- 프론트: develop-frontend
-- develop → master 병합 결정은 팀장 재량
+## 2. 커밋 관리
 
-### FEATURE
+Karma - Git Commit Msg
 
 - 기능 하나당 하나의 브랜치에 작업
 - 즉, `한 사람당 한 브랜치`를 사용
@@ -190,12 +164,14 @@ EX) 채팅 기능 구현시 **Feat: 채팅 기능 구현**
 
 # 💙 기술 issue 해결 과정
 
-- mvp 다 하고 열심히 파봅시당
+- 문서화를 통한 협업
+- PR 과정에서 발생하는 conflict 해결 및 협업 능력 향상
+- Spring Boot를 활용해 주어진 요구에 맞춰 REST API 설계 및 구현
+- 주어진 요구에 맞춰 ERD 설계
 
-# 💜 프로젝트 중점사항
+# 💛 프로젝트 구조
 
-- 문서화
-- 단위테스트를 통한 service 의존성 분리
+![2](docs/AvocadoArchitecture.png)
 
 # 🤎 유스케이스 다이어그램
 
@@ -203,7 +179,7 @@ EX) 채팅 기능 구현시 **Feat: 채팅 기능 구현**
 
 # 🖤 DB ERD
 
-<img src="docs/아보카도_ERD.png">
+![아보카도_ERD](docs/아보카도_ERD.png)
 
 # 🤍 Front
 
