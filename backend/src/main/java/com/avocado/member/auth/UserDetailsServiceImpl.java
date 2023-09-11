@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final MemberRepository memberRepository;
