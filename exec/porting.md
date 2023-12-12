@@ -262,27 +262,27 @@ server {
 
 # 6. 시연 시나리오 
 ## - 회원가입
-![회원가입](docs/register.png)
+![회원가입](/docs/register.png)
 ## - 로그인
-![로그인](docs/login.png)
+![로그인](/docs/login.png)
 ## - 상품 요청 게시판 
-![상품요청게시판](docs/consign.png)
+![상품요청게시판](/docs/consign.png)
 ## - 상시 경매 게시판
-![sangsi](/uploads/1c370aee6b4584469691debab359a82f/sangsi.PNG)
+![sangsi](/docs/sansi2.png)
 ## - 상시 경매 상세 페이지 & 입찰
-![hammer](/uploads/a77bab8d68f187d29202b42d6cc42582/hammer.PNG)
+![상시 경매 상세](/docs/sansiauction.png)
 ## - 라이브 경매 편성
-![라이브 편성](docs/liveList.png)
+![라이브 편성](/docs/liveList.png)
 ## - 라이브 경매 디테일
-![라이브 편성 디테일](docs/liveDetail.png)
+![라이브 편성 디테일](/docs/liveDetail.png)
 ## - 라이브 경매 사용자 시점
-![라이브 경매 입찰](docs/liveAuctionUser.png)
+![라이브 경매 입찰](/docs/liveAuctionUser.png)
 ## - 라이브 경매 어드민 시점 
-![라이브 경매 어드민](docs/liveAuctionAdmin.png)
+![라이브 경매 어드민](/docs/liveAuctionAdmin.png)
 ## - 마이페이지
-![마이페이지](docs/mypage.png)
+![마이페이지](/docs/mypage.png)
 ## - 어드민 상시 관리
-![관리자상시페이지](docs/adminNormal.png)
+![관리자상시페이지](/docs/adminNormal.png)
 ## - 어드민 상시 관리
-![관리자라이브페이지](docs/adminLive.png)
+![관리자라이브페이지](/docs/adminLive.png)
 
